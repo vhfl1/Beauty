@@ -1,0 +1,159 @@
+main {
+    width: 100%;
+    height: auto;
+}
+main > .complete {
+    width: 1000px;
+    min-height: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 50px 100px;
+    box-sizing: border-box;
+}
+main > .complete > section:nth-of-type(1) {
+    text-align: right;
+}
+main > .complete > section:nth-of-type(1) > p {
+    display: inline-block;
+    margin-left: 20px;
+    font-weight: normal;
+    font-size: 10px;
+}
+main > .complete > section:nth-of-type(1) > p > span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    background: #e5e5e5;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 3px;
+}
+main > .complete > section:nth-of-type(1) > .current {
+    color: #212121;
+    font-weight: bold;
+}
+main > .complete > section:nth-of-type(1) > .current > span {
+    background: #81cb49;
+}
+main > .complete > section:nth-of-type(2) > div > article {
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	margin: 10px 0;
+}
+main > .complete > section:nth-of-type(2) > div > article > span {
+	float: left;
+	width: 80%;
+	height: auto;
+	line-height: 30px;
+	margin-left: 30px;
+	padding-top: 10px;
+}
+main > .complete > section:nth-of-type(2) > div > article > img {
+    float: left;
+    width: 80px;
+    height: 80px;
+}
+main > .complete > section:nth-of-type(2) > div > span > .material-icons {
+    float : right;
+    font-size: 25px;
+    line-height: 70px;
+}
+main > .complete > span {
+    font-weight: bold;
+    font-size: 20px;
+}
+main > .complete > span:nth-of-type(2) {
+    font-size: 22px;
+}
+main > .complete > section {
+    margin: 30px 0;
+}
+main > .complete > section > p {
+    text-align: left;
+    color: #555;
+    font-size: 12px;
+    font-weight: bold;
+}
+main > .complete > section > div {
+    width: 100%;
+    min-height: 70px;
+    border-radius: 20px;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    margin-top: 20px;
+    text-align: left;
+    line-height: 70px;
+    padding: 0 30px;
+    box-sizing: border-box;
+    position: relative;
+}
+main > .complete > section > div > .material-icons {
+	position: absolute;
+    font-size: 24px;
+    cursor: pointer;
+    right: 40px;
+}
+#more {
+	top: 37px;
+}
+#less {
+	bottom : 37px;
+}
+
+main > .complete > section > div span {
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+}
+main > .complete > section > div > section > span {
+    display: inline-block;
+    width: 100px;
+}
+main > .complete > section > div > .total {
+    border-top: 1px solid #e5e5e5;
+}
+main > .complete > section > div > section > p {
+    display: inline-block;
+    width: 200px;
+    text-align: right;
+    font-size: 14px;
+}
+main > .complete > section > div > section > p > strong {font-size: 16px;}
+main > .complete > section > div > .total > p > strong {color: #6d6bff;}
+main > .complete > section > div > .total > p:nth-of-type(2) {text-align: left; margin-left: 30px;}
+main > .complete > section > div > .orderer > p {
+    margin-left: 60px;
+    width: 500px;
+    text-align: left;
+    box-sizing: border-box;
+}
+main > .complete > button {
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+main > .complete > a > img {
+    display: inline-block;
+    width: 800px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 30px;
+}
+main > .complete > button:nth-of-type(1) {
+    color: #6d6bff;
+    background: #fff;
+    border: 1px solid #6d6bff;
+}
+main > .complete > button:nth-of-type(2) {
+    color: white;
+    background: #6d6bff;
+    border: none;
+}

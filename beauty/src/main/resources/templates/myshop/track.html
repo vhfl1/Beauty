@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script th:src="@{/js/myshop/track.js}" defer></script>
+<link rel="stylesheet" th:href="@{/css/myshop/track.css}">
+<head>
+    <meta charset="UTF-8">
+    <title>배송조회</title>
+	<!-- 스프링 시큐리티 csrf token 누락 -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<!-- 스프링 시큐리티 csrf token 누락 -->
+</head>
+<body>
+
+    <div data-v-9131d49c="" class="field has-addons">
+        <div data-v-9131d49c="" class="control">
+            <span class="select">
+                <select id="company">
+                    <option value="" selected="selected" disabled="disabled" style="color: rgb(204, 204, 204);">택배사</option>
+                    <option value="de.dhl">DHL</option><option data-v-9131d49c="" value="jp.sagawa">Sagawa</option>
+                    <option value="jp.yamato">Kuroneko Yamato</option>
+                    <option value="jp.yuubin">Japan Post</option>
+                    <option value="kr.chunilps">천일택배</option>
+                    <option value="kr.cjlogistics">CJ대한통운</option>
+                    <option value="kr.cupost">CU 편의점택배</option>
+                    <option value="kr.cvsnet">GS Postbox 택배</option>
+                    <option value="kr.cway">CWAY (Woori Express)</option>
+                    <option value="kr.daesin">대신택배</option>
+                    <option value="kr.epost">우체국 택배</option>
+                    <option value="kr.hanips">한의사랑택배</option>
+                    <option value="kr.hanjin">한진택배</option>
+                    <option value="kr.hdexp">합동택배</option>
+                    <option value="kr.homepick">홈픽</option>
+                    <option value="kr.honamlogis">한서호남택배</option>
+                    <option value="kr.ilyanglogis">일양로지스</option>
+                    <option value="kr.kdexp">경동택배</option>
+                    <option value="kr.kunyoung">건영택배</option>
+                    <option value="kr.logen">로젠택배</option>
+                    <option value="kr.lotte">롯데택배</option>
+                    <option value="kr.slx">SLX</option>
+                    <option value="kr.swgexp">성원글로벌카고</option>
+                    <option value="nl.tnt">TNT</option>
+                    <option value="un.upu.ems">EMS</option>
+                    <option value="us.fedex">Fedex</option>
+                    <option value="us.ups">UPS</option>
+                    <option value="us.usps">USPS</option>
+                </select>
+            </span>
+        </div>
+        <div data-v-9131d49c="" class="control is-clearfix">
+            <input type="text" autocomplete="on" placeholder="송장번호" class="input" id="trackNumber">
+        </div>
+        <a href="https://tracker.delivery/#/jp.yamato/1111111111111" target="_blank" id="btnTrack">배송조회</a>
+    </div>
+    <div class="forImg" th:style="'background-image:url('+ @{/img/track.png} +');'">
+		
+	</div>
+
+</body>
+</html>

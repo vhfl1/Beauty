@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 김동근 -->
+<mapper namespace="kr.co.beauty.dao.ProductDAO">
+	<select id="selectProductNew" resultType="ProductVO">
+		SELECT a.*,
+		GROUP_CONCAT(DISTINCT b.`size`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `size`,
+		GROUP_CONCAT(DISTINCT b.`colorName`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `colorName`
+		FROM `product` AS a
+		LEFT JOIN `product_option` AS b
+		ON a.`prodNo`=b.`prodNo`
+		GROUP BY `prodNo` ORDER BY `prodNo` DESC LIMIT 16;
+	</select>
+	<select id="selectProductBest" resultType="ProductVO">
+		SELECT a.*,
+		GROUP_CONCAT(DISTINCT b.`size`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `size`,
+		GROUP_CONCAT(DISTINCT b.`colorName`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `colorName`
+		FROM `product` AS a
+		LEFT JOIN `product_option` AS b
+		ON a.`prodNo`=b.`prodNo`
+		GROUP BY `prodNo` ORDER BY `score`,`sold`,`review`,`hit` DESC LIMIT 16;
+	</select>
+	<select id="selectBestItem" resultType="productVO">
+		SELECT * FROM `product`
+		WHERE `prodCate1`=#{cate} GROUP BY `prodNo`	 order by `score`,`sold`,`review`,`hit` DESC LIMIT 8;
+	</select>
+	<select id="selectProduct1" resultType="ProductVO">
+		SELECT a.*,
+		GROUP_CONCAT(DISTINCT b.`size`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `size`,
+		GROUP_CONCAT(DISTINCT b.`colorName`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `colorName`
+		FROM `product` AS a
+		LEFT JOIN `product_option` AS b
+		ON a.`prodNo`=b.`prodNo`
+		WHERE `prodCate1`=#{arg0} GROUP BY `prodNo` 
+		ORDER BY <choose>
+			<when test="arg1 == 'lowprice'">`price` ASC</when>
+			<when test="arg1 == 'highprice'">`price` DESC</when>
+			<when test="arg1 == 'score'">`score` DESC</when>
+			<when test="arg1 == 'hit'">`hit` DESC</when>
+			<otherwise>`prodNo` DESC</otherwise> 				
+		</choose> LIMIT #{arg2},20;
+	</select>
+	<select id="selectProduct2" resultType="ProductVO">
+		SELECT a.*,
+		GROUP_CONCAT(DISTINCT b.`size`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `size`,
+		GROUP_CONCAT(DISTINCT b.`colorName`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `colorName`
+		FROM `product` AS a
+		LEFT JOIN `product_option` AS b
+		ON a.`prodNo`=b.`prodNo`
+		WHERE `prodCate2`=#{arg0} GROUP BY `prodNo` 
+		ORDER BY <choose>
+			<when test="arg1 == 'lowprice'">`price` ASC</when>
+			<when test="arg1 == 'highprice'">`price` DESC</when>
+			<when test="arg1 == 'score'">`score` DESC</when>
+			<when test="arg1 == 'hit'">`hit` DESC</when>
+			<otherwise>`prodNo` DESC</otherwise>					
+		</choose> LIMIT #{arg2},20;
+	</select>
+	<select id="selectProduct1Count" resultType="int">
+		SELECT COUNT(`prodNo`) FROM `product` WHERE `prodCate1`=#{cate};
+	</select>
+	<select id="selectProduct2Count" resultType="int">
+		SELECT COUNT(`prodNo`) FROM `product` WHERE `prodCate2`=#{cate};
+	</select>
+	<select id="selectCate" resultType="ProdCate2VO">
+		SELECT b.cate,b.c1Name,b.c2Name FROM `cate1` AS a JOIN `cate2` AS b
+		ON a.c1Name=b.c1Name WHERE <choose>
+			<when test="cate%100 == 0">a.`cate` = #{cate}</when>
+			<otherwise>b.`cate` = #{cate}</otherwise>
+			</choose>	
+	</select>
+	
+	<!-- 상품 view -->
+	<select id="selectProduct" resultType="ProductVO">
+		SELECT a.*,
+	    GROUP_CONCAT(DISTINCT b.`color` ORDER BY b.`prodNo` DESC SEPARATOR ',')  AS `color`,
+	    GROUP_CONCAT(DISTINCT b.`size`  ORDER BY FIELD (size, 'XS', 'S', 'M', 'L', 'XL', 'FREE') ASC SEPARATOR ',')  AS `size`,
+	    GROUP_CONCAT(DISTINCT b.`colorName`  ORDER BY b.`prodNo` DESC SEPARATOR ',')  AS `colorName`
+		FROM `product` AS a
+		JOIN `product_option` AS b
+		ON a.`prodNo`=b.`prodNo` WHERE a.`prodNo`=#{prodNo};
+	</select>
+	<insert id="addWish">
+		INSERT INTO `wish` (`prodNo`, `uid`, `rdate`) 
+		VALUES (#{prodNo}, #{uid}, NOW());
+	</insert>
+	<select id="checkCart" resultType="int">
+		SELECT COUNT(`prodNo`) FROM `cart` WHERE `prodNo`=#{prodNo} AND `color`=#{color} AND `size`=#{size};
+	</select>
+	<update id="updateCart">
+		UPDATE `cart` SET `count`=`count`+#{count} WHERE `prodNo`=#{prodNo} AND `color`=#{color} AND `size`=#{size};
+	</update>
+	<insert id="addCart">
+		INSERT INTO `cart` (`uid`, `prodNo`, `count`, `color`, `size`, `rdate`) 
+		VALUES (#{uid}, #{prodNo}, #{count}, #{color}, #{size}, NOW());
+	</insert>
+	<update id="updateHit">
+		UPDATE `product` SET `hit`=`hit`+1 WHERE `prodNo`=#{prodNo};
+	</update>
+</mapper>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Email 전송</title>
+    <link rel="stylesheet" th:href="@{/css/emailform.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+    	$(function(){
+    		let receivedCode = '';
+    		
+    		$('.auth').click(function(){
+    			let jsonData = $('input[name=email]').val();
+    			
+    			if(jsonData == '')
+    				return false;
+    			
+    			$.ajax({
+    				url : '/Beauty/EmailAuth',
+    				method : 'post',
+    				data : {'jsonData' : jsonData},
+    				dataType : 'json',
+    				success : function(data){
+    					alert('인증코드가 발송되었습니다.');
+    					receivedCode = data;
+    				}
+    			});
+    		});
+    		
+    		$('.authCheck').click(function(){
+    			let code = $('input[name=receivedCode]').val();
+    			
+    			//빈칸
+    			if(code == ''){
+    				return false;
+    			}
+    			
+    			//코드확인
+    			if(code == receivedCode){
+    				alert('인증코드가 일치합니다.');
+    			}else{
+    				alert('인증코드가 틀립니다.');
+    			}
+    		});
+    	});
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <h3>Email Authentication Demo</h3>
+        <div>
+            <input type="email" name="email" placeholder="email123@sample.com"/>
+            <input type="text" name="receivedCode" placeholder="인증번호 입력"/>
+            <button class="submit auth">인증번호 전송</button>
+            <button class="submit authCheck">이메일 인증하기</button>
+        </div>
+    </div>
+</body>
+</html>

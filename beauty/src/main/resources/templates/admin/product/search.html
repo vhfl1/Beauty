@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+    <title>Beauty</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/admin/product.css}">
+    <script th:src="@{/js/admin.js}"></script>
+    <script>
+    	
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <th:block th:replace="~{admin/product/_header :: headerFragment}"></th:block>
+        <main>
+            <aside>
+			    <ul>
+			        <li>
+			            <a th:href="@{/admin/product/list}">ALL</a>
+			        </li>
+			        <li>
+			            <a href="#" class="cate1">OUTER</a>
+			            <ul>
+			                <li><label><input type="checkbox" class="allCheck">전체</input></label></li>
+			                <li><label><input type="checkbox" name="category2" value="101">가디건</input></label></li>
+			                <li><label><input type="checkbox" name="category2" value="102">자켓/코트</input></label></li>
+			                <li><label><input type="checkbox" name="category2" value="103">패딩/점퍼</input></label></li>
+			                <li><label><input type="checkbox" name="category2" value="104">집업/조끼</input></label></li>
+			            </ul>
+			        </li>
+			        <li>
+			            <a th:href="@{#}" class="cate1">TOP</a>
+			            <ul>
+			                <li><label><input type="checkbox" class="allCheck">전체</input></label></li>
+			                <li><label><input type="checkbox" name="category2" value="201">티셔츠</label></li>
+			                <li><label><input type="checkbox" name="category2" value="202">니트/스웨터</label></li>
+			                <li><label><input type="checkbox" name="category2" value="203">맨투맨/후드</label></li>
+			                <li><label><input type="checkbox" name="category2" value="204">조끼/나시</label></li>
+			            </ul>
+			        </li>
+			        <li>
+			            <a th:href="@{#}" class="cate1">BOTTOM</a>
+			            <ul>
+			                <li><label><input type="checkbox" class="allCheck">전체</input></label></li>
+			                <li><label><input type="checkbox" name="category2" value="301">스커트</label></li>
+			                <li><label><input type="checkbox" name="category2" value="302">데님</label></li>
+			                <li><label><input type="checkbox" name="category2" value="303">팬츠</label></li>
+			                <li><label><input type="checkbox" name="category2" value="304">슬랙스</label></li>
+			                <li><label><input type="checkbox" name="category2" value="305">레깅스</label></li>
+			            </ul>
+			        </li>
+			        <li>
+			            <a th:href="@{#}" class="cate1">DRESS</a>
+			            <ul>
+			                <li><label><input type="checkbox" class="allCheck">전체</input></label></li>
+			                <li><label><input type="checkbox" name="category2" value="401">원피스</label></li>
+			                <li><label><input type="checkbox" name="category2" value="402">투피스</label></li>
+			                <li><label><input type="checkbox" name="category2" value="403">점프수트</label></li>
+			            </ul>
+			        </li>
+			        <li>
+			            <a th:href="@{#}" class="cate1">ETC</a>
+			            <ul>
+			                <li><label><input type="checkbox" class="allCheck">전체</input></label></li>
+			                <li><label><input type="checkbox" name="category2" value="501">신발</label></li>
+			                <li><label><input type="checkbox" name="category2" value="502">가방</label></li>
+			                <li><label><input type="checkbox" name="category2" value="503">모자</label></li>
+			                <li><label><input type="checkbox" name="category2" value="504">쥬얼리</label></li>
+			            </ul>
+			        </li>
+			    </ul>
+			</aside>
+            <section id="admin-product-list">
+                <div class="searchPart">
+                    <form th:action="@{/admin/product/search}" method="get">
+                    	<input type="hidden" name="arg0" id="cate2">
+                    	<input type="hidden" name="pg" value="1">
+                        <select name="param2" id="search">
+                            <option value="prodName" th:if="${param2 == 'prodName'}">상품명</option>
+                            <option value="prodNo" th:if="${param2 == 'prodNo'}">상품번호</option>
+                        </select>
+                        <input type="text" name="arg2" th:if="${arg2 == null}">
+                        <input type="text" name="arg2" th:unless="${arg2 == null}" th:value="${arg2}">
+                        <button class="searchClick">검색</button>
+                    </form>
+                </div>
+                <table>
+                    <tr>
+                        <th><input type="checkbox" name="전체체크" id="checkAll"></th>
+                        <th>사진</th>
+                        <th>품번</th>
+                        <th>대분류</th>
+                        <th>소분류</th>
+                        <th>상품명</th>
+                        <th>원가</th>
+                        <th>할인율</th>
+                        <th>상태</th>
+                        <th>재고</th>
+                        <th>조회</th>
+                        <th>관리</th>
+                    </tr>
+                    <tr th:each="prod:${products}">
+                        <td><input type="checkbox" name="선택체크" class="rowCheck"></td>
+                        <td><img th:src="@{/image/}+${prod.thumb1}"></td>
+                        <td>[[${prod.prodNo}]]</td>
+                        <td>[[${prod.prodCate1}]]</td>
+                        <td>[[${prod.prodCate2}]]</td>
+                        <td>[[${prod.prodName}]]</td>
+                        <td>[[${prod.price}]]</td>
+                        <td>[[${prod.discount}]]</td>
+                        <td>판매중</td>
+                        <td>[[${prod.stock}]]</td>
+                        <td>[[${prod.hit}]]</td>
+                    	<td>
+                    		<button class='more'>상세보기</button></br>
+                    		<button class='deleteButton' th:value="${prod.prodNo}">삭제</button>
+                    	</td>
+                    </tr>
+                </table>
+                <input type="button" value="선택삭제" class="delete">
+                <div class="page">
+                	<th:block th:if="${groups[0]>1}">
+			            <a th:href="@{/admin/product/search(arg0=${arg0},pg=${groups[0]-1},param2=${param2},arg2=${arg2})}" class="prev">이전</a>
+			        </th:block>
+			
+			        <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+			            <a th:href="@{/admin/product/search(arg0=${arg0},pg=${num},param2=${param2},arg2=${arg2})}" th:class="${num==currentPage? 'current':'num'}">[[${num}]]</a>
+			        </th:block>
+			
+			        <th:block th:if="${groups[1]<lastPageNum}">
+			            <a th:href="@{/admin/product/search(arg0=${arg0},pg=${groups[1]+1},param2=${param2},arg2=${arg2})}" class="next">다음</a>
+			        </th:block>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

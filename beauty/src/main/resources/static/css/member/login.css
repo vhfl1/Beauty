@@ -1,0 +1,196 @@
+/**
+ * 날짜 : 2023/03/07
+ * 이름 : 강중현 
+ * 내용 : Beauty member login css
+ */
+main>.lg {
+	width: 1600px;
+	min-height: 600px;
+	margin: 80px auto 0 auto;
+}
+
+.lg>section {
+	width: 800px;
+	margin: 0 auto;
+}
+
+.lg>section>h2 {
+	height: 100px;
+	width: 100%;
+	font-size: 40px;
+	font-weight: 500;
+	line-height: 100px;
+	text-align: center;
+	margin: 10px 0;
+}
+
+.lg>section>table {
+	width: 500px;
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+.lg>section>table tr>td {
+	width: 50%;
+	height: 50px;
+	color: #555;
+	text-align: center;
+	border-bottom: 3px solid #e5e5e5;
+	cursor: pointer;
+}
+
+.lg>section>table tr>td.current {
+	font-weight: bold;
+	color: black;
+	border-color: black;
+}
+
+#member>.login {
+	width: 500px;
+	margin: 50px auto;
+	position: relative;
+}
+
+.sendMail {
+	width: 215px !important;
+	height: 50px;
+	padding: 10px 20px;
+	border: 1px solid #e5e5e5;
+	box-sizing: border-box;
+}
+
+#member>.login input {
+	width: 350px;
+	height: 50px;
+	padding: 10px 20px;
+	border: 1px solid #e5e5e5;
+	box-sizing: border-box;
+}
+
+#member>.login input:focus {
+	outline: 1px solid;
+}
+
+#member>.login form>button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 125px;
+	height: 100%;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	background: black;
+	outline: none;
+}
+
+#member>.login form>.sendCode {
+	position: absolute;
+	top: 0;
+	right: 150px !important;
+	width: 125px;
+	height: 50px;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	background: #c0c0c0;
+	outline: none;
+}
+
+.reg {
+	float: left;
+	width: 100%;
+	color: red;
+	font-size: 13px;
+	margin-top: 6px;
+}
+
+#member>.login>.loginlabel {
+	float: left;
+	width: 100%;
+	height: auto;
+	font-size: 13px;
+}
+
+#member>.login>.loginlabel>label {
+	cursor: pointer;
+}
+
+#member>.login>.loginlabel>label>input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+	margin: 10px 10px 0;
+	vertical-align: bottom;
+	outline: none;
+}
+
+#member>.other {
+	width: 500px;
+	height: 75px;
+	margin: 60px auto 0 auto;
+	text-align: center;
+	background: #f7f7f7;
+}
+
+#member>.other>a {
+	font-size: 12px;
+	line-height: 75px;
+	margin: 0 40px;
+}
+
+#member>.other>p {
+	font-size: 13px;
+	color: #555;
+	line-height: 75px;
+}
+
+.other span {
+	font-size: 20px;
+	vertical-align: middle;
+}
+
+.m2 {
+	display: none;
+}
+
+.eye {
+	position: absolute;
+	top: 74px;
+	right: 158px;
+	cursor: pointer;
+}
+
+.close {
+	display: none;
+	position: absolute;
+	top: 14px;
+	right: 158px;
+	cursor: pointer;
+}
+
+#timer {
+	position: absolute;
+	top: 74px;
+	right: 158px;
+}
+.error {
+    color: red;
+    font-size: 12px;
+    display: inline-block;
+    margin: 0 auto;
+    text-align: left;
+    margin-left: 150px;
+}
+.nomember {
+	text-align: center;
+    margin-top: 30px;
+}
+.nomember > a {
+    display: inline-block;
+    width: 230px;
+    height: 60px;
+    line-height: 60px;
+    background: #000;
+    color: #fff;
+    font-weight: bold;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="total">
+    <div class="wrap-right">
+		<section class="total">
+		<p>
+			결제정보
+		</p>
+		<div class="orderBox">
+			<div class="totalLeft">
+				<p>
+					상품가격
+				</p>
+				<p>
+					할인금액
+				</p>
+				<p>
+					배송비
+				</p>
+				<p>
+					사용적립금
+				</p>
+				<p>
+					적립금
+				</p>
+			</div>
+			<div class="totalRight">
+				<p>
+					<input type="number" name="ordPrice" readonly></input>원
+				</p>
+				<p>
+					<input type="number" name="ordDisprice" readonly></input>원
+				</p>
+				<p>
+					<input type="number" name="ordDelivery" readonly></input>원
+				</p>
+				<p>
+					<input type="number" name="usedPoint" value="0" readonly></input>원
+				</p>
+				<p>
+					<input type="number" name="savePoint" readonly></input>원
+				</p>
+			</div>
+			<div class="totalBottom">
+				<p>
+					총 주문금액
+				</p>
+				<p>
+					<strong><input type="number" name="total" readonly><input type="hidden" name="oriTotal" readonly></input><input type="hidden" name="ordCount" readonly></input></strong>원
+				</p>
+			</div>
+		</div>
+		</section>
+		<section class="payment">
+		<p>
+			결제수단
+		</p>
+		<div class="orderBox">
+			<div class="paymentList">
+				<input type="radio" id="chk1" name="payment" value="1" checked="checked">
+				<label for="chk1">카드결제</label>
+				<input type="radio" id="chk2" name="payment" value="2">
+				<label for="chk2">실시간계좌이체</label>
+				<input type="radio" id="chk3" name="payment" value="3">
+				<label for="chk3">무통장입금</label>
+				<input type="radio" id="chk4" name="payment" value="4">
+				<label for="chk4">휴대폰결제</label>
+				<input type="radio" id="chk5" name="payment" value="5">
+				<label for="chk5">카카오페이</label>
+				<input type="radio" id="chk6" name="payment" value="6">
+				<label for="chk6">네이버페이</label>
+			</div>
+		</div>
+		</section>
+		<a href="#" class="btnOrder">결제하기</a>
+	</div>
+</th:block>
+
+<th:block th:fragment="terms">
+	<div>
+		<section class="terms">
+			<p>비회원 구매 약관</p>
+			<div class="orderBox">
+				<div>
+					<label> 
+						<input type="checkbox" name="non-chkTerms">
+						<span>비회원 구매 시 개인정보수집 이용동의</span>
+					</label>
+					<br />
+					<textarea id="rMessage" name="non-terms" readonly maxlength="255" cols="45" rows="5">[[${terms.nonmember}]]</textarea>
+					<br />
+				</div>
+			</div>
+		</section>
+	</div>
+</th:block>
+
+</html>

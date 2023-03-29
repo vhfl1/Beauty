@@ -1,0 +1,82 @@
+/**
+ * 날짜 : 2023/03/07
+ * 이름 : 강중현 
+ * 내용 : Beauty member findIdResult
+ */
+ 
+* {
+	margin: 0 auto;
+	padding: 0;
+}
+
+main>.findId {
+	height: 500px;
+	width: 900px;
+	margin: 100px auto 100px auto;
+	font-size: 12px;
+}
+
+main>.findId>h2 {
+	height: 22px;
+	width: 100%;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: left;
+	margin: 10px 50px;
+}
+
+main>.findId>.findId {
+	line-height: 70px;
+	height: 350px;
+	width: 450px;
+	border: 1px solid #dddddd;
+	margin: 20px 100px;
+	padding: 50px 50px 50px 50px;
+}
+
+main>.findId>.findId>fieldset {
+	min-width: min-content;
+	vertical-align: top;
+	border: 0px none;
+}
+
+main>.findId>.findId>fieldset>table>tbody>tr>td {
+	font-size: 20px;
+	margin: 10px;
+}
+
+
+main>.findId>.findId>fieldset>div {
+	height: 40px;
+	width: 375px;
+	padding: 40px 0 10px 0;
+	display: flex;
+}
+
+main>.findId>.findId>fieldset>div>.btnNext {
+	width: 190px;
+    height: 20px;
+    border: 1px solid #ffffff;
+    margin: 0 2px 0 2px;
+    padding: 15px 10px 15px 10px;
+    background-color: #444444;
+    color: #ffffff;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+main>.findId>.findId>fieldset>div>.btnLogin {
+	width: 190px;
+    height: 20px;
+    border: 1px solid #ffffff;
+    margin: 0 2px 0 2px;
+    padding: 15px 10px 15px 10px;
+    background-color: #444444;
+    color: #ffffff;
+    line-height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+}

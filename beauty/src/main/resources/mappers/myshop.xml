@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 김동근 -->
+<mapper namespace="kr.co.beauty.dao.MyshopDAO">
+
+	<!-- 주문/배송 -->
+	<select id="selectOrderList" resultType="MyorderVO">
+		SELECT 	p.`prodNo`,
+				p.`prodName`,
+				p.`thumb1`, 
+				p.`price`, 
+				p.`disPrice`, 
+				o.`ordNo`, 
+				o.`count`, 
+				o.`color`, 
+				o.`size`, 
+				o.`rdate`
+		FROM `ordercomplete` AS oc
+		JOIN `order` 		 AS o 	ON oc.`ordNo`=o.`ordNo`
+		JOIN `product` 		 AS p 	ON o.`prodNo`=p.`prodNo`
+		WHERE uid = #{uid};
+	</select>
+	<select id="selectOrderListByDate" resultType="MyorderVO">
+		SELECT
+			p.`prodNo`,
+			p.`prodName`,
+			p.`thumb1`, 
+			p.`price`, 
+			p.`disPrice`, 
+			p.`company`,
+			o.`ordNo`, 
+			o.`count`, 
+			o.`color`, 
+			o.`size`, 
+			o.`rdate`
+		FROM `ordercomplete` AS oc
+		JOIN `order` AS o USING (`ordNo`)
+		JOIN `product` AS p USING (`prodNo`)
+		WHERE `uid` = #{uid} AND o.`rdate` > DATE_ADD(NOW(), INTERVAL ${date} MONTH);
+	</select>
+	<select id="selectOrderListSearchDate" resultType="MyorderVO">
+		SELECT
+			p.`prodNo`,
+			p.`prodName`,
+			p.`thumb1`, 
+			p.`price`, 
+			p.`disPrice`, 
+			p.`company`,
+			o.`ordNo`, 
+			o.`count`, 
+			o.`color`, 
+			o.`size`, 
+			o.`rdate`
+		FROM `ordercomplete` AS oc
+		JOIN `order` AS o USING (`ordNo`)
+		JOIN `product` AS p USING (`prodNo`)
+		WHERE `uid` = #{uid} AND DATE(o.`rdate`) BETWEEN #{start} AND #{end}
+		ORDER BY o.`rdate` DESC LIMIT #{pg}, 10;
+	</select>
+	<select id="countOrderList" resultType="int">
+		SELECT COUNT(*) 
+		FROM `ordercomplete` AS oc
+		JOIN `order` AS o USING (`ordNo`)
+		JOIN `product` AS p USING (`prodNo`)
+		WHERE `uid` = #{uid} AND DATE(o.`rdate`) BETWEEN #{start} AND #{end};
+	</select>
+
+
+	<!-- 위시리스트 -->
+	<insert id="addWish">
+		INSERT INTO `wish` 
+		SET `prodNo`=#{prodNo},
+			`uid` =#{uid},
+			`rdate` = NOW();
+	</insert>
+	
+	<select id="checkWish" resultType="int">
+		SELECT COUNT(wishNo) FROM `wish`
+		WHERE `uid`=#{uid} AND `prodNo`=#{prodNo}
+	</select>
+	
+	<select id="selectWishlist" resultType="WishVO">
+		SELECT A.*, B.prodName, B.price, B.disPrice, B.thumb1 
+		FROM `wish` as A JOIN `product` as B 
+		ON A.prodNo = B.prodNo 
+		WHERE A.uid = #{uid}
+		ORDER BY `wishNo` DESC;
+	</select>
+
+	<delete id="deleteSelectedWish">
+		DELETE FROM `wish` WHERE `wishNo`=#{wishNo};
+	</delete>
+	<delete id="deleteAllWish">
+		DELETE FROM `wish` WHERE `uid`=#{uid};
+	</delete>
+
+</mapper>

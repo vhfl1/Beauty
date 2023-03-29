@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 김동근 -->
+<mapper namespace="kr.co.beauty.dao.OrderDAO">
+	
+	<!-- 김동근 -->
+	<!-- 카트 -->
+	<select id="selectCartList" resultType="CartVO">
+		SELECT a.`cartNo`, a.`prodNo`, a.`count`, b.`prodName`, b.`price`, b.`discount`, b.`disPrice`, b.`point`, a.`color`, a.`size`, b.`thumb1`
+		FROM `cart` AS a
+		JOIN `product` AS b 
+		ON a.`prodNo` = b.`prodNo`
+		<if test="arg0 != null and arg1 == null">
+    		WHERE `uid` = #{arg0}
+    	</if>
+		<if test="arg1 == null and arg1 != null">
+    		WHERE `uid` = #{arg1}
+    	</if>
+		<if test="arg1 != null and arg1 != null">
+    		WHERE `uid` = #{arg0} OR `uid`= #{arg1}
+    	</if>
+    	ORDER BY a.`cartNo` DESC;
+	</select>
+	
+	<delete id="deleteSelectedCart">
+		DELETE FROM `cart` WHERE `cartNo`=#{cartNo};
+	</delete>
+	
+	<delete id="deleteAllCart">
+		DELETE FROM `cart` WHERE `uid`=#{uid};
+	</delete>
+	
+	<select id="checkCountForUpdate" resultType="int">
+		SELECT `count` FROM `cart`
+		WHERE `cartNo` = #{cartNo};
+	</select>
+	
+	<update id="cartIncrease">
+		UPDATE `cart` SET
+		count = count + 1
+		WHERE `cartNo` = #{cartNo};
+	</update>
+	
+	<update id="cartDecrease">
+		UPDATE `cart` SET
+		count = count - 1
+		WHERE `cartNo` = #{cartNo};
+	</update>
+	<!-- 카트 모달 -->
+	<select id="openOption" resultType="String">
+		<!-- 서브쿼리 값을 하나의 행으로 병합 -->
+		SELECT GROUP_CONCAT(A.colorName) AS colorName
+		FROM (<!-- 중복제거 처리한 cartNo가 같은 colorName 행을 반환하는 서브쿼리 -->
+			SELECT DISTINCT po.prodNo,  po.colorName
+			FROM `cart` AS c JOIN `product_option` AS po
+			ON c.`prodNo` = po.`prodNo`
+			WHERE c.`cartNo` = #{cartNo}
+		) A
+		GROUP BY `prodNo`;
+	</select>
+	<select id="selectOption" resultType="String">
+		SELECT GROUP_CONCAT(size) AS sizes
+		FROM `product_option`
+		WHERE `prodNo`=#{prodNo} AND `colorName`=#{color} AND `sold` > 0 
+		GROUP BY `prodNo`;
+	</select>
+	<update id="saveOption">
+		UPDATE `cart` SET
+		`color`	=#{color},
+		`size`	=#{size}
+		WHERE `cartNo`=#{cartNo};
+	</update>
+	
+	
+
+	<!-- 박진휘 -->	
+	<select id="selectOrdercomplete" resultType="OrdercompleteVO">
+		SELECT * FROM `ordercomplete` WHERE `ordNo`=#{ordNo};
+	</select>
+	<select id="selectOrder" resultType="OrderVO">
+		SELECT a.*,b.prodName,b.thumb1 FROM `order` AS a JOIN `product` AS b ON a.prodNo=b.prodNo  WHERE `ordNo`=#{ordNo}; 
+	</select>
+	<select id="selectProdut" resultType="CartVO">
+		SELECT * FROM `product` WHERE `prodNo`=#{prodNo};
+	</select>
+	<select id="selectCart" resultType="CartVO">
+		SELECT  a.`cartNo`, a.`prodNo`, a.`count`, b.`prodName`, b.`price`, b.`discount`, b.`disPrice`, b.`point`, a.`color`, a.`size`, b.`thumb1`
+		FROM `cart` AS a
+		JOIN `product` AS b 
+		ON a.`prodNo` = b.`prodNo`
+		WHERE a.`cartNo`=#{cartNo};
+	</select>
+	<insert id="insertOrder">
+		INSERT INTO `order` (`ordNo`,`prodNo`,`count`,`price`,`discount`,`disPrice`,`point`,`color`,`size`,`total`,`rdate`) 
+		VALUES (#{ordNo},#{prodNo},#{count},#{price},#{discount},#{disPrice},#{point},#{color},#{size},#{total},NOW());
+	</insert>
+	<select id="deleteCart">
+		DELETE FROM `cart` WHERE `cartNo`=#{cartNo};
+	</select>
+	<select id="orderTerms" resultType="TermsVO">
+		SELECT `nonmember` FROM `terms`;
+	</select>
+	
+	<insert id="completeInsert" parameterType="OrdercompleteVO" useGeneratedKeys="true" keyProperty="ordNo">
+		INSERT INTO `ordercomplete` 
+		(`uid`,`password`,`ordCount`,`ordPrice`,`ordDisprice`,`ordDelivery`,`savePoint`,`usedPoint`,`total`,
+		`orderer`,`orderHp`,`orderZip`,`orderAddr1`,`orderAddr2`,`orderEmail`,
+		`recipName`,`recipHp`,`recipZip`,`recipAddr1`,`recipAddr2`,`message`,`payment`,`ordDate`) VALUES 
+		(#{uid},#{password},#{ordCount},#{ordPrice},#{ordDisprice},#{ordDelivery},#{savePoint},#{usedPoint},#{total},
+		#{orderer},#{orderHp},#{orderZip},#{orderAddr1},#{orderAddr2},#{orderEmail},
+		#{recipName},#{recipHp},#{recipZip},#{recipAddr1},#{recipAddr2},#{message},#{payment},NOW());
+	</insert>
+	
+	<update id="updateMemberPoint">
+		UPDATE `member` set `point` = `point` + #{savePoint} - #{usedPoint} WHERE `uid`=#{uid};
+	</update>
+
+</mapper>

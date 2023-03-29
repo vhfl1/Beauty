@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <!-- 배포 ajax통신 403에러 -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/member/login.css}">
+    <!-- js -->
+    <script th:src="@{/js/member/find.js}"></script>
+    
+    <th:block th:replace="~{_header :: headerFragment}"></th:block>
+</head>
+<body>
+    <div id="wrap">
+        <main>
+            <div class="lg">
+                <section>
+                    <h2>아이디/비밀번호 찾기</h2>
+                    <table>
+                        <tr>
+                            <td class="findId" th:classappend="${type == 1 ? 'current' : ''}">아이디 찾기</td>
+                            <td class="findPw" th:classappend="${type == 2 ? 'current' : ''}">비밀번호 찾기</td>
+                        </tr>
+                    </table>
+                    <article id="member" class="m1" th:style="${type == 1 ? 'display:block' : 'display:none'}">
+                        <div class="login">
+                            <form action="#" method="post">
+                                <input type="text" name="name" placeholder="이름">
+                                <span class="material-icons close">close</span>
+                                <input type="text" name="phone" placeholder="휴대폰 번호" style="margin-top: 10px;">
+                                <button type="submit" class="btnId">확인</button>
+                            </form>
+                            <div class="reg">
+                                <p class="resultPhone"></p>
+                            </div>
+                        </div>
+                        <div class="other">
+                            <p>
+                                <span class="material-icons">call</span>&nbsp;&nbsp;
+                                0000-0000&nbsp;&nbsp; 평일(월~금) 11:00~19:00 (주말 및 공휴일 휴무)
+                            </p>
+                        </div>
+                    </article>
+                    <article id="member" class="m2" th:style="${type == 2 ? 'display:block' : 'display:none'}">
+                        <div class="login">
+                            <form action="#" method="post">
+                                <input type="email" name="uid" class="sendMail" placeholder="이메일" style="margin-right: 10px;">
+                                <span class="material-icons close">close</span>
+                                <button type="submit" class="sendCode">인증번호 발송</button>
+                                
+                                <input type="text" class="insertCode" name="insertCode" placeholder="인증번호 6자리를 입력하세요" style="margin-top: 10px;">
+                                <span id="timer"></span>
+                                <button type="submit" class="btnPw">확인</button>
+                            </form>
+                        </div>
+                        <div class="other">
+                            <p>
+                                <span class="material-icons">call</span>&nbsp;&nbsp;
+                                0000-0000&nbsp;&nbsp; 평일(월~금) 11:00~19:00 (주말 및 공휴일 휴무)
+                            </p>
+                        </div>
+                    </article>
+                </section>
+            </div>
+        </main>
+        <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+#wrap {display: none;}
+#modile {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+#modile > span {
+    display: inline-block;
+    width: 100%;
+    font-weight: bold;
+    line-height: 30px;
+    color: #898d9c;
+}

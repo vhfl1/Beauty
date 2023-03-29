@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Beauty</title>
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/community/community.css}">
+</head>
+<body>
+	<th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+        <th:block th:replace="~{_header :: headerFragment}"></th:block>
+        <main>
+            <div>
+                <section>
+                    <span>Q&A</span>
+                </section>
+                <div>
+                    <ul>
+                        <li><a href="#"><span class="material-icons">menu</span>Q&A전체보기</a></li>
+                        <li><a href="#"><span class="material-icons">question_answer</span>상품문의</a></li>
+                        <li><a href="#"><span class="material-icons">local_shipping</span>배송문의</a></li>
+                        <li><a href="#"><span class="material-icons">change_circle</span>교환/반품/취소문의</a></li>
+                        <li><a href="#"><span class="material-icons">help</span>기타문의</a></li>
+                    </ul>
+                </div>
+                <table>
+                    <colgroup> 
+                        <col width="5%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="65%">
+                        <col width="10%">
+                        <col width="10%">
+                    </colgroup> 
+                    <tr>
+                        <th>번호</th>
+                        <th>상품정보</th>
+                        <th>카테고리</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="prod"><a href="#"><img th:src="@{/img/sample3.jpg}" alt="상품이미지"></a></td>
+                        <td>교환/반품/취소문의</td>
+                        <td class="title"><a th:href="@{community/board/qna_view}">사이즈교환</a></td>
+                        <td>고객님</td>
+                        <td>2023-03-02</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="prod"><a href="#"><img th:src="@{/img/sample3.jpg}" alt="상품이미지"></a></td>
+                        <td>교환/반품/취소문의</td>
+                        <td class="title"><a href="#">사이즈교환</a></td>
+                        <td>고객님</td>
+                        <td>2023-03-02</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td class="prod"><a href="#"><img th:src="@{/img/sample3.jpg}" alt="상품이미지"></a></td>
+                        <td>교환/반품/취소문의</td>
+                        <td class="title"><a href="#">사이즈교환</a></td>
+                        <td>고객님</td>
+                        <td>2023-03-02</td>
+                    </tr>
+                </table>
+                <div id="boardSearch">
+                    <input type="text" name="search" placeholder="Search"><span class="material-icons">search</span>
+                    <button type="button"><a th:href="@{community/board/qna_write}">글쓰기</a></button>
+                </div>
+                <div class="page">
+                    <a href="#" class="prev"><span class="material-icons">chevron_left</span></a>
+                    <a href="#" class="num current">1</a>
+                    <a href="#" class="num">2</a>
+                    <a href="#" class="num">3</a>
+                    <a href="#" class="num">4</a>
+                    <a href="#" class="num">5</a>
+                    <a href="#" class="num">6</a>
+                    <a href="#" class="num">7</a>
+                    <a href="#" class="num">8</a>
+                    <a href="#" class="num">9</a>
+                    <a href="#" class="num">10</a>
+                    <a href="#" class="next"><span class="material-icons">chevron_right</span></a>
+                </div>
+            </div>
+        </main>
+        <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

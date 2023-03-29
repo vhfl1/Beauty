@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+	<!-- 배포 ajax통신 403에러 -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<!-- css -->
+	<link rel="stylesheet" th:href="@{/css/index.css}">
+	<link rel="stylesheet" th:href="@{/css/member/findPwResult.css}">
+	<!-- js -->
+	<script th:src="@{/js/member/find.js}"></script>
+
+	<th:block th:replace="~{_header :: headerFragment}"></th:block>
+</head>
+<body>
+	<main>
+		<div class="findPw">
+			<h2>비밀번호 찾기 결과</h2>
+			<div class="findPw">
+				<fieldset>
+					<h2 class="uid">고객님의 아이디는 <strong>[[${uid}]]</strong> 입니다.</h2>
+					<table border="0">
+						<tr>
+							<td>새 비밀번호</td>
+							<td><input type="password" id="pass1" name="pass1" placeholder="새 비밀번호 입력" required="required"/></td>
+						</tr>
+						<tr>
+							<td>새 비밀번호 확인</td>
+							<td><input type="password" id="pass2" name="pass2" placeholder="새 비밀번호 입력" required="required"/></td>
+						</tr>
+					</table>
+					<div class="btn">
+						<a th:href="@{/member/login}" class="changePw">비밀번호 변경</a>
+						<a th:href="@{/member/login}" class="btnLogin">로그인</a>
+						<a th:href="@{/member/find(type=1)}" class="findId">아이디 찾기</a>
+					</div>	
+				</fieldset>
+			</div>
+		</div>
+	</main>
+	<th:block th:replace="~{_footer :: footerFragment}"></th:block>
+</body>
+</html>

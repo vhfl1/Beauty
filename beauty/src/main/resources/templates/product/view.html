@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <!-- 스프링 시큐리티 csrf token 누락 -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<!-- 스프링 시큐리티 csrf token 누락 -->
+	<th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/product/view.css}">
+    <link rel="stylesheet" th:href="@{/css/color.css}">
+    <script th:src="@{/js/product/product.js}"></script>
+	<script th:inline="javascript">
+	$(function(){
+		var header = $("meta[name='_csrf_header']").attr('content');
+		var token = $("meta[name='_csrf']").attr('content');
+		
+		// 색상 옵션 선택
+		$('.selectColor').click(function() {
+			$('.selectColor').removeClass('select');
+			$(this).addClass('select on');
+			$(this).siblings('span').children().text($(this).text());
+		});
+		
+		// 선택한 제품 닫기
+		$(document).on('click', '#close', function() {
+			let tot = $('input[name=total]').val();
+			let cnt = $(this).prevAll('div').children('.count').text();
+			result(tot * cnt * -1);
+
+			$(this).closest('.orderItems').remove();
+			if ($('#close').length == 0) {
+				$('.result').css('display', 'none');
+			}
+		});
+		
+		// 선택한 제품 수량 -1개
+		$(document).on('click', '#remove', function() {
+			let cnt = $(this).next().text();
+			if (cnt == 1) {
+				alert('최소 1개이상 주문가능합니다.');
+				return false;
+			}
+			cnt = Number(cnt) - 1;
+			let tot = $('input[name=total]').val();
+			$(this).parents().siblings('.total').text(format(tot * cnt));
+			$(this).next().text(cnt);
+			result(tot * -1);
+		});
+		
+		// 선택한 제품 수량 +1개
+		$(document).on('click', '#add', function() {
+			let cnt = $(this).prev().text();
+			if (cnt == 10) {
+				alert('최대 10개까지 주문가능합니다.');
+				return false;
+			}
+			cnt = Number(cnt) + 1;
+			let tot = $('input[name=total]').val();
+			$(this).parents().siblings('.total').text(format(tot * cnt));
+			$(this).prev().text(cnt);
+			result(tot);
+		});
+		
+		// 숫자에 , 찍기
+		function format(num) {
+			return Number(num).toLocaleString();
+		}
+		
+		// 총 합계 계산
+		function result(num) {
+			let result = $('.resultprice').text();
+			result = result.replace(/,/g, "");
+			result = Number(result) + Number(num);
+			$('.resultprice').text(format(result));
+		}
+		
+		// 사이즈 옵션 선택
+		$('.selectSize').click(function() {
+			if ($('.selector').find('.on').val() != "") {
+				alert('색상부터 선택해주세요.');
+				return false;
+			}
+			$('.selectSize').removeClass('select');
+			$(this).addClass('select');
+			$(this).siblings('span').children().text($(this).text());
+			let c = $('.c').children('.select').text();
+			let s = $('.s').children('.select').text();
+	
+			let array1 = new Array();
+			let array2 = new Array();
+	
+			$("input[name=color]").each(function(index, item) {
+				array1.push($(item).val());
+			});
+			$("input[name=size]").each(function(index, item) {
+				array2.push($(item).val());
+			});
+	
+			for (let i = 0; i < array1.length; i++) {
+				if (array1[i] == c && array2[i] == s) {
+					alert('이미 추가된 상품입니다.');
+					return false;
+				}
+			}
+	
+			let tag = "<article class='orderItems'>";
+			tag += "<input type='hidden' name='prodNo' value='" + [[${ prod.prodNo }]] + "'>"
+			tag += "<input type='hidden' name='color' value='" + c + "'>"
+			tag += "<input type='hidden' name='size' value='" + s + "'>"
+			tag += "<span class='colorsize'>";
+			tag += "<p class='cc'>" + c + "</p> / ";
+			tag += "<p class='ss'>" + s + "</p>";
+			tag += "</span>";
+			tag += "<div>";
+			tag += "<button type='button' id='remove'><span class='material-icons'>remove</span></button>";
+			tag += "<span class='count'>1</span>";
+			tag += "<button type='button' id='add'><span class='material-icons'>add</span></button>";
+			tag += "</div>";
+			tag += "<span class='total'></span>";
+			tag += "<span class='material-icons' id='close'>close</span>";
+			tag += "</article>";
+			$('.t1').after(tag);
+	
+			$('.result').css('display', 'block');
+			let tot = $('input[name=total]').val();
+			$('.total').text(format(tot));
+			result(tot);
+		});
+		
+		var uid = [[${uid}]];
+		var prodNo = [[${prod.prodNo}]];
+		
+		// 위시리스트
+		$('.wish').click(function(){
+			if(uid == null){
+				alert('회원만 사용가능한 기능입니다.');
+				return false;
+			}
+			
+			let jsonData = {
+				'uid' : uid,
+				'prodNo' : prodNo
+			}
+			
+			$.ajax({
+				url : '/Beauty/addWish',
+				method : 'POST',
+				data : jsonData,
+				dataType : "JSON",
+				beforeSend: function(xhr){
+			        xhr.setRequestHeader(header, token);
+			    },
+				success : function(data){
+					if(data.result > 0){
+						alert('위시리스트에 등록되었습니다.');
+					}else{
+						alert('죄송합니다. 잠시후에 다시 시도해주십시요.');
+					}
+				}
+			});
+		});
+		
+		// 장바구니
+		$('.cart').click(function() {
+			check();
+			let jsonArray = resultArray();
+			$.ajax({
+				url: '/Beauty/addCart',
+				method: 'POST',
+				data: { jsonArray: JSON.stringify(jsonArray) },
+				dataType: 'JSON',
+				beforeSend: function(xhr){
+			        xhr.setRequestHeader(header, token);
+			    },
+				success: function(data) {
+					if (data.result > 0) {
+						$('.goCart').css('display', 'block');
+					}
+				}
+			});
+		});
+		
+		// 바로구매
+		$('.order').click(function() {
+			check();
+			let jsonArray = resultArray();
+			console.log(jsonArray);
+			$.ajax({
+				url: '/Beauty/addOrder',
+				method: 'POST',
+				data: { jsonArray: JSON.stringify(jsonArray) },
+				dataType: 'JSON',
+				beforeSend: function(xhr){
+			        xhr.setRequestHeader(header, token);
+			    },
+				success: function(data) {
+					if (data.result > 0) {
+						location.href = "/Beauty/order/orderform";
+					}
+				}
+			});
+		});
+
+		// 선택된 상품이 있어야 된다.
+		function check() {
+			if ($('.orderItems').length == 0) {
+				alert('상품옵션을 선택해주세요.');
+				return false;
+			}
+		}
+		
+		// 선택한 상품을 배열 JSON으로 만들어 줌
+		function resultArray() {
+			console.log($('article.orderItems').length);
+			let array = [];
+			$("article.orderItems").each(function(index, item) {
+				let color = $(item).children('input[name=color]').val();
+				let size = $(item).children('input[name=size]').val();
+				let count = $(item).children('div').children('span.count').text();
+				let jsonData = {
+					'prodNo': prodNo,
+					'count': count,
+					'color': color,
+					'size': size
+				}
+				array.push(jsonData);
+			});
+			return array;
+		}
+
+		$('.continue').click(function(e) {
+			e.preventDefault;
+			$('.goCart').css('display', 'none');
+		});
+	});
+	</script>
+</head>
+<body>
+    <th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+       	<th:block th:replace="~{_header :: headerFragment}"></th:block>
+        <main>
+            <div id="cnt">
+                <div class="cntbody">
+                    <div id="detail">
+                        <div class="wrap_prd">
+                            <div class="prdimg">
+                                <div id="mimg_div" class="img">
+                                    <img id="main-img" th:src="@{/image/}+${prod.thumb1}" alt="대표이미지">
+                                    <div id="goods_video"></div>
+                                    <div id="changeimg">
+                                        <img th:src="@{/img/ａ_01.png}" onclick="imgChange(-1)" style="width: 30px;height: 40px; position: absolute; left: 10px; top: 50%; transform:translateY(-50%); cursor: pointer;">
+                                        <img th:src="@{/img/ａ_03.png}" onclick="imgChange(+1)" style="width: 30px;height: 40px; left:auto; right:10px !important; position: absolute; top: 50%; transform:translateY(-50%); cursor: pointer;">
+                                    </div>
+                                </div>
+                                <div class="addimg">
+                                    <!-- 반복문시작 -->
+                                    <div class="box_add_slide" >
+                                        <div class="add_slide slick-initialized slick-slider">
+                                            
+                                            <div aria-live="polite" class="slick-list draggable">
+                                                <div class="slick-track" style="opacity: 1; width: 1350px; transform: translate3d(0px, 0px, 0px);" role="listbox">
+                                                    <div class="slick-slide on slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00">
+                                                        <img th:src="@{/image/}+${prod.thumb1}">
+                                                    </div>
+                                                    <div class="slick-slide slick-active" data-slick-index="1" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide01">
+                                                        <img th:src="@{/image/}+${prod.thumb2}">
+                                                    </div>
+                                                    <div class="slick-slide slick-active" data-slick-index="2" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide02">
+                                                        <img th:src="@{/image/}+${prod.thumb3}">
+                                                    </div>
+                                                    <div class="slick-slide slick-active" data-slick-index="2" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide02">
+                                                        <img th:src="@{/image/}+${prod.thumb4}">
+                                                    </div>
+                                                    <div class="blur slick-slide" data-slick-index="3" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide03">
+                                                        <img th:src="@{/image/}+${prod.thumb5}">
+                                                    </div>
+                                                    <div class="blur slick-slide" data-slick-index="4" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide03">
+                                                        <img th:src="@{/image/}+${prod.thumb6}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                    $('.add_slide img').click(function(){
+                                        $(this).closest('.slick-slide').addClass("on").siblings().removeClass("on");
+                        
+                                        $('#goods_video').empty();
+                        
+                                        if( !$(this).data('video') ){
+                        
+                                            imgChange(0);
+                                        }else{
+                                            $('#goods_video').append( $(this).data('video') );
+                                        }
+                                    });
+                        
+                                    $('.add_slide').slick({
+                                        // lazyLoad: 'ondemand',
+                                        slidesToShow: 5,
+                                        slidesToScroll: 5,
+                                        arrows: true,
+                                        dots: false,
+                                        swipe: false,
+                                        infinite: false
+                                    });
+                        
+                                    function imgChange(num){
+                                        var obj = $('.add_slide .slick-slide.on');
+                                        var eq = $('.add_slide .slick-slide.on').index();
+                                        var maxLength = $('.add_slide .slick-slide').length-1;
+
+                                        eq += num;
+                                        if(eq < 0 ){
+                                            eq = maxLength;
+                                        }else if( eq > maxLength ){
+                                            eq = 0;
+                                        }
+                                        if($('.add_slide .slick-slide').eq(eq).hasClass('blur')){
+                                            $('#mimg_div').addClass('blur');
+                                        }else{
+                                            $('#mimg_div').removeClass('blur');
+                                        }
+
+                                        $('.add_slide .slick-slide').eq(eq).addClass('on').siblings().removeClass('on');
+                                        var src = $('.add_slide .slick-slide').eq(eq).find('img').attr('src');
+                                        $('#main-img').attr('src', src);
+                                        $('.add_slide').slick('slickGoTo',eq);
+                                    }
+                                    </script>
+                                    <!-- 반복문끝 -->
+                                </div>
+                            </div>
+                            <div class="view_info">
+                                <h3>[[${prod.prodName}]]</h3>
+                                <p th:text="${prod.descript}"></p>
+                                <div class="price">
+                                <th:block th:if="${prod.discount == 0}">
+	                                    <div class="price-box">
+										    <span class="p2" th:text="${#numbers.formatInteger(prod.price, 3, 'COMMA') + '원'}"></span>
+										</div>
+	                                </th:block>
+	                                <th:block th:unless="${prod.discount == 0}">
+	                                    <div class="price-box">
+	   										<span class="sell" th:text="${#numbers.formatInteger(prod.price, 3, 'COMMA') + '원'}"></span>
+										    <span class="p2" th:text="${#numbers.formatInteger(prod.price - prod.disPrice, 3, 'COMMA') + '원'}"></span>
+										    <span class="p1" th:text="${prod.discount + '%'}"></span>
+										</div>
+									</th:block>
+                                <table class="t1">
+                                	<tr>
+                                		<td>적립금</td>
+                                		<td>1%</td>
+                                	</tr>
+                                	<tr>
+                                		<td>무이자 할부</td>
+                                		<td><a href='#'>무이자혜택</a></td>
+                                	</tr>
+                                	<tr>
+                                		<td>멤버쉽 혜택</td>
+                                		<td><a th:href="@{/myshop/index}">등급별혜택보기</a></td>
+                                	</tr>
+                                	<tr>
+                                		<td>배송구분</td>
+                                		<td>택배배송 (5만원 이상 무료)</td>
+                                	</tr>
+                                	<tr>
+                                		<td>배송예상</td>
+                                		<td>18시 이전주문 시 <span>오늘출고예정</span></td>
+                                	</tr>
+                                	<tr>
+                                		<td>색상</td>
+                                		<td class="selector c">
+                                		<th:block th:each="color : ${prod.colorArr}">
+                                			<p class="selectColor">[[${color}]]</p>
+                               			</th:block>
+                               			<span>[필수]<strong>옵션을 선택해주세요.</strong></span>
+                                		</td>
+                                	</tr>
+                                	<tr>
+                                		<td>사이즈</td>
+                                		<td class="selector s">
+                                		<th:block th:each="size : ${prod.sizeArr}">
+                                			<p class="selectSize">[[${size}]]</p>
+                               			</th:block>
+                               			<span>[필수]<strong>옵션을 선택해주세요.</strong></span>
+                                		</td>
+                                	</tr>
+                                </table>
+                                <input type="hidden" name="total" readonly="readonly" th:value="${prod.price-prod.disPrice}">
+                                <div class="result">
+                                	<p>TOTAL : <strong class="resultprice"></strong>원</p>
+                                </div>
+                                <section>
+	                                <button type="button" class="wish"><span class="material-icons">favorite_border</span></button>
+	                                <button type="button" class="cart">장바구니</button>
+	                                <button type="button" class="order">바로구매</button>
+                                </section>
+                            </div>
+                       	</div>
+                    </div>
+                </div>
+				</div>
+            </div>
+            <th:block th:replace="~{_config :: goCart}"></th:block>
+            <th:block th:replace="~{product/viewDetail:: detailFragment}"></th:block>
+        </main>
+		<th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="indexConfigFragment">
+    <title>Beauty</title>
+	<!-- Public index, headfoot settings -->
+	<!-- jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- swiper -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.7/swiper-bundle.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!-- font -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- css -->
+	<link rel="stylesheet" th:href="@{/css/headfoot.css}">
+	<link rel="stylesheet" media="all and (max-width:640px)" th:href="@{/css/modile.css}">
+	<!-- js -->
+	<script th:src="@{/js/main.js}"></script>
+</th:block>
+
+<th:block th:fragment="goCart">
+   <div class="goCart">
+       <span>장바구니에 담았습니다.</span>
+       <a th:href="@{/order/cart}">장바구니로 이동</a>
+       <button type="button" class="continue">쇼핑계속하기</button>
+   </div>
+</th:block>
+</html>

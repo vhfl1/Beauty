@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <!-- 스프링 시큐리티 csrf token 누락 -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<!-- 스프링 시큐리티 csrf token 누락 -->
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <!-- 웹 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR:wght@300&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+    <!-- 라이브러리 -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/order/order.css}">
+    <!-- 주소 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/postcode.js}"></script>
+    <!-- js -->
+    <script type="text/javascript" th:src="@{/js/order/order.js?ver=1}"></script>
+    <script th:inline="javascript">
+    	$(function(){
+    		// 주문할 제품 총 합계 계산기
+			let value = [[${list}]];
+			
+			totalPrice(value);
+    		function totalPrice(value){
+    			let price = 0;
+    			let disPrice = 0;
+    			let delivery = 2500;
+    			let usedPoint = $('input[name=usedPoint]').val();;
+    			let savePoint = 0;
+    			let total = 0;
+    			let count = 0;
+    			for(let i of value){
+            		price += i.price*i.count;
+            		disPrice += i.disPrice*i.count;
+            		savePoint += i.point*i.count;
+            		count += i.count;
+        		}
+    			$('input[name=ordPrice]').val(price);
+    			$('input[name=ordDisprice]').val(disPrice);
+    			if(price >= 50000){
+    				delivery = 0;
+        			$('input[name=ordDelivery]').val(delivery);
+    			}else{
+    				$('input[name=ordDelivery]').val(delivery);
+    			}
+    			$('input[name=savePoint]').val(savePoint);
+    			$('input[name=total]').val(price-disPrice+delivery-usedPoint);
+    			$('input[name=oriTotal]').val(price-disPrice+delivery-usedPoint);
+    			$('input[name=ordCount]').val(count);
+    		}
+    		
+    		// 회원전용 포인트 사용
+    		$('.used').focusout(function(){
+    			$('input[name=total]').val($('input[name=oriTotal]').val());
+    			let myPoint = [[${member.point}]];
+    			let r1 = $(this).val();
+    			if(r1 < 3000){
+    				alert('3000점 이상 사용가능합니다.');
+    				$(this).val(0);
+    				return false;
+    			}
+    			if($('input[name=oriTotal]').val() - r1 < 0){
+    				alert('0원 이하로 포인트를 사용할 수 없습니다.');
+    				$(this).val(0);
+    				return false;
+    			}
+    			if(r1 > myPoint){
+    				alert('보유포인트 이상으로 사용할 수 없습니다.');
+    				$(this).val(0);
+    				return false;
+    			}
+    			$('input[name=usedPoint]').val(r1);
+    			let tot = $('input[name=total]').val();
+    			$('input[name=total]').val(tot - r1);
+    		});
+    	});
+    </script>
+</head>
+<body>
+	<th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+        <th:block th:replace="~{_header :: headerFragment}"></th:block>   
+		<!-- 메인 -->
+		<main>
+		<div class="mainBackgorund">
+			<div class="mainContent">
+				<!-- 콘텐츠 -->
+				<section class="myContent">
+				<!-- 각 페이지 내용 -->
+				<div class="orderFrame">
+					<section class="nav">
+					<p>
+						<span>1</span>장바구니
+					</p>
+					<p class="current">
+						<span>2</span> 주문/결제
+					</p>
+					<p>
+						<span>3</span> 주문완료
+					</p>
+					</section>
+					<!-- 주문 내용 -->
+					<div class="wrap-left">
+						<section class="prodList">
+						<p>
+							주문상품 (총 [[${count}]]건)
+						</p>
+						<div class="orderBox">
+							<table border="0">
+							<thead>
+							<tr>
+								<th>
+								</th>
+								<th>
+									상품정보
+								</th>
+								<th>
+									수량
+								</th>
+								<th>
+									적립
+								</th>
+								<th>
+									합계
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+							<!-- 아이템 반복 -->
+							<tr th:each="item : ${list}">
+								<td>
+									<img th:src="@{/image/}+${item.thumb1}" alt="상품썸네일">
+								</td>
+								<td>
+									<span id="prodName" th:text="${item.prodName}"></span>
+									<span id="prodOption" th:text="|${item.color}, ${item.size}|"></span>
+									<span id="prodPrice" th:text="${#numbers.formatInteger(item.price, 0, 'COMMA')}"></span>
+								</td>
+								<td>
+									<span id="prodCount" th:text="${item.count}"></span>개
+								</td>
+								<td>
+									<span id="prodSavePoint" th:text="${#numbers.formatInteger(item.point, 0, 'COMMA')}"></span>점
+								</td>
+								<td>
+									<span id="prodTotal" th:text="${#numbers.formatInteger((item.price-item.disPrice)*item.count, 0, 'COMMA')}"></span>원
+								</td>
+							</tr>
+							</tbody>
+							</table>
+						</div>
+						</section>
+						<section class="buyer">
+						<p>
+							주문자 정보
+						</p>
+						<input type="hidden" name="uid" th:value="${member.uid}">
+						<div class="orderBox">
+							<table border="0" class="infoTable">
+							<tbody>
+							<tr>
+								<th>
+									고객명 <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수">
+								</th>
+								<td>
+									<input id="bName" name="orderer" placeholder="" size="10" type="text" th:value="${member.name}">
+								</td>
+							</tr>
+							<tr>
+								<th>
+									휴대전화 <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수">
+								</th>
+								<td>
+									<select id="bPh1" name="oHp1">
+										<option value="010" th:selected="${member.phone1 == '010'}">010</option>
+										<option value="011" th:selected="${member.phone1 == '011'}">011</option>
+										<option value="016" th:selected="${member.phone1 == '016'}">016</option>
+										<option value="017" th:selected="${member.phone1 == '017'}">017</option>
+										<option value="018" th:selected="${member.phone1 == '018'}">018</option>
+										<option value="019" th:selected="${member.phone1 == '019'}">019</option>
+									</select>
+									 - <input id="bPh2" name="oHp2" maxlength="4" size="4" type="text" th:value="${member.phone2}">
+									- <input id="bPh3" name="oHp3" maxlength="4" size="4" type="text" th:value="${member.phone3}">
+									<input type="hidden" name="orderHp"/>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									주소<img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수">
+								</th>
+								<td>
+									<input id="orderZip" name="orderZip" size="6" readonly="readonly" type="text" th:value="${member.zip}"><a href="#" class="btn" id="btnZip" onclick="orderPost()"> 주소 검색</a><br>
+									<input id="orderAddr1" name="orderAddr1" size="30" readonly="readonly" type="text" th:value="${member.addr1}"><br>
+									<input id="orderAddr2" name="orderAddr2" size="30" type="text" th:value="${member.addr2}">
+								</td>
+							</tr>
+							<tr>
+								<th>
+									이메일 <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수">
+								</th>
+								<td>
+									<input id="bEmail1" name="bEmail1" size="13" type="text" th:value="${member.email1}">@<input id="bEmail2" name="bEmail2" size="13" type="text" th:value="${member.email2}">
+									<select id="bEmail3" name="bEmail3">
+										<option value="">- 이메일 선택 -</option>
+										<option value="naver.com" th:selected="${member.email2 == 'naver.com'}">naver.com</option>
+										<option value="daum.net" th:selected="${member.email2 == 'daum.net'}">daum.net</option>
+										<option value="nate.com" th:selected="${member.email2 == 'nate.com'}">nate.com</option>
+										<option value="hotmail.com" th:selected="${member.email2 == 'hotmail.com'}">hotmail.com</option>
+										<option value="yahoo.com" th:selected="${member.email2 == 'yahoo.com'}">yahoo.com</option>
+										<option value="empas.com" th:selected="${member.email2 == 'empas.com'}">empas.com</option>
+										<option value="korea.com" th:selected="${member.email2 == 'korea.com'}">korea.com</option>
+										<option value="dreamwiz.com" th:selected="${member.email2 == 'dreamwiz.com'}">dreamwiz.com</option>
+										<option value="gmail.com" th:selected="${member.email2 == 'gmail.com'}">gmail.com</option>
+										<option value="etc">직접입력</option>
+									</select>
+									<input type="hidden" name="orderEmail">
+									<ul>
+										<li>- 이메일을 통해 주문처리과정을 보내드립니다.</li>
+										<li>- 반드시 수신가능한 이메일주소를 입력해 주세요</li>
+									</ul>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									적립금
+								</th>
+								<td>
+									<p>
+										<input id="input_mile" class="used" name="input_mile" size="10" type="number"> 원 
+										(총 사용가능 적립금 : <strong id="usedPoint" th:text="${#numbers.formatInteger(member.point, 0, 'COMMA')}"></strong>원)
+										<input type="hidden" name="myPoint" th:value="${member.point}">
+									</p>
+									적립금은 최소 3,000원 이상일 때 결제가 가능합니다.
+								</td>
+							</tr>
+							</tbody>
+							</table>
+						</div>
+						</section>
+						<section class="receiver">
+						<p>
+							배송지 정보
+						</p>
+						<div class="orderBox">
+							<table border="0" class="infoTable">
+							<tbody>
+							<tr>
+								<th>
+									수령인 <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수">
+								</th>
+								<td>
+									<input id="rName" name="recipName" placeholder="" size="10" type="text">
+									<label>
+									<input type="radio" name="info" id="same">
+									<span>주문자 정보와 동일</span>
+									</label>
+									<label>
+									<input type="radio" name="info" id="new" checked>
+									<span>새로운 배송지</span>
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									휴대전화 <img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수">
+								</th>
+								<td>
+									<select id="rPh1" name="rHp1">
+										<option value="010">010</option>
+										<option value="011">011</option>
+										<option value="016">016</option>
+										<option value="017">017</option>
+										<option value="018">018</option>
+										<option value="019">019</option>
+									</select>
+									 - <input id="rPh2" name="rHp2" maxlength="4" size="4" type="text">
+									- <input id="rPh3" name="rHp3" maxlength="4" size="4" type="text">
+									<input type="hidden" name="recipHp"/>
+								</td>
+							</tr>
+							<tr>
+								<th>
+									주소<img src="//img.echosting.cafe24.com/skin/base_ko_KR/order/ico_required.gif" alt="필수">
+								</th>
+								<td>
+									<input id="recipZip" name="recipZip" size="6" readonly="readonly" type="text"><a href="#" class="btn" id="btnZip" onclick="recipPost()"> 주소 검색</a><br>
+									<input id="recipAddr1" name="recipAddr1" size="30" readonly="readonly" type="text"><br>
+									<input id="recipAddr2" name="recipAddr2" size="30" type="text">
+								</td>
+							</tr>
+							<tr>
+								<th>
+									배송메시지
+								</th>
+								<td>
+									<textarea id="rMessage" name="message" maxlength="255" cols="45"></textarea><br/>
+									- 배송메모는 배달기사님께 보여지는 메모입니다.</br>
+									- 주문건 관련하여 요청사항 있으실 경우 게시판에 남겨주세요.
+								</td>
+							</tr>
+							</tbody>
+							</table>
+						</div>
+						</section>
+					</div>
+					
+					<th:block th:replace="~{order/_order :: total}"></th:block>
+					
+				</div>
+				</section>
+			</div>
+		</div>
+		</main>
+		<th:block th:replace="~{_footer :: footerFragment}"></th:block>
+	</div>
+</body>
+</html>

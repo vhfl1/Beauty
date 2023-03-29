@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+	<th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/product/list.css}">
+    <link rel="stylesheet" th:href="@{/css/color.css}">
+    <script th:inline="javascript">
+		$(function(){
+			let val1 = [[${page[0]}]];
+			let val2 = [[${page[1]}]];
+			let val3 = [[${page[2]}]];
+			let val4 = [[${page[3]}]];
+			//firstPage
+			$('.firstPage').click(function(){
+				if(val1 == val4){
+					alert('첫 페이지입니다.');
+					return false;
+				}
+			});
+			//prevPage
+			$('.prevPage').click(function(){
+				if(val1 == val4){
+					alert('첫 페이지입니다.');
+					return false;
+				}
+			});
+			//nextPage
+			$('.nextPage').click(function(e){
+				if(val2 == val4){
+					alert('마지막 페이지입니다.');
+					return false;
+				}
+			});
+			//lastPage
+			$('.lastPage').click(function(){
+				if(val3 == val4){
+					alert('마지막 페이지입니다.');
+					return false;
+				}
+			});
+			
+		});  
+    </script>
+</head>
+<body>
+	<th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+       	<th:block th:replace="~{_header :: headerFragment}"></th:block>
+        <main>
+            <!-- 베스트상품 -->
+            <article>
+            	<span>Best ITEMS</span>
+				<ul>
+					<li class="bestItem" th:each="vo : ${best}">
+						<a th:href="@{/shop/view(pno=${vo.prodNo})}"> 
+						<img th:src="@{/image/}+${vo.thumb1}" alt="상품">
+						</a>
+					</li>
+				</ul>
+			</article>
+            <!-- 리스트 -->
+            <section>
+                <div class="headcate">
+                    <div class="title2">
+                        <h2 th:if="${now/100 == 1}">OUTER</h2>
+                        <h2 th:if="${now/100 == 2}">TOP</h2>
+                        <h2 th:if="${now/100 == 3}">BOTTOM</h2>
+                        <h2 th:if="${now/100 == 4}">DRESS</h2>
+                        <h2 th:if="${now/100 == 5}">ETC</h2>
+                        <h2 th:if="${now == 1000}">NEW 새로 나온 신상품 !!!</h2>
+                        <h2 th:if="${now == 1001}">많은 사람들에게 사랑받고 있는 베스트 상품들~</h2>
+                    </div>
+                    <section class="menuCategory" th:if="${now < 1000}">
+                        <span th:class="${now}%100 == 0 ? 's_title selected' : 's_title'">
+                        <th:block th:if="${sort == null}">
+                        	<a th:href="@{/shop/list(cate=${now/100}*100)}">ALL</a>
+                        </th:block>
+                        <th:block th:unless="${sort == null}">
+                        	<a th:href="@{/shop/list(cate=${now/100}*100)}">ALL</a>
+                        </th:block>
+                        </span>
+                        <th:block th:each="cate : ${cate}">
+                        	<span th:class="${now} == ${cate.cate} ? 's_title selected' : 's_title'"><a th:href="@{/shop/list(cate=${cate.cate})}" th:text="${cate.c2Name}"></a></span>
+                        </th:block>
+                    </section>
+                    <div class="item-info" th:if="${now < 1000}">
+                        <div class="item-total">
+                            Total <b>[[${count}]]</b> items
+                        </div>
+                        <ul class="item-order" th:if="${now < 1000}">
+                            <li th:class="${sort} == null ? 'selected' : ''"><a th:href="@{/shop/list(cate=${now})}">신상품</a></li>
+                            <li th:class="${sort} == 'lowprice' ? 'selected' : ''"><a th:href="@{/shop/list(cate=${now},sort='lowprice')}">낮은가격</a></li>
+                            <li th:class="${sort} == 'highprice' ? 'selected' : ''"><a th:href="@{/shop/list(cate=${now},sort='highprice')}">높은가격</a></li>
+                            <li th:class="${sort} == 'score' ? 'selected' : ''"><a th:href="@{/shop/list(cate=${now},sort='score')}">인기순</a></li>
+                            <li th:class="${sort} == 'hit' ? 'selected' : ''"><a th:href="@{/shop/list(cate=${now},sort='hit')}">많이 본 순</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+				    <div class="product" th:each="list : ${lists}">
+                        <a th:href="@{/shop/view(pno=${list.prodNo})}"><img th:src="@{/image/} + ${list.thumb1}" alt="상품"></a>
+                        <div class="colorCodeBox">
+	                        <th:block th:each="code : ${list.colorArr}">
+	                            <span th:title="${code}" class="colorCode" th:class="${code} + ' colorCode'"></span>
+	                        </th:block>
+                        </div>
+                        <a th:href="@{/shop/view(pno=${list.prodNo})}"><span class="name">[[${list.prodName}]]</span></a>
+                       	<th:block th:if="${list.discount == 0}">
+                      		<span class="price">[[${#numbers.formatInteger(list.price, 3, 'COMMA') + '원'}]]</span>
+                       	</th:block>
+                       	<th:block th:unless="${list.discount == 0}">
+	                        <span class="oriPrice" th:text="${#numbers.formatInteger(list.price, 3, 'COMMA') + '원'}"></span>
+	                        <span class="price">[[${#numbers.formatInteger(list.price-list.disPrice, 3, 'COMMA') + '원'}]]</span>
+	                        <span class="discount">[[${list.discount}]]%</span>
+                        </th:block>
+                    </div>
+				</div>
+                   
+                    <div class="center" th:if="${now < 1000}">
+                        <div class="pagination">
+	                        <a class="firstPage" th:href="@{/shop/list(cate=${now},sort=${sort},pg=${page[0]})}">&laquo;</a>
+	                        <a class="prevPage" th:href="@{/shop/list(cate=${now},sort=${sort},pg=${page[3]-1})}">&lsaquo;</a>
+	                       	<th:block th:each="cnt : ${#numbers.sequence(page[0],page[1])}">
+	                        	<a th:href="@{/shop/list(cate=${now},sort=${sort},pg=${cnt})}" th:class="${cnt} == ${page[3]} ? 'active' : 'off'">[[${cnt}]]</a>
+	                        </th:block>
+	                        <a class="nextPage" th:href="@{/shop/list(cate=${now},sort=${sort},pg=${page[3]+1})}">&rsaquo;</a>
+	                        <a class="lastPage" th:href="@{/shop/list(cate=${now},sort=${sort},pg=${page[2]})}">&raquo;</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
+		<th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

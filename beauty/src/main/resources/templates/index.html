@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/color.css}">
+    <script th:src="@{/js/cookieconsent.js}"></script>
+</head>
+<body>
+	<th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+        <th:block th:replace="~{_header :: headerFragment}"></th:block>
+        <main>
+            <div class="swiper swiperBanner">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide banner1"></div>
+                    <div class="swiper-slide banner2"></div>
+                    <div class="swiper-slide banner3"></div>
+                    <div class="swiper-slide banner4"></div>
+                    <div class="swiper-slide banner5"></div>
+                    <div class="swiper-slide banner6"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <script>
+                const swiper1 = new Swiper('.swiperBanner', {
+                    // Optional parameters
+                    effect : 'fade',
+                    slidesPerView: 1,
+                    autoplay: {     //자동슬라이드 (false-비활성화)
+	                    delay: 6000, // 시간 설정 
+	                    disableOnInteraction: false,// false-스와이프 후 자동 재생
+                 	},
+                    loop: true,
+            
+                    // If we need pagination
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+            
+                    // And if we need scrollbar
+                    scrollbar: {
+                        el: '.swiper-scrollbar',
+                    },
+            
+                });
+            </script>
+            <article>
+                <span>BEST ITEMS</span>
+                <div class="swiper swiperItem">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <ul>
+                                <li>
+                                    <div class="bestItem" th:each="vo : ${outer}" >
+                                        <a th:href="@{/shop/view(pno=${vo.prodNo})}">
+                                        	<img th:src="@{/image/} + ${vo.thumb1}" alt="상품">
+                                        	<div class="bestDescript">
+	                                            <th:block th:each="code : ${vo.colorArr}">
+						                            <span th:title="${code}" class="colorCode" th:class="${code} + ' colorCode'"></span>
+						                        </th:block>
+					                        	<br/>
+	                                            <span th:text="${vo.prodName}" class="name"></span><br/>
+	                                            <th:block th:if="${vo.discount == 0}">
+						                      		<span class="price">[[${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}]]</span>
+						                       	</th:block>
+						                       	<th:block th:unless="${vo.discount == 0}">
+							                        <span class="oriPrice" th:text="${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}"></span>
+							                        <span class="price">[[${#numbers.formatInteger(vo.price-vo.disPrice, 3, 'COMMA') + '원'}]]<span class="discount">[[${vo.discount}]]%</span></span>
+						                        </th:block>
+                                        	</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="swiper-slide">
+                            <ul>
+                                <li>
+                                    <div class="bestItem" th:each="vo : ${top}" >
+                                        <a th:href="@{/shop/view(pno=${vo.prodNo})}">
+                                        	<img th:src="@{/image/} + ${vo.thumb1}" alt="상품">
+                                        	<div class="bestDescript">
+	                                            <th:block th:each="code : ${vo.colorArr}">
+						                            <span th:title="${code}" class="colorCode" th:class="${code} + ' colorCode'"></span>
+						                        </th:block>
+					                        	<br/>
+	                                            <span th:text="${vo.prodName}" class="name"></span><br/>
+	                                            <th:block th:if="${vo.discount == 0}">
+						                      		<span class="price">[[${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}]]</span>
+						                       	</th:block>
+						                       	<th:block th:unless="${vo.discount == 0}">
+							                        <span class="oriPrice" th:text="${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}"></span>
+							                        <span class="price">[[${#numbers.formatInteger(vo.price-vo.disPrice, 3, 'COMMA') + '원'}]]<span class="discount">[[${vo.discount}]]%</span></span>
+						                        </th:block>
+                                        	</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="swiper-slide">
+                            <ul>
+                                <li>
+                                    <div class="bestItem" th:each="vo : ${bottom}" >
+                                        <a th:href="@{/shop/view(pno=${vo.prodNo})}">
+                                        	<img th:src="@{/image/} + ${vo.thumb1}" alt="상품">
+                                        	<div class="bestDescript">
+	                                            <th:block th:each="code : ${vo.colorArr}">
+						                            <span th:title="${code}" class="colorCode" th:class="${code} + ' colorCode'"></span>
+						                        </th:block>
+					                        	<br/>
+	                                            <span th:text="${vo.prodName}" class="name"></span><br/>
+	                                            <th:block th:if="${vo.discount == 0}">
+						                      		<span class="price">[[${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}]]</span>
+						                       	</th:block>
+						                       	<th:block th:unless="${vo.discount == 0}">
+							                        <span class="oriPrice" th:text="${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}"></span>
+							                        <span class="price">[[${#numbers.formatInteger(vo.price-vo.disPrice, 3, 'COMMA') + '원'}]]<span class="discount">[[${vo.discount}]]%</span></span>
+						                        </th:block>
+                                        	</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="swiper-slide">
+                            <ul>
+                                <li>
+                                    <div class="bestItem" th:each="vo : ${dress}" >
+                                        <a th:href="@{/shop/view(pno=${vo.prodNo})}">
+                                        	<img th:src="@{/image/} + ${vo.thumb1}" alt="상품">
+                                        	<div class="bestDescript">
+	                                            <th:block th:each="code : ${vo.colorArr}">
+						                            <span th:title="${code}" class="colorCode" th:class="${code} + ' colorCode'"></span>
+						                        </th:block>
+					                        	<br/>
+	                                            <span th:text="${vo.prodName}" class="name"></span><br/>
+	                                            <th:block th:if="${vo.discount == 0}">
+						                      		<span class="price">[[${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}]]</span>
+						                       	</th:block>
+						                       	<th:block th:unless="${vo.discount == 0}">
+							                        <span class="oriPrice" th:text="${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}"></span>
+							                        <span class="price">[[${#numbers.formatInteger(vo.price-vo.disPrice, 3, 'COMMA') + '원'}]]<span class="discount">[[${vo.discount}]]%</span></span>
+						                        </th:block>
+                                        	</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="swiper-slide">
+                            <ul>
+                                <li>
+                                    <div class="bestItem" th:each="vo : ${etc}" >
+                                        <a th:href="@{/shop/view(pno=${vo.prodNo})}">
+                                        	<img th:src="@{/image/} + ${vo.thumb1}" alt="상품">
+                                        	<div class="bestDescript">
+	                                            <th:block th:each="code : ${vo.colorArr}">
+						                            <span th:title="${code}" class="colorCode" th:class="${code} + ' colorCode'"></span>
+						                        </th:block>
+					                        	<br/>
+	                                            <span th:text="${vo.prodName}" class="name"></span><br/>
+	                                            <th:block th:if="${vo.discount == 0}">
+						                      		<span class="price">[[${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}]]</span>
+						                       	</th:block>
+						                       	<th:block th:unless="${vo.discount == 0}">
+							                        <span class="oriPrice" th:text="${#numbers.formatInteger(vo.price, 3, 'COMMA') + '원'}"></span>
+							                        <span class="price">[[${#numbers.formatInteger(vo.price-vo.disPrice, 3, 'COMMA') + '원'}]]<span class="discount">[[${vo.discount}]]%</span></span>
+						                        </th:block>
+                                        	</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </article>
+            <script>
+                let bullet = ["OUTER", "TOP", "BOTTOM", "DRESS", "ACC"];
+                const swiper2 = new Swiper('.swiperItem', {
+                    // Optional parameters
+                    slidesPerView: 1,
+                    loop: true,
+    
+                    // If we need pagination
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        renderBullet: function (index, className) {
+                        return '<div class="' + className + '"><span>' + (bullet[index]) + '</span></div>';
+                        }
+                    },
+    
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+    
+                    // And if we need scrollbar
+                    scrollbar: {
+                        el: '.swiper-scrollbar',
+                    },
+                    autoplay: {     //자동슬라이드 (false-비활성화)
+	                    delay: 10000, // 시간 설정
+	                    disableOnInteraction: false, // false-스와이프 후 자동 재생
+	                    
+                    },
+                });
+            </script>
+            <section>
+                <span>NEW</span>
+                <div>
+                    <div class="product" th:each="list : ${lists}">
+                        <a th:href="@{/shop/view(pno=${list.prodNo})}"><img th:src="@{/image/} + ${list.thumb1}" alt="상품"></a>
+                        <div class="colorCodeBox">
+	                        <th:block th:each="code : ${list.colorArr}">
+	                            <span th:title="${code}" class="colorCode" th:class="${code} + ' colorCode'"></span>
+	                        </th:block>
+                        </div>
+                        <a th:href="@{/shop/view(pno=${list.prodNo})}"><span class="name">[[${list.prodName}]]</span></a>
+                       	<th:block th:if="${list.discount == 0}">
+                      		<span class="price">[[${#numbers.formatInteger(list.price, 3, 'COMMA') + '원'}]]</span>
+                       	</th:block>
+                       	<th:block th:unless="${list.discount == 0}">
+	                        <span class="oriPrice" th:text="${#numbers.formatInteger(list.price, 3, 'COMMA') + '원'}"></span>
+	                        <span class="price">[[${#numbers.formatInteger(list.price-list.disPrice, 3, 'COMMA') + '원'}]]</span>
+	                        <span class="discount">[[${list.discount}]]%</span>
+                        </th:block>
+                    </div>
+                </div>
+            </section>
+            <article class="advertise">
+            	<img th:src="@{/img/btmo_event_01.jpg}" alt="광고">
+            </article>
+        </main>
+        <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

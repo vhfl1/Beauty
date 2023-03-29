@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <!-- 스프링 시큐리티 csrf token 누락 -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<!-- 스프링 시큐리티 csrf token 누락 -->
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" th:href="@{/css/order/ordercomplete.css?ver=1}">
+    <script type="text/javascript" th:src="@{/js/order/ordercomplete.js?ver=1}"></script>
+</head>
+<body>
+	<th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+        <th:block th:replace="~{_header :: headerFragment}"></th:block>  
+        <main>
+            <div class="complete">
+                <section>
+                    <p><span>1</span>장바구니</p> 
+                    <p><span>2</span> 주문/결제</p> 
+                    <p class="current"><span>3</span> 주문완료</p>
+                </section>
+                <span>주문이 완료되었습니다.</span><br/>
+                <span>주문번호 [[${vo.ordNo}]]</span>
+                <section>
+                    <p>주문상품 (총 상품 [[${vo.ordCount}]]건)</p>
+                    <div class="order">
+                    	<span class="material-icons" id="more">expand_more</span>
+                    	<span class="material-icons" id="less" style="display: none">expand_less</span>
+                    	<article th:each="order : ${orders}" class="orderItem" style="display: none">
+                    		<img th:src="@{/image/}+${order.thumb1}" alt="상품썸네일">
+                        	<span>[[${order.prodName}]] [[${order.count}]]개</span><span>&#91;옵션: [[${order.color}]], [[${order.size}]]&#93;</span>
+                        </article>
+                    </div>
+                </section>
+                <section>
+                    <p>결제정보</p>
+                    <div>
+                        <section><span>주문금액</span><p><strong th:text="${#numbers.formatInteger(vo.ordPrice, 0, 'COMMA')}"></strong> 원</p></section>
+                        <section><span>할인금액</span><p><strong th:text="${#numbers.formatInteger(vo.ordDisprice * -1, 0, 'COMMA')}"></strong> 원</p></section>
+                        <section class="total" ><span>최종결제금액</span><p><strong th:text="${#numbers.formatInteger(vo.total, 0, 'COMMA')}"></strong> 원</p>
+                        <p th:if="${vo.payment == '1'}">카드결제</p>
+                        <p th:if="${vo.payment == '2'}">실시간 계좌이체</p>
+                        <p th:if="${vo.payment == '3'}">무통장 입금</p>
+                        <p th:if="${vo.payment == '4'}">휴대폰 결제</p>
+                        <p th:if="${vo.payment == '5'}">카카오페이</p>
+                        <p th:if="${vo.payment == '6'}">네이버페이</p>
+                        
+                        </section>
+                    </div>
+                </section>
+                <section>
+                    <p>배송지 정보</p>
+                    <div>
+                        <section class="orderer">
+                            <span>받는 사람</span>
+                            <p>[[${vo.recipName}]] / [[${vo.recipHp}]]</p>
+                        </section>
+                        <section class="orderer">
+                            <span>받는 주소</span>
+                            <p>[[${vo.recipZip}]] [[${vo.recipAddr1}]] [[${vo.recipAddr2}]]</p>
+                        </section>
+                    </div>
+                </section>
+                <a href="https://www.freepik.com/free-vector/gradient-boxing-day-social-media-promo-template_32837630.htm#query=shopping%20banner&position=3&from_view=keyword&track=ais"><img th:src="@{/img/SideBanner2.jpg}" alt="광고"></a>
+                <button type="button" class="continue">쇼핑계속</button>
+                <button type="button" class="detail">주문내역상세</button>
+            </div>
+        </main>
+        <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

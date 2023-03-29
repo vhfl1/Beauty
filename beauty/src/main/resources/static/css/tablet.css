@@ -1,0 +1,14 @@
+.logo {
+    width: 100%;
+    text-align: center;
+}
+.logo > a {
+    margin: 0 auto;
+    line-height: 100px;
+}
+.category {
+	min-width: 800px;
+	max-width: 100%; 
+}
+.navigation {display: none;}
+.search {display: none;}

@@ -1,0 +1,187 @@
+ul, ol {
+    list-style: none;
+    -webkit-padding-start: 0px;
+}
+/* myorder */
+.myContent > div.pointFrame {
+    width: 1000px;
+}
+
+/* myorder - pointList */
+/* 안내정보 */
+div.pointFrame > ul.deliInfo {
+    line-height: 1.5;
+    font-size: 14px;
+}
+div.pointFrame > ul.deliInfo > li {
+    color: #777777;
+    padding-left: 8px;
+    position: relative;
+    line-height: 1.5;
+    font-weight: bold;
+}
+div.pointFrame > ul.deliInfo > li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 3px;
+    height: 3px;
+    background: #777777;
+    border-radius: 100%;
+}
+
+/* 기간 선택 */
+div.pointFrame > div.byDate {
+    margin: 30px 0;
+}
+div.pointFrame > div.byDate > div.dateBtns {
+    display: inline-block;
+}
+div.pointFrame > div.byDate > div.datePeriod {
+    display: inline-block;
+    margin-left: 30px;
+}
+div.pointFrame > div.byDate > div.datePeriod > input[type=date] {
+    height: 30px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+div.pointFrame > div.byDate > div.datePeriod > .btn {
+    width: 60px;
+    height: 30px;
+    background-color: #333;
+    color: white;
+}
+
+div.pointFrame > div.byDate input[type=radio] {
+    display: none;
+} 
+
+div.pointFrame > div.byDate input[type=radio]+label {
+    display: inline-block;
+    cursor: pointer;
+    width: 60px;
+    height: 30px;
+    font-size:14px;
+    font-weight:bold;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #e5e7eb;
+}
+
+div.pointFrame > div.byDate input[type=radio]:checked+label{
+    border-color: #777;
+}
+
+
+/* 아이템 반복 */
+div.pointFrame > div.pointList > table {
+    width: 1000px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+div.pointFrame > div.pointList > table th {
+    height: 50px;
+    font-size: 16px;
+    border: 1px solid #999;
+    border-left: 0;
+    border-right: 0;
+}
+
+div.pointFrame > div.pointList > table td {
+    height: 70px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    word-break: break-all;
+    padding: 5px;
+    border-right: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+    box-sizing: border-box;
+}
+
+
+div.pointFrame > div.pointList > table td:nth-child(1){ width: 15%; }
+div.pointFrame > div.pointList > table td:nth-child(2){ width: 10%; }
+div.pointFrame > div.pointList > table td:nth-child(3){ width: 20%; }
+div.pointFrame > div.pointList > table td:nth-child(4){ width: 10%; }
+div.pointFrame > div.pointList > table td:nth-child(5){ width: 30%; }
+div.pointFrame > div.pointList > table td:nth-child(6){ width: 15%; }
+
+div.pointFrame > div.pointList > table td:last-child {
+    border-right: none;
+}
+
+div.pointFrame > div.pointList > table td:first-child > div {
+    display: table;
+    text-align: left;
+}
+div.pointFrame > div.pointList > table td:first-child > div > a {
+    display: table-cell;
+    width: 80px;
+}
+div.pointFrame > div.pointList > table td:first-child > div > a > img {
+    width: 80px;
+    height: 80px;
+}
+div.pointFrame > div.pointList > table td:first-child > div > ul {
+    display: table-cell;
+    padding-left: 10px;
+    vertical-align: top;
+}
+div.pointFrame > div.pointList > table td:first-child > div > ul > li#seller {
+    display: block;
+    color: #777777;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+div.pointFrame > div.pointList > table td:first-child > div > ul > li#prodName {
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+div.pointFrame > div.pointList > table td:first-child > div > ul > li#option {
+    color: #999;
+}
+div.pointFrame > div.pointList > table td #count {
+    color: #999;
+}
+
+div.pointFrame > div.pointList > table td:last-child > div > button {
+    padding: 3px 6px;
+    margin: 2px 0;
+}
+
+/* 페이지 */
+.center {
+	float: left;
+	width: 100%;
+	height: auto;
+	text-align: center;
+}
+.pagination {
+	display: inline-block;
+	font-size: 15px;
+	margin-top: 100px;
+}
+
+.pagination a {
+color: black;
+float: left;
+padding: 8px 10px;
+text-decoration: none;
+}
+
+.pagination a.active {
+background-color: #bdc2bd;
+color: white;
+border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd; border-radius: 5px;}

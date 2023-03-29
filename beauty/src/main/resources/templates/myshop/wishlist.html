@@ -1,0 +1,93 @@
+<!--
+날짜 : 2023/03/01
+이름 : 김동근
+내용 : 포트폴리오01 HTML wishlist
+-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+		<meta charset="UTF-8">
+        <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+        <!-- 스프링 시큐리티 csrf token 누락 -->
+	    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+		<meta name="_csrf" th:content="${_csrf.token}">
+		<!-- 스프링 시큐리티 csrf token 누락 -->
+        <!-- Private index, headfoot settings -->
+        <!-- font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR:wght@300&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+        <!-- library -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <!-- css -->
+        <link rel="stylesheet" th:href="@{/css/myshop/init.css}">
+        <link rel="stylesheet" th:href="@{/css/myshop/myPage.css}">
+        <link rel="stylesheet" th:href="@{/css/myshop/wishlist.css}">
+        <!-- js -->
+        <script th:src="@{/js/myshop/myshop.js}"></script>
+        <script th:src="@{/js/myshop/wishlist.js}"></script>
+        
+        <title>WishList</title>
+    </head>
+    <body>
+        <div id="wrap">
+            <!-- 헤더 -->
+            <th:block th:replace="~{_header :: headerFragment}"></th:block>
+            
+            <!-- 메인 -->
+            <main>
+                <div class="mainBackgorund">
+                    <div class="mainContent">
+                        <!-- 콘텐츠 -->
+                        <section class="myContent">
+                        	<!-- 마이페이지 메뉴-->
+	                        <th:block th:replace="~{myshop/_mymenu :: mymenuFragment}"></th:block>
+	                        
+	                        <!-- 회원정보 -->
+							<th:block th:replace="~{myshop/_mymenu :: myheadFragment}"></th:block>
+							
+                            <!-- 위시리스트 -->
+                            <div class="wishListFrame">
+                                <div class="wishListHead">
+                                    위시리스트
+                                    <span 	class="headCount" 		id="headCount" 	th:text="${#lists.size(wishList)}"></span>
+                                    <a 		class="deleteAllWish" 	href="#">비우기 X</a>
+                                </div>
+                                <article class="wishList">
+									<div class="emptyWish" th:if="${#lists.size(wishList) == 0}">찜한 상품이 없습니다.</div>
+                                    <!-- 아이템 반복 -->
+                                    <th:block  th:each="wish:${wishList}">
+                                    <div class="item">
+                                        <div class="itemThumb">
+                                            <a th:href="@{/shop/view(pno=${wish.prodNo})}">
+                                                <!--
+													<img th:src="@{/image/}+${wish.thumb1}" alt="">
+                                                -->
+                                                <img th:src="@{/image/}+${wish.thumb1}" alt="">
+                                            </a>
+                                            <a class="delete" th:href="@{/myshop/deleteSelectedWish(wishNo=${wish.wishNo})}">x</a>
+                                        </div>
+                                        <div class="itemInfo">
+                                            <a 		th:href="@{/shop/view(pno=${wish.prodNo})}" th:text="${wish.prodName}"></a>
+                                            <span 	class="price" th:text="${#numbers.formatInteger(wish.getSalePrice, 0, 'COMMA')}"></span>
+                                        </div>
+                                    </div>
+                                    </th:block>
+                                    <!-- 아이템 반복 종료 -->
+                                </article>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+            </main>
+
+            <!-- 푸터 -->
+            <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+        </div>
+    </body>
+</html>

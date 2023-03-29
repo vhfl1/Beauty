@@ -1,0 +1,434 @@
+/* 카트는 나중에 myContent div바꿔야 함 */
+main div.mainContent > .myContent {
+}
+:root{
+--bs-link-hover-color: #000;
+}
+/* 현재페이지 */
+main div.mainContent > section.myContent {
+    width: 100%;
+}
+main div.cartFrame > .nav {
+    display: block;
+    text-align: right;
+    margin: 30px 0;
+}
+main div.cartFrame > .nav > p {
+    display: inline-block;
+    margin-left: 20px;
+    font-weight: normal;
+    font-size: 10px;
+    text-align: left;
+    color: #555;
+}
+main div.cartFrame > .nav > p > span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    background: #e5e5e5;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 3px;
+}
+main div.cartFrame > .nav > p.current {
+    color: #212121;
+    font-weight: bold;
+}
+main div.cartFrame > .nav > p.current span {
+    background: #81cb49;
+}
+
+/*마이페이지 - 콘텐츠 - 카트*/
+main div.cartFrame {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+main div.cartFrame > .cartListHead {
+    width: 100%;
+    height: 30px;
+    color: #4f4f4f;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 50px 0;
+}
+
+main div.cartFrame > .cartListHead > .headCount{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-color: #4f4f4f;
+    border-radius: 100%;
+    font-family: Arial;
+    font-size: 11px;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+    position: relative;
+    right: -5px;
+    top: -6px;
+}
+
+/*마이페이지 - 콘텐츠 - 카트 테이블*/
+main div.cartFrame > .cartList > table {
+    width: 1400px;
+    max-width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 0px solid #e5e7eb;
+    table-layout: fixed;
+}
+
+main div.cartFrame > .cartList > table th {
+    height: 30px;
+    text-align: center;
+    color: #333333;
+    border: none;
+    border-top: 1px solid rgba(33, 33, 33, 0.15);
+    border-bottom: 1px solid rgba(33, 33, 33, 0.15);
+}
+main div.cartFrame > .cartList > table th:first-child {
+    padding-left: 10px;
+}
+
+main div.cartFrame > .cartList > table input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    border: #4f4f4f;
+}
+
+
+/*마이페이지 - 콘텐츠 - 카트 테이블 - 아이템 반복*/
+main div.cartFrame > .cartList > table td {
+    height: 110px;
+    font-size: 14px;
+    text-align: center;
+    border: none;
+    border: 1px solid rgba(33, 33, 33, 0.15);
+    border-right: none;
+}
+main div.cartFrame > .cartList > table td:nth-child(-n+3){
+    border-left: none;
+}
+main div.cartFrame > .cartList > table td:nth-child(1) {
+    padding-left: 10px;
+    width: 110px;
+}
+main div.cartFrame > .cartList > table td:nth-child(2) {
+    width: 130px;
+}
+main div.cartFrame > .cartList > table td:nth-child(3) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+main div.cartFrame > .cartList > table td:nth-child(4) {
+	width: 120px;
+}
+main div.cartFrame > .cartList > table td:nth-child(n+5) {
+	width: 100px;
+}
+
+main div.cartFrame > .cartList > table td:nth-child(2) img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: auto auto;
+}
+
+main div.cartFrame > .cartList > table td:nth-child(3) {
+    text-align: left;
+}
+main div.cartFrame > .cartList > table td:nth-child(3) span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #666666;
+}
+main div.cartFrame > .cartList > table td:nth-child(3) .btn {
+    font-size: 12px;
+    padding: 2px 8px;
+}
+
+main div.cartFrame > .cartList > table td:nth-child(4) > .oriPrice {
+    color: rgba(79,79,79,0.6);
+    text-decoration: line-through;
+    font-weight: bold;
+}
+main div.cartFrame > .cartList > table td:nth-child(4) > .price {
+    color: #333333;
+    font-weight: bold;
+}
+main div.cartFrame > .cartList > table td:nth-child(4) > .discount {
+    font-size: 14px;
+    margin-left: 0px;
+    color: #ff6292;
+}
+main div.cartFrame > .cartList > table td:nth-child(4) > .discount::after {
+    content: "%";
+}
+  
+main div.cartFrame > .cartList > table td:nth-child(5) > .countFrame{
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    text-align: left;
+}
+
+main div.cartFrame > .cartList > table td:nth-child(5) > .countFrame > input[type=text] {
+    width: 27px;
+    height: 25px;
+    padding: 0 0 0 5px;
+    line-height: 25px;
+    border: 1px solid #d4d8d9;
+    border-radius: 3px 0 0 3px;
+    margin-bottom: 3px;
+}
+
+
+main div.cartFrame > .cartList > table td:nth-child(5) > .countFrame > .btnIncrease {
+    position: absolute;
+    left: 26px;
+    top: -5px;
+}
+main div.cartFrame > .cartList > table td:nth-child(5) > .countFrame > .btnDecrease {
+    position: absolute;
+    left: 26px;
+    bottom: 0px;
+}
+main div.cartFrame > .cartList > table td:nth-child(7) span {
+    font-weight: bold;
+}
+
+main div.cartFrame > .cartList > table td:last-child a {
+    display: block;
+    width: 100px;
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+    color: rgba(79, 79, 79, 0.6);
+    cursor: pointer;
+
+}
+main div.cartFrame > .cartList > table td:last-child a:hover {
+    color: #333333;
+}
+
+main div.cartFrame > .cartList > table tr:nth-child(1) > td.deliveryInfo {
+	display:table-cell;
+}
+main div.cartFrame > .cartList > table tr:nth-child(n+2) > td.deliveryInfo {
+	display:none;
+}
+
+/*마이페이지 - 콘텐츠 - 카트 - 삭제버튼*/
+main div.cartFrame > .cartList > .cartBtns {
+    margin: 15px 0;
+}
+/*마이페이지 - 콘텐츠 - 카트 - 토탈 테이블*/
+main div.cartFrame .totalTable {
+    width: 1200px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin-top: 50px;
+}
+main div.cartFrame .totalTable th {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 10px 0;
+    font-weight: normal;
+}
+main div.cartFrame .totalTable th > span {
+    font-weight: bold;
+}
+main div.cartFrame .totalTable td {
+    text-align: center;
+    padding: 32px 0;
+}
+
+main div.cartFrame .totalTable .priceInfoContainer, main div.cartFrame .totalTable .priceInfoContainer > div {
+    display: inline-flex;
+    flex-direction: row;
+}
+main div.cartFrame .totalTable .priceWrap p:first-child {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4f4f4f;
+}
+main div.cartFrame .totalTable .priceWrap p:last-child {
+    font-size: 13px;
+    color: rgba(79, 79, 79, 0.6);
+}
+
+main div.cartFrame .totalTable .im-icon {
+    margin: 10px 20px;
+    font-size: 10px;
+}
+
+#deliIcon {
+    font-size: 17px;
+    font-weight: bold;
+    color: #666666;
+    cursor: pointer;
+}
+
+/*마이페이지 - 콘텐츠 - 카트 - 주문버튼*/
+main section.myContent > .cartBtns {
+    width: auto;
+    margin: 50px auto;
+    text-align: center;
+}
+main section.myContent > .cartBtns > a {
+    display: block;
+    margin: 0 auto;
+}
+
+main section.myContent > .cartBtns > a.btnOrder {
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+    color: #fff;
+    font-size: 15px;
+    line-height: 48px;
+    background-color: #6d6bff;
+    border: 1px solid #6d6bff;
+    border-radius: 9px;
+    padding: 0 24px;
+    margin: 0 5px;
+}
+main section.myContent> .cartBtns > a.all {
+    border: none;
+}
+main section.myContent > .cartBtns > a.select {
+    color: #6d6bff;
+    background: #fff;
+}
+main section.myContent > .cartBtns > a.keepShopping {
+    text-decoration: underline;
+    font-size: 15px;
+    font-weight: lighter;
+    margin-top: 30px;
+}
+
+
+/*마이페이지 - 콘텐츠 - 카트 - 위시리스트*/
+main div.wishListFrame {
+    width: 1200px;
+    margin: 60px auto 0 auto;
+}
+
+main div.wishListFrame > .wishListHead {
+    width: 100%;
+    height: 30px;
+    color: #4f4f4f;
+    font-size: 20px;
+    font-weight: bold;
+}
+main div.wishListFrame > .wishListHead > a {
+    margin-left: 15px;
+}
+main div.wishListFrame > .wishListHead > .headCount{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-color: #4f4f4f;
+    border-radius: 100%;
+    font-family: Arial;
+    font-size: 11px;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+    position: relative;
+    right: -5px;
+    top: -2px;
+}
+
+/*마이페이지 - 콘텐츠 - 위시리스트 - 아이템 반복*/
+main div.wishListFrame > .wishList > .item {
+    width: 200px;
+    height: 275px;
+    display: inline-block;
+    margin: 10px 40px 0 0;
+    box-sizing: border-box;
+    position: relative;
+}
+main div.wishListFrame > .wishList > .item:nth-child(5n+0){
+    margin-right: 0px;
+}
+
+main div.wishListFrame > .wishList > .item > .itemThumb {
+    height: 200px;
+    background-color: #555555;
+    margin-bottom: 3px;
+    position: absolute;
+    top: 0px;
+}
+
+main div.wishListFrame > .wishList > .item > .itemThumb img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+main div.wishListFrame > .wishList > .item > .itemThumb:hover img {
+    opacity: 0.5;
+}
+
+main div.wishListFrame > .wishList > .item > .itemThumb .delete {
+    display: none;
+}
+
+main div.wishListFrame > .wishList > .item > .itemThumb:hover .delete {
+    width: 15px;
+    height: 15px;
+    color: #e5e5e5;
+    font-size: 15px;
+    line-height: 12px;
+    text-align: center;
+    border: solid 1px #e5e5e5;
+    border-radius: 100%;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: inline-block;
+}
+
+main div.wishListFrame > .wishList > .item > .itemInfo {
+    text-align: center;
+    font-size: 13px;
+    position: absolute;
+    top: 200px;
+}
+
+main div.wishListFrame > .wishList > .item > .itemInfo > a {
+    display: block;
+    font-weight: lighter;
+    border-bottom: solid 1px #e5e5e5;
+    margin: 0 20px;
+}
+main div.wishListFrame > .wishList > .item > .itemInfo > span {
+    color: #555555;
+    font-weight: bold;
+}
+
+.wishListFrame > article.wishList > div.emptyWish {
+	color: #555555;
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	margin: 30px 0;
+}
+.cartFrame > article.cartList > div.emptyCart {
+	height:200px;
+	color: #555555;
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	line-height: 200px;
+	margin: 30px 0;
+	background: #fbfbfb;
+	border: 1px solid #555;
+	border-radius: 20px;	
+}

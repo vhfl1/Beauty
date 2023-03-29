@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="footerFragment">
+	<footer>
+	    <div class="up"><span class="material-icons">expand_less</span></div>
+	    <div>
+	        <ul>
+	            <li><a th:href="@{/index}">홈</a></li>
+	            <li><a th:href="@{/introduce}">회사소개</a></li>
+	            <li><a th:href="@{/terms/service}">이용약관</a></li>
+	            <li><a th:href="@{/terms/privacy}">개인정보취급방침</a></li>
+	            <li><a th:href="@{/terms/information}">이용안내</a></li>
+	        </ul>
+	        <section>
+	            <strong>CUSTOMER CENTER</strong><br/>
+	            <span>T. 0000-0000</span>
+	            <ul>
+	                <li>MON-FRI AM 11:00 - PM 07:00</li>
+	                <li>점심시간 PM 12:00 - PM 01:00</li>
+	                <li>SAT.SUN.HOLIDAY <span>closed</span></li>
+	            </ul>
+	            <ul>
+	                <li>농협 000-0000-0000-00</li>
+	                <li>우리 0000-000-000000</li>
+	                <li>예금주 : 뷰티샵</li>
+	            </ul>
+	        </section>
+	        <section>
+	            <strong>RETURN/EXCHANGE</strong>
+	            <ul>
+	                <li>교환/반품주소 : 부산 부산진구 중앙대로775번길 5 부산서면우체국</li>
+	                <li>우체국택배 0000-0000</li>
+	            </ul>
+	            <ul>
+	                <li>* 고객센터를 통하여 먼저 접수 후 상품을 보내주셔야하며,</li>
+	                <li>지정택배사를 이용해주시기 바랍니다.</li>
+	            </ul>
+	        </section>
+	        <section>
+	            <strong>MEMBER</strong>
+	            <ul>
+	                <li><a th:href="@{/order/cart}">장바구니</a></li>
+	                <li><a th:href="@{/myshop/index}">마이페이지</a></li>
+	                <li><a th:href="@{/myshop/orderDetail}">주문/배송</a></li>
+	                <li><a th:href="@{/myshop/profile}">회원정보수정</a></li>
+	                <li><a th:href="@{/myshop/wishlist}">위시리스트</a></li>
+	            </ul>
+	        </section>
+	        <section>
+	            <strong>COMMUNITY</strong>
+	            <ul>
+	                <li><a th:href="@{/board/notice}">공지사항</a></li>
+	                <li><a th:href="@{/board/qna}">Q&A</a></li>
+	                <li><a th:href="@{/board/review}">리뷰</a></li>
+	                <li><a th:href="@{/board/event}">이벤트</a></li>
+	            </ul>
+	        </section>
+	        <section class="footerinfo">
+	            <ul>
+	                <li>COMPANY : 뷰티샵 OWNER : 홍길동 TEL : 0000-0000 ADDRESS : 부산 부산진구 서면로 XX빌딩</li>
+	                <li>BUSINESS LICENSE : 000-00-00000 ONLINE ORDER LICENSE : 0000-가나다라-0000 [사업자정보확인]</li>
+	                <li>CHIEF PRIVACY OFFICER : 홍길동 EMAIL : email@naver.com</li>
+	            </ul>
+	        </section>
+	    </div>
+	</footer>
+</th:block>
+</html>

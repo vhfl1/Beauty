@@ -1,0 +1,210 @@
+main {
+    width: 100%;
+    height: auto;
+}
+table {
+    width: 100%;
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+main > div {
+    text-align: center;
+    position: relative;
+    width: 1400px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+main > section {
+    width: 100%;
+    height: 100px;
+    line-height: 35px;
+    margin-top: 150px;
+    position: relative;
+    text-align: center;
+}
+
+th, td {border: 0; vertical-align: top;}
+
+.container {
+    width: 100%;
+    max-width: 1359px;
+    margin: 30px auto 0;
+    padding: 0 50px;
+    box-sizing: border-box;
+}
+
+.path {
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+}
+.path ol {
+    float: right;
+}
+.path li {
+    float: left;
+    padding: 0 0 0 12px;
+    margin: 0 0 0 8px;
+    font-size: 12px;
+    color: #757575;
+    background: url("/Beauty/img/ico_path.gif") no-repeat 0 9px;
+}
+.path li a {
+    color: #757575;
+}
+.path li:first-child {
+    background: none;
+}
+
+main  section > span {
+    font-size: 20px;
+    color: #555;
+    font-weight: bold;
+}
+main  section > p {
+    position: relative;
+    margin: 10px 0 0;
+    padding: 0;
+    color: #757575;
+    font-size: 12px;
+}
+
+/* 내용 */
+main table {
+    position: relative;
+    margin: 10px 0 0;
+    border-bottom: 1px solid #ebebeb;
+    color: #fff;
+    line-height: 180%;
+   
+}
+main table th {
+    padding: 11px 0 10px 18px;
+    border: 1px solid #ebebeb;
+    border-bottom-width: 0;
+    color: #757575;
+    text-align: left;
+    font-weight: normal;
+    background-color: #fbfafa; 
+}
+main table th:first-child{border-left: 0;}
+main table td {
+    padding: 11px 10px 10px;
+    border-top: 1px solid #ebebeb;
+    color: #757575;
+    vertical-align: middle;
+    word-break: break-all;
+    word-wrap: break-word;
+    text-align: left;
+}
+main table td {
+    padding: 8px 10px 7px;
+}
+
+table td ul {text-align: right;}
+table td ul li {
+    display: inline-block;
+    margin: 0 0 9px;
+    padding: 8px 20px 10px;
+    vertical-align: top;
+    line-height: 22px;
+    color: #666;
+}
+.detail {
+    padding: 30px 20px;
+    margin: -9px 0 0;
+    border-top: 1px solid #ebebeb;
+    word-break: break-all;
+    line-height: normal;
+}
+
+.button {
+    margin: 10px 0 40px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* 버튼 공통 */
+.btn {
+    display: inline-block;
+    width: 96px;
+    padding: 8px;    
+    border: 1px solid #bebebe; 
+    text-align: center;    
+}
+.btn:hover {
+    background-color: #e5e5e5;
+}
+.btnComplete:hover {background-color: #5c5c5c}
+.btnModify:hover {background-color: #5c5c5c}
+.btnNext { background: #e9e9e9; }
+.btnWrite {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border: 1px solid #3b3c3f; 
+    background: #4b545e; 
+    color: #fff;
+}
+
+.btnComplete, .btnModify {
+    border: 1px solid #3b3c3f; 
+    background: #4b545e; 
+    color: #fff;
+}
+
+.btnAuth, .btnConfirm {
+    display: inline-block;
+    padding: 4px;    
+    border: 1px solid #bebebe; 
+    text-align: center;
+}
+
+
+.gleft {float: left; text-align: left;}
+.gright {float: right; text-align: right;}
+
+/* 글쓰기 */
+input, select, textarea {
+    font-size: 100%;
+    color: #353535;
+    vertical-align: middle;
+}
+
+select {
+    background: url(/Beauty/img/pc_icon_arrow.png) no-repeat right center;
+}
+select {
+    height: 24px;
+    border: 1px solid #d5d5d5;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    min-width: 90px;
+    padding: 0 0 0 6px;
+}
+
+input {
+    height: 18px;
+    line-height: 20px;
+    padding: 2px 4px;
+    border: 1px solid #d5d5d5;
+    color: #353535;
+    font-size: 11px;
+}
+
+input[type=radio] {
+    width: 20px;
+    height: 13px;
+    border: 0;
+    
+}
+
+input[type=file] {
+    height: 20px;
+    border: 0;
+}

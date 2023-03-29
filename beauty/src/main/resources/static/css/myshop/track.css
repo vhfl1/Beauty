@@ -1,0 +1,36 @@
+html {
+	width: 600px;
+}
+body {
+	background-color: gainsboro;
+}
+body > div {
+	margin: 30px 0;
+	width: 100%;
+	text-align: center;
+}
+select {
+	width: 200px;
+	height: 30px;
+	margin-bottom: 3px;
+}
+input{
+	width: 192px;
+	height: 24px;
+}
+#btnTrack {
+	display: block;
+	background-color: black;
+	color: white;
+	width: 150px;
+	height: 30px;
+	line-height: 30px;
+	margin: 5px auto;
+	text-decoration: none;
+}
+div.forImg {
+	 width:600px;
+	 height:600px;
+	 background-size: cover;
+	 background-repeat : no-repeat;
+}

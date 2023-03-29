@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:fragment="modileFragment">
+	<div id="modile">
+        <span>아직 모바일 환경은 지원하지 않아요.</span><br/>
+        <span>최대한 빠른 시일 내에 지원하도록 노력할게요!</span>
+    </div>
+</th:block>
+<th:block th:fragment="headerFragment">
+	<header>
+		<div>
+		<div class="navigation">
+	    	<!-- 강중현 -->
+	    	<!-- 비로그인 사용자가 보이는 블럭 -->
+	    	<ul>
+		    	<li sec:authorize="isAnonymous()">
+			        <a th:href="@{/member/login}">로그인</a>
+		        </li>
+		    	<li sec:authorize="isAnonymous()">
+					<a th:href="@{/member/register}">회원가입</a>
+		        </li>
+		        <!-- 권한이 1인(일반회원) 사용자가 보이는 블럭 -->
+	           	<li sec:authorize="hasAnyRole('1','3')">
+	           		<a th:href="@{/myshop/index}"><span class="head_name" sec:authentication="principal.member.name"></span></a>
+		        </li>
+	           	<li sec:authorize="hasAnyRole('1','3')">
+					<a th:href="@{/member/logout}">로그아웃</a>
+		        </li>
+		        <!-- 권한이 3인(관리자) 사용자가 보이는 블럭 -->
+		        <li sec:authorize="hasRole('3')">
+		        	<a th:href="@{/admin/product/list}">관리자 페이지</a>
+		        </li>
+		        <li>
+		        	<a th:href="@{/order/cart}">장바구니<span>([[${cartCount}]])</span></a>
+			    </li>
+		        <li class="cate">
+		            <a th:href="@{/myshop/index}">마이페이지</a>
+		            <ul class="dep">
+                        <li><a th:href="@{/myshop/myorder}">주문/배송</a></li>
+                        <li><a th:href="@{/myshop/coupon}">쿠폰</a></li>
+                        <li><a th:href="@{/myshop/point}">적립금</a></li>
+                        <li><a th:href="@{/myshop/wishlist}">위시리스트</a></li>
+                        <li><a th:href="@{/myshop/myqna}">1:1문의</a></li>
+                        <li><a th:href="@{/myshop/profile}">나의프로필</a></li>
+                    </ul>
+			    </li>
+		        <li class="cate">
+			        <a th:href="@{/board/notice}">고객센터</a>
+			        <ul class="dep">
+                        <li><a th:href="@{/board/notice}">공지사항</a></li>
+                        <li><a th:href="@{/board/qna}">Q&A</a></li>
+                        <li><a th:href="@{/board/review}">리뷰</a></li>
+                        <li><a th:href="@{/board/event}">이벤트</a></li>
+                    </ul>
+			    </li>
+	        </ul>
+	    </div>
+	    <div class="logo">
+	    	<a th:href="@{/index}">Beauty Shop</a>
+	    </div>
+	    <section class="moveNavi">
+	        <div class="category">
+	            <ul>
+	                <li class="cate">
+	                    <a th:href="@{/shop/list?cate=1000}" class="cate1">NEW</a>
+	                </li>
+	                <li class="cate">
+	                    <a th:href="@{/shop/list?cate=1001}" class="cate1">BEST</a>
+	                </li>
+	                <li class="cate">
+	                    <a th:href="@{/shop/list?cate=100}" class="cate1">OUTER</a>
+	                    <ul class="dep">
+	                        <li><a th:href="@{/shop/list?cate=101}">가디건</a></li>
+	                        <li><a th:href="@{/shop/list?cate=102}">자켓/코트</a></li>
+	                        <li><a th:href="@{/shop/list?cate=103}">패딩/점퍼</a></li>
+	                        <li><a th:href="@{/shop/list?cate=104}">집업/조끼</a></li>
+	                    </ul>
+	                </li>
+	                <li class="cate">
+	                    <a th:href="@{/shop/list?cate=200}" class="cate1">TOP</a>
+	                    <ul class="dep">
+	                        <li><a th:href="@{/shop/list?cate=201}">티셔츠</a></li>
+	                        <li><a th:href="@{/shop/list?cate=202}">니트/스웨터</a></li>
+	                        <li><a th:href="@{/shop/list?cate=203}">셔츠/블라우스</a></li>
+	                        <li><a th:href="@{/shop/list?cate=204}">맨투맨/후드</a></li>
+	                        <li><a th:href="@{/shop/list?cate=205}">조끼/나시</a></li>
+	                    </ul>
+	                </li>
+	                <li class="cate">
+	                    <a th:href="@{/shop/list?cate=300}" class="cate1">BOTTOM</a>
+	                    <ul class="dep">
+	                        <li><a th:href="@{/shop/list?cate=301}">스커트</a></li>
+	                        <li><a th:href="@{/shop/list?cate=302}">데님</a></li>
+	                        <li><a th:href="@{/shop/list?cate=303}">팬츠</a></li>
+	                        <li><a th:href="@{/shop/list?cate=304}">슬랙스</a></li>
+	                        <li><a th:href="@{/shop/list?cate=305}">레깅스</a></li>
+	                    </ul>
+	                </li>
+	                <li class="cate">
+	                    <a th:href="@{/shop/list?cate=400}" class="cate1">DRESS</a>
+	                    <ul class="dep">
+	                        <li><a th:href="@{/shop/list?cate=401}">원피스</a></li>
+	                        <li><a th:href="@{/shop/list?cate=402}">투피스</a></li>
+	                        <li><a th:href="@{/shop/list?cate=403}">점프수트</a></li>
+	                    </ul>
+	                </li>
+	                <li class="cate">
+	                    <a th:href="@{/shop/list?cate=500}" class="cate1">ETC</a>
+	                    <ul class="dep">
+	                        <li><a th:href="@{/shop/list?cate=501}">신발</a></li>
+	                        <li><a th:href="@{/shop/list?cate=502}">가방</a></li>
+	                        <li><a th:href="@{/shop/list?cate=503}">모자</a></li>
+	                        <li><a th:href="@{/shop/list?cate=504}">쥬얼리</a></li>
+	                    </ul>
+	                </li>
+	            </ul>
+	        </div>
+	    </section>
+	    <!--
+	    <div class="search">
+	        <input type="text" name="item"><span class="material-icons">search</span></input>
+	    </div>
+	    -->
+	    </div>
+	</header>
+</th:block>
+</html>

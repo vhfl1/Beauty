@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = mapper파일의 아이디 값 -->
+<mapper namespace="kr.co.beauty.dao.MainDAO">
+	<select id="selectNewItem" resultType="productVO">
+		SELECT a.*,
+		GROUP_CONCAT(DISTINCT b.`size`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `size`,
+		GROUP_CONCAT(DISTINCT b.`colorName`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `colorName`
+		FROM `product` AS a
+		LEFT JOIN `product_option` AS b
+		ON a.`prodNo`=b.`prodNo`
+		GROUP BY `prodNo` ORDER BY `prodNo` DESC LIMIT 16;
+	</select>
+	<select id="selectBestItem" resultType="productVO">
+		SELECT a.*,
+		GROUP_CONCAT(DISTINCT b.`size`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `size`,
+		GROUP_CONCAT(DISTINCT b.`colorName`  ORDER BY b.`prodNo` DESC SEPARATOR ', ')  AS `colorName`
+		FROM `product` AS a
+		LEFT JOIN `product_option` AS b
+		ON a.`prodNo`=b.`prodNo`
+		WHERE `prodCate1`=#{cate} GROUP BY `prodNo`	 order by `score`,`sold`,`review`,`hit` DESC LIMIT 8;
+	</select>
+	<select id="countCart" resultType="String">
+		SELECT count(a.`prodNo`)
+		FROM `cart` AS a
+		JOIN `product` AS b 
+		ON a.`prodNo` = b.`prodNo`
+    	WHERE `uid` = #{arg0} OR `uid`= #{arg1};
+	</select>
+</mapper>

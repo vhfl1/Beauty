@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Beauty</title>
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/community/community.css}">
+  	<link rel="stylesheet" th:href="@{/css/community/reviwPopup.css}">
+    <script th:src="@{/js/review.js}"></script>
+  	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<style>
+  		#myModal {
+            display: none;
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            box-sizing: border-box;
+            z-index: 101;
+        }
+        
+        .modal-open {
+        	overflow: hidden;
+        }
+  	</style>
+  	
+  	
+</head>
+<body>
+	<th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+        <th:block th:replace="~{_header :: headerFragment}"></th:block>
+        <main>
+            <div>
+                <section>
+                    <span>REVIEW</span>
+                </section>
+                <article class="reply">
+                    <div><strong>PHOTO REVIEW</strong><span> | 포토 리뷰</span></div>
+                    <div>
+                        <p>※리뷰 정렬 기준</p>
+                    </div>
+                    <div>
+                        <section>
+                            <span>카테고리별 보기</span>
+                            <select name="cate" id="cate">
+                                <option value="1">카테고리를 선택해주세요</option>
+                                <option value="1">OUTER</option>
+                                <option value="1">TOP</option>
+                                <option value="1">BOTTOM</option>
+                                <option value="1">DRESS</option>
+                                <option value="1">ETC</option>
+                            </select>
+                        </section>
+                        <section>
+                            <select name="cate" id="cate">
+                                <option value="1">최신순</option>
+                                <option value="1">별점순</option>
+                                <option value="1">추천순</option>
+                            </select>
+                        </section>
+                        <section>
+                            <span class="material-icons">search</span><input type="text" name="replySearch" placeholder="검색어를 입력해주세요">
+                        </section>
+                     </div>
+                     <div>
+                        <section>
+                            <div id="height">키<span class="material-icons"> expand_more</span></div>
+                            <ul class="sort">
+                                <li><label><input type="checkbox" name="height">149 cm 이하</label></li>
+                                <li><label><input type="checkbox" name="height">150 - 152 cm</label></li>
+                                <li><label><input type="checkbox" name="height">153 - 155 cm</label></li>
+                                <li><label><input type="checkbox" name="height">156 - 158 cm</label></li>
+                                <li><label><input type="checkbox" name="height">159 - 161 cm</label></li>
+                                <li><label><input type="checkbox" name="height">162 - 164 cm</label></li>
+                                <li><label><input type="checkbox" name="height">165 - 167 cm</label></li>
+                                <li><label><input type="checkbox" name="height">168 - 170 cm</label></li>
+                                <li><label><input type="checkbox" name="height">171 - 173 cm</label></li>
+                                <li><label><input type="checkbox" name="height">174 - 176 cm</label></li>
+                                <li><label><input type="checkbox" name="height">177 - 179 cm</label></li>
+                                <li><label><input type="checkbox" name="height">180 cm 이상</label></li>
+                            </ul>
+                        </section>
+                        <section>
+                            <div id="weight">몸무게<span class="material-icons"> expand_more</span></div>
+                            <ul class="sort">
+                                <li><label><input type="checkbox" name="weight">44 kg 이하</label></li>
+                                <li><label><input type="checkbox" name="weight">45 - 47 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">48 - 50 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">51 - 53 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">54 - 56 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">57 - 59 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">60 - 62 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">63 - 65 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">66 - 68 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">69 - 71 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">72 - 74 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">75 - 77 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">78 - 80 kg</label></li>
+                                <li><label><input type="checkbox" name="weight">81 kg 이상</label></li>
+                            </ul>
+                        </section>
+                        <section>
+                            <div id="size">사이즈<span class="material-icons"> expand_more</span></div>
+                            <ul class="sort">
+                                <li><label><input type="checkbox" name="weight">XS</label></li>
+                                <li><label><input type="checkbox" name="weight">S</label></li>
+                                <li><label><input type="checkbox" name="weight">M</label></li>
+                                <li><label><input type="checkbox" name="weight">L</label></li>
+                                <li><label><input type="checkbox" name="weight">XL</label></li>
+                            </ul>
+                        </section>
+                     </div>
+                     <div>
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+    					<!-- 모달 -->
+    					<div id="myModal">
+					        <div class="media_popup">
+					            <div class="media_popup_content">
+					                <div class="media_popup_lcontent">
+					                    <a href="#">
+					                        <div class="media_popup_media_button_container">
+					                            <img class="media_popup_media_prev_button" src="/Beauty/img/btn_slide_prev02.png" alt="">
+					                        </div>
+					                    </a>
+					                    <div class="media_popup_media_content">
+					                        <div class="media_popup_media_media_content">
+					                            <div class="media_popup_media_medium_container">
+					                                <img src="/Beauty/img/sample1.jpg" style="height: 761px; width: auto; cursor: zoom-in;">
+					                            </div>
+					                        </div>
+					                    </div>
+					                    <a href="#">
+					                        <div class="media_popup_media_button_container">
+					                            <img class="media_popup_media_next_button" src="/Beauty/img/btn_slide_next02.png" alt="">
+					                        </div>
+					                    </a>
+					                </div>
+					                <div class="media_popup_rcontent">
+					                    <div class="media_popup_product_header">
+					                        <div class="product_info_bar_product">
+					                            <a href="#">
+					                                <div class="product_info_bar_product_container">
+					                                    <div class="product_info_bar_product_image_container">
+					                                        <img class="product_info_bar_product_image" src="/Beauty/img/sample1.jpg" alt="">
+					                                    </div>
+					                                    <div class="product_info_bar_product_info_container">
+					                                        <div class="product_info_bar_product_name">상품이름</div>
+					                                        <div class="product_info_bar_product_reviews_info">
+					                                            <span class="product_info_bar_product_score">평점 4.9</span>
+					                                            <div class="product_info_bar__reviews_count">리뷰 100</div>
+					                                        </div>
+					                                    </div>
+					
+					                                </div>
+					                            </a>
+					                        </div>
+					                        <img class="closeIcon" src="/Beauty/img/close.png" alt="closeBtn">
+					                    </div>
+					
+					                    <div class="media_popup_review_body">
+					                        <div class="viewport">
+					                            <div class="overview">
+					                                <div class="media_popup_review">
+					                                    <div class="media_popup_review_review_content">
+					                                        <div class="media_popup_review_content_section">
+					                                            <div class="media_popup_review_options_container">
+					                                                <div class="media_popup_review_user_name_message"><b style="font-weight: bold;">abc***</b>님의 리뷰입니다</div>
+					                                                <div class="media_popup_review_review_optoins_container">
+					                                                    <div class="review_options_v2_option">
+					                                                        <span class="review_options_v2_name">키</span>
+					                                                        <span class="review_options_v2_value">165cm</span>
+					                                                    </div>
+					                                                    <div class="review_options_v2_option">
+					                                                        <span class="review_options_v2_name">COLOR</span>
+					                                                        <span class="review_options_v2_value">블랙</span>
+					                                                    </div>
+					                                                    <div class="review_options_v2_option">
+					                                                        <span class="review_options_v2_name">SIZE</span>
+					                                                        <span class="review_options_v2_value">M</span>
+					                                                    </div>
+					                                                </div>
+					                                            </div>
+					                                            <div class="media_popup_review_message_container">
+					                                                <div class="media_popup_review_message"> 너무 이뻐요!! </div>
+					                                            </div>
+					                                            <div class="media_popup_review_like_section">
+					                                                <a href="#">
+					                                                    <img src="/Beauty/img/likeicon.jpg" alt="like">
+					                                                    <span>도움되요</span>
+					                                                </a>
+					                                                <a href="#">
+					                                                    <img src="/Beauty/img/unlikeicon.jpg" alt="unlike">
+					                                                    <span>도움안돼요</span>
+					                                                </a>
+					                                            </div>
+					                                        </div>
+					                                    </div>
+					                                </div>
+					                            </div>
+					                        </div>
+					                    </div>
+					
+					                </div>
+					            </div>
+					
+					        </div>
+					    </div>
+					    <script type="text/javascript">
+					  		/*모달 창 열기 닫기*/
+							$('#re_popup').click(function(e) {
+							  e.preventDefault();
+							  $('#myModal').modal('show');
+							  $('body').addClass('modal-open');
+							  $('.moveNavi').hide();
+							});
+					
+							$('.closeIcon').click(function() {
+							  $('#myModal').modal('hide');
+							  $('body').removeClass('modal-open');
+							  $('.moveNavi').show();
+							});
+						</script>            
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+                        <article>
+                            <a href="#" id="re_popup">
+                                <img th:src="@{/img/sample2.jpg}" alt="리뷰이미지">
+                                <div class="replyContent">
+                                    <p>댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용</p>
+                                    <span>박**</span><span>2023. 03. 03</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="replyProd">
+                                    <img th:src="@{/img/sample2.jpg}" alt="상품이미지">
+                                    <p>상품명상품명상품명상품명상품명상품명상품명상품명</p>
+                                    <span>리뷰 <strong>3</strong></span>
+                                    <span>평점 <strong>5.0</strong></span>
+                                </div>
+                            </a>
+                        </article>
+                     </div>
+                     <div class="page">
+                        <a href="#" class="prev"><span class="material-icons">chevron_left</span></a>
+                        <a href="#" class="num current">1</a>
+                        <a href="#" class="num">2</a>
+                        <a href="#" class="num">3</a>
+                        <a href="#" class="num">4</a>
+                        <a href="#" class="num">5</a>
+                        <a href="#" class="num">6</a>
+                        <a href="#" class="num">7</a>
+                        <a href="#" class="num">8</a>
+                        <a href="#" class="num">9</a>
+                        <a href="#" class="num">10</a>
+                        <a href="#" class="next"><span class="material-icons">chevron_right</span></a>
+                    </div>
+                </article>
+            </div>
+        </main>
+        <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

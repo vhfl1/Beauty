@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="mymenuFragment">
+	<!-- 마이페이지 메뉴 -->
+    <aside class="myMenu">
+        <ul>
+            <li th:classappend="${option == 'myhome'} 	? 'on' : ''"><a id="myMenuMyhome" 	th:href="@{/myshop/index}">마이 페이지</a></li>
+            <li th:classappend="${option == 'myorder'} 	? 'on' : ''"><a id="myMenuMyorder" 	th:href="@{/myshop/myorder}">주문/배송</a></li>
+            <li th:classappend="${option == 'coupon'} 	? 'on' : ''"><a id="myMenuCoupon" 	th:href="@{/myshop/coupon}"	>쿠폰</a></li>
+            <li th:classappend="${option == 'point'} 	? 'on' : ''"><a id="myMenuPoint" 	th:href="@{/myshop/point}"	>적립금</a></li>
+            <li th:classappend="${option == 'wishlist'} ? 'on' : ''"><a id="myMenuWishlist" th:href="@{/myshop/wishlist}">위시 리스트</a></li>
+            <li th:classappend="${option == 'myqna'} 	? 'on' : ''"><a id="myMenuMyqna" 	th:href="@{/myshop/myqna}"	>1:1문의</a></li>
+            <li th:classappend="${option == 'profile'} 	? 'on' : ''"><a id="myMenuProfile"	th:href="@{/myshop/profile}">나의 프로필</a></li>
+        </ul>
+    </aside>
+</th:block>
+<th:block th:fragment="myheadFragment">
+	<!-- 회원 정보 -->
+	<th:block sec:authorize="isAuthenticated()">
+	<nav class="head">
+	    <div class="user">
+	        <div class="userThumb" >
+	            <a href="#">
+	                <img th:src="@{/img/default_profile.png}" alt="">
+	            </a>
+	        </div>
+	        <div class="userInfo" th:with="levelPoint=${2500}">
+	            <div><span id="userNick" th:text="${member.name}"></span>님</div>
+	            
+	            <!-- 등급 -->
+	            <th:block th:if="${levelPoint < 1000}">
+		            <div>Lv.<span id="level">0</span> <span id="levelName">브론즈</span></div>
+	            </th:block>
+	            <th:block th:if="${levelPoint < 3000 && 1000 < levelPoint}">
+		            <div>Lv.<span id="level">1</span> <span id="levelName">실버</span></div>
+	            </th:block>
+	            <th:block th:if="${levelPoint < 10000 && 3000 < levelPoint}">
+		            <div>Lv.<span id="level">2</span> <span id="levelName">골드</span></div>
+	            </th:block>
+	            <th:block th:if="${10000 < levelPoint}">
+		            <div>Lv.<span id="level">3</span> <span id="levelName">다이아몬드</span></div>
+	            </th:block>
+	            
+	            <div>
+	                <div class="boughtPrice">
+	                    <span>누적 구매 금액</span>
+	                    <span id="boughtPrice">250,000</span>
+	                </div>
+	                <div class="point">
+	                    <span>현재 포인트</span>
+	                    <span id="point" th:text="${#numbers.formatInteger(member.point, 0, 'COMMA')}"></span>
+	                </div>
+	                <div class="coupon">
+	                    <span>보유 쿠폰</span>
+	                    <span id="countCoupon">3</span>
+	                </div>
+	                <div class="levelPoint">
+	                    <span>등급 점수</span>
+	                    <span id="levelPoint" th:text="${#numbers.formatInteger(levelPoint, 0, 'COMMA')}"></span>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="level">
+	        <ul class="levelInfo">
+	            <li>누적 구매금액은 실시간 반영이 아닌 출고요청 상태 주문건을 기준으로 매주 월요일 새벽에 집계됩니다.</li>
+	            <li>누적 구매금액은 최근 3년 치가 반영됩니다.</li>
+	        </ul>
+	    </div>
+	</nav>
+	</th:block>
+</th:block>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Beauty</title>
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/community/community_board.css}">
+    <script th:src="@{/js/comm.js}"></script>
+ 
+</head>
+<body>
+    <th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+        <th:block th:replace="~{_header :: headerFragment}"></th:block>
+        <main>
+            <div class="container">
+                <div class="path">
+                    <ol>
+                        <li><a href="#">HOME</a></li>
+                        <li><a href="#">Q&A</a></li>
+                    </ol>
+                </div>
+                <section>
+                    <span>Q&A</span>
+                    <p>Q&A 입니다.</p>
+                </section>
+                <table border="1">
+                    <colgroup>
+                        <col style="width: 130px;">
+                        <col style="width: auto;">
+                    </colgroup>
+                    <tr>
+                        <th>제목</th>
+                        <td>XXXXX q&a</td>
+                    </tr>
+                    <tr>
+                        <th>작성자</th>
+                        <td>beauty shop</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <ul>
+                                <li>
+                                    <strong>작성일</strong>
+                                    <span>2023-03-15</span>
+                                </li>
+                                <li>
+                                    <strong>조회수</strong>
+                                    <span>250</span>
+                                </li>
+                            </ul>
+                            <div class="detail">
+                                <p>내용</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="button">
+                    <span class="gleft">
+                        <a th:href="@{/board/qna}" class="btn btnList">목록</a>
+                    </span>
+                    <!-- 관리자 전용 -->
+                    <span class="gright">
+                        <a href="#" class="btn">삭제</a>
+                        <a href="#" class="btn btnList">수정</a>
+                        <a href="#" class="btn btnList">답변</a>
+                    </span>
+                    <!-- 관리자 전용 -->
+                </div>
+            </div>
+        </main>
+        <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

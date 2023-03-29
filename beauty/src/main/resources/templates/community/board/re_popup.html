@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Review Popup</title>
+    <th:block th:replace="~{/_config :: indexConfigFragment}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/community/reviwPopup.css}">
+    
+</head>
+<body>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="media_popup">
+            <div class="media_popup_content">
+                <div class="media_popup_lcontent">
+                    <a href="#">
+                        <div class="media_popup_media_button_container">
+                            <img class="media_popup_media_prev_button" src="/Beauty/img/btn_slide_prev02.png" alt="">
+                        </div>
+                    </a>
+                    <div class="media_popup_media_content">
+                        <div class="media_popup_media_media_content">
+                            <div class="media_popup_media_medium_container">
+                                <img src="/Beauty/img/sample1.jpg" style="height: 761px; width: auto; cursor: zoom-in;">
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="media_popup_media_button_container">
+                            <img class="media_popup_media_next_button" src="/Beauty/img/btn_slide_next02.png" alt="">
+                        </div>
+                    </a>
+                </div>
+                <div class="media_popup_rcontent">
+                    <div class="media_popup_product_header">
+                        <div class="product_info_bar_product">
+                            <a href="#">
+                                <div class="product_info_bar_product_container">
+                                    <div class="product_info_bar_product_image_container">
+                                        <img class="product_info_bar_product_image" src="/Beauty/img/sample1.jpg" alt="">
+                                    </div>
+                                    <div class="product_info_bar_product_info_container">
+                                        <div class="product_info_bar_product_name">상품이름</div>
+                                        <div class="product_info_bar_product_reviews_info">
+                                            <span class="product_info_bar_product_score">평점 4.9</span>
+                                            <div class="product_info_bar__reviews_count">리뷰 100</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                        <img class="closeIcon" src="/Beauty/img/close.png" alt="closeBtn">
+                    </div>
+
+                    <div class="media_popup_review_body">
+                        <div class="viewport">
+                            <div class="overview">
+                                <div class="media_popup_review">
+                                    <div class="media_popup_review_review_content">
+                                        <div class="media_popup_review_content_section">
+                                            <div class="media_popup_review_options_container">
+                                                <div class="media_popup_review_user_name_message"><b style="font-weight: bold;">abc***</b>님의 리뷰입니다</div>
+                                                <div class="media_popup_review_review_optoins_container">
+                                                    <div class="review_options_v2_option">
+                                                        <span class="review_options_v2_name">키</span>
+                                                        <span class="review_options_v2_value">165cm</span>
+                                                    </div>
+                                                    <div class="review_options_v2_option">
+                                                        <span class="review_options_v2_name">COLOR</span>
+                                                        <span class="review_options_v2_value">블랙</span>
+                                                    </div>
+                                                    <div class="review_options_v2_option">
+                                                        <span class="review_options_v2_name">SIZE</span>
+                                                        <span class="review_options_v2_value">M</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="media_popup_review_message_container">
+                                                <div class="media_popup_review_message"> 너무 이뻐요!! </div>
+                                            </div>
+                                            <div class="media_popup_review_like_section">
+                                                <a href="#">
+                                                    <img src="/Beauty/img/likeicon.jpg" alt="like">
+                                                    <span>도움되요</span>
+                                                </a>
+                                                <a href="#">
+                                                    <img src="/Beauty/img/unlikeicon.jpg" alt="unlike">
+                                                    <span>도움안돼요</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

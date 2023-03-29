@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace = mapper파일의 아이디 값 -->
+<mapper namespace="kr.co.beauty.dao.AdminDAO">
+	<!-- 상품 등록 -->
+	<insert id="insertProduct" parameterType="Product1VO" useGeneratedKeys="true" keyProperty="prodNo">
+		insert into `product` set
+		`prodCate1`=#{prodCate1},
+		`prodCate2`=#{prodCate2},
+		`prodName`=#{prodName},
+		`descript`=#{descript},
+		`price`=#{price},
+		`discount`=#{discount},
+		`disPrice`=#{disPrice},
+		`point`=#{point},
+		`company`=#{company},
+		`origin`=#{origin},
+		`rdate`=#{rdate},
+		`status`=#{status},
+		`thick`=#{thick},
+		`through`=#{through},
+		`lining`=#{lining},
+		`flex`=#{flex},
+		`thumb1`=#{thumb1},
+		`thumb2`=#{thumb2},
+		`thumb3`=#{thumb3},
+		`thumb4`=#{thumb4},
+		`thumb5`=#{thumb5},
+		`thumb6`=#{thumb6},
+		`detail1`=#{detail1},
+		`detail2`=#{detail2},
+		`detail3`=#{detail3};
+	</insert>
+	
+	<!-- 상품 옵션 등록 -->
+	<insert id="insertOption">
+		insert into `product_option` set
+		`prodNo`=#{param1},
+		`color`=#{param2},
+		`colorName`=#{param3},
+		`size`=#{param4};
+	</insert>
+
+	<!-- 관리자 페이지에서 체크된 소분류 상품 목록 불러오기 -->
+	<select id="selectProducts"  resultType="Product1VO">
+		SELECT a.*, b.*, c.`cate` AS `cate2`, c.`c2Name`   
+		FROM `product` AS a 
+		LEFT JOIN `cate1` AS b 
+		ON a.`prodCate1`=b.`cate` 
+		JOIN `cate2` AS c 
+		ON a.`prodCate2`=c.`cate`   
+		<where>
+			<if test="collection != null and collection.size() > 0">
+			and `prodCate2` in
+			<foreach item="checkBox" collection="collection" open="(" separator="," close=")">#{checkBox}</foreach>
+			</if>
+		</where>
+		GROUP BY a.prodNo;
+	</select>
+	<!-- 관리자 페이지에서 상품 삭제하기 -->
+	<delete id="deleteProduct">
+		delete from a,b 
+		using `product` as a 
+		left join `product_option` as b 
+		on a.`prodNo`=b.`prodNo`  
+		where a.`prodNo`=#{prodNo};
+	</delete>
+	<!-- 관리자 페이지에서 상품 검색하기 -->
+	<select id="searchProduct" resultType="Product1VO">
+		select * from `product` 
+		<choose>
+		<when test="arg0 != null and arg0.length > 0">
+			where `prodCate2` in
+			<foreach collection="arg0" item="cate2" open="(" close=")" separator=",">
+				#{cate2} 
+			</foreach>
+			and ${arg1} like concat('%', #{arg2}, '%') 
+		</when>
+		<otherwise>
+		 	where ${arg1} like concat('%', #{arg2}, '%') 
+		 </otherwise>
+		</choose>
+		order by `prodNo` desc 
+		limit #{arg3},10;
+	</select>
+	<!-- 상품목록 페이지 처리를 위해 상품 개수 세기 -->
+	<select id="selectCountProducts" resultType="int">
+		 SELECT COUNT(`prodNo`) FROM `product`
+	    <where>
+	        <if test="collection != null and collection.size() > 0">
+	            AND `prodCate2` IN
+	            <foreach item="checkBox" collection="collection" open="(" separator="," close=")">#{checkBox}</foreach>
+	        </if>
+	    </where>
+	    ;
+	</select>
+	<!-- 상품목록 페이지 처리를 위해 상품 개수 세기 -->
+	<select id="selectCountProductByKeyword" resultType="int">
+		<choose>
+			<when test="param2 == 'prodName'">
+				SELECT count(`prodNo`) FROM `product` WHERE `prodName` LIKE CONCAT ('%',#{arg2},'%')
+			</when>
+			<otherwise>
+				SELECT count(`prodNo`) FROM `product` WHERE `prodNo` LIKE CONCAT ('%',#{arg2},'%')
+			</otherwise>
+		</choose>
+	</select> 
+</mapper>

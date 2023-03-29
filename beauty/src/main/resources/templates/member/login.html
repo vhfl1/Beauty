@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <!-- 배포 ajax통신 403에러 -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+    
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/member/login.css}">
+    
+    <!-- js -->
+    <script th:src="@{/js/member/login.js}"></script>
+    <th:block th:replace="~{_header :: headerFragment}"></th:block>
+</head>
+<body>
+    <div id="wrap">
+        <main>
+            <div class="lg">
+                <section>
+                    <h2>로그인</h2>
+                    <table>
+                        <tr>
+                            <td class="member current">회원</td>
+                            <td class="nomember">비회원 (주문조회)</td>
+                        </tr>
+                    </table>
+                    <article id="member" class="m1">
+                        <div class="login" id="l1">
+                            <form action="#" method="post">
+                                <input type="text" name="uid" placeholder="아이디">
+	                                <span class="material-icons close">close</span>
+	                                <input type="password" name="password" placeholder="비밀번호" style="margin-top: 10px;">
+	                                <span class="material-icons eye">visibility_off</span>
+                                </input>
+        						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />	
+                                <button type="submit" name="login">로그인</button>
+                            </form>
+                            <div class="loginlabel">
+                                <label><input type="checkbox" name="autoLogin">자동로그인</label>
+                            </div>
+                        </div>
+                        <div class="other">
+                            <a th:href="@{/member/find(type=1)}">아이디 찾기</a>
+                            <a th:href="@{/member/find(type=2)}">비밀번호 찾기</a>
+                            <a th:href="@{/member/register}">회원가입</a>
+                        </div>
+                    </article>
+                    <article id="member" class="m2">
+                        <div class="login">
+                            <form action="#" method="post">
+                                <input type="text" name="uid" placeholder="이름">
+                                <span class="material-icons close">close</span>
+                                <input type="text" name="uid" placeholder="휴대폰 번호('-'없이 입력)" style="margin-top: 10px;">
+                                <input type="text" name="uid" placeholder="주문번호" style="margin-top: 10px;">
+                                <button type="submit">주문/배송조회</button>
+                            </form>
+                        </div>
+                        <div class="other">
+                            <p>
+                                <span class="material-icons">call</span>&nbsp;&nbsp;
+                                0000-0000&nbsp;&nbsp; 평일(월~금) 11:00~19:00 (주말 및 공휴일 휴무)
+                            </p>
+                        </div>
+                    </article>
+                    <article class="nomember" th:if="${type == 'guest'}">
+                    	<a th:href="@{/order/non_orderform(type=${type})}">비회원 주문하기</a>
+                    </article>
+                </section>
+            </div>
+        </main>
+        <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+
+</html>

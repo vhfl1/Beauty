@@ -1,0 +1,355 @@
+main div.mainBackgorund {
+    width: 100%;
+    min-height: 800px;
+}
+main div.mainContent {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0px auto;
+    padding: 50px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 현재페이지 */
+main div.orderFrame > .nav {
+    display: block;
+    text-align: right;
+    margin: 30px 0;
+}
+main div.orderFrame > .nav > p {
+    display: inline-block;
+    margin-left: 20px;
+    font-weight: normal;
+    font-size: 10px;
+    text-align: left;
+    color: #555;
+}
+main div.orderFrame > .nav > p > span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    background: #e5e5e5;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 3px;
+}
+main div.orderFrame > .nav > p.current {
+    color: #212121;
+    font-weight: bold;
+}
+main div.orderFrame > .nav > p.current span {
+    background: #81cb49;
+}
+
+/*상품 - 주문*/
+main div.orderFrame {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+main div.orderFrame > div {}
+
+main div.orderFrame > div.wrap-left {
+    width: 600px;
+    float: left;
+}
+main div.orderFrame > div.wrap-right {
+    width: 380px;
+    float: right;
+}
+
+main div.orderFrame > div > section {
+    margin-bottom: 30px;
+}
+main div.orderFrame > div > section > p {
+    color: #555;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+main div.orderFrame .orderBox {
+    border-radius: 20px;
+    border: 1px solid #e5e5e5;
+    margin-top: 20px;
+    padding: 10px 30px;
+    box-sizing: border-box;
+}
+
+
+
+/* prodList */
+main div.orderFrame .prodList table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 15px;
+}
+main div.orderFrame .prodList table > thead > tr {
+    border-bottom: 1px solid #d5d5d5;
+}
+
+main div.orderFrame .prodList table > tbody > tr {
+    border-bottom: 1px solid #e5e5e5;
+} 
+
+main div.orderFrame .prodList table > tbody > tr:last-child{
+    border-color: #d5d5d5;
+}
+
+main div.orderFrame .prodList table th {
+    padding: 5px 0;
+}
+
+main div.orderFrame .prodList table td {
+    padding: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+main div.orderFrame .prodList table td:nth-child(1) {
+    width: 100px;
+}
+main div.orderFrame .prodList table td:nth-child(1) > img {
+    width: 80px;
+    height: 80px;
+}
+
+main div.orderFrame .prodList table td:nth-child(2) {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+main div.orderFrame .prodList table td:nth-child(2) > span {
+    display: block;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 230px;
+}
+main div.orderFrame .prodList table td:nth-child(2) > span:nth-child(2) {
+    font-size: 12px;
+    color: #555;
+}
+main div.orderFrame .prodList table td:nth-child(2) > span:nth-child(2)::before {
+    content: "[옵션: ";
+}
+main div.orderFrame .prodList table td:nth-child(2) > span:nth-child(2)::after {
+    content: "]";
+}
+main div.orderFrame .prodList table td:nth-child(2) > span:nth-child(3) {
+    font-weight: bold;
+}
+main div.orderFrame .prodList table td:nth-child(2) > span:nth-child(3)::after {
+    content: "원";
+}
+main div.orderFrame .prodList table td:nth-child(n+3):nth-child(-n+5){
+    width: 80px;
+    text-align: center;
+}
+
+
+
+/* buyer, receiver*/
+main div.orderFrame .buyer {}
+main div.orderFrame .receiver {}
+
+main div.orderFrame .infoTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 12px;
+}
+
+main div.orderFrame .infoTable tr {
+    border-bottom: 1px solid #e5e5e5;
+    border-left: 0;
+    border-right: 0;
+}
+main div.orderFrame .infoTable tr:last-child {
+    border-bottom: 0;
+}
+
+main div.orderFrame .infoTable th {
+    width: 112px;
+    background-color: #fff;
+    color: #353535;
+    text-align: left;
+    font-weight: normal;
+    padding: 10px;
+    border-right: 1px solid #e5e5e5;
+}
+
+main div.orderFrame .infoTable td {
+    padding: 10px;
+    color: #353535;
+    font-size: 12px;
+}
+
+main div.orderFrame .infoTable input {
+    margin: 1px;
+}
+
+main div.orderFrame .infoTable tr:nth-child(3) #btnZip {
+    padding: 1px 6px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    display: inline-block;
+    border:1px solid black;
+}
+
+
+/* total */
+main div.orderFrame .total {}
+
+
+main div.orderFrame .total > .orderBox {
+    overflow: hidden;
+    line-height: 25px;
+}
+main div.orderFrame .total .totalLeft {
+    float: left;
+    color: #999;
+    font-size: 14px;
+    
+}
+main div.orderFrame .total .totalRight {
+    float: right;
+    text-align: right;
+    font-size: 16px;
+}
+main div.orderFrame .total .totalBottom {
+    width: 100%;
+    float: left;
+    margin: 10px 0;
+    padding-top: 10px;
+    border-top: 1px solid #a5a5a5;
+    overflow: hidden;
+}
+main div.orderFrame .total .totalBottom > p:first-child{
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+	color: #555;
+}
+main div.orderFrame .total .totalBottom > p:last-child{
+    float: right;
+    font-size: 14px;
+}
+
+/* payment */
+main div.orderFrame .payment {}
+
+main div.orderFrame .payment .paymentList {
+    margin: 10px 0px;
+}
+main div.orderFrame .payment .paymentList > li {
+    display: inline-block;
+}
+
+main div.orderFrame .payment .paymentList  input[type=radio] {
+    display: none;
+} 
+main div.orderFrame .payment .paymentList  input[type=radio]+label {
+    display: inline-block;
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    font-size:12px;
+    font-weight:bold;
+    text-align: center;
+    line-height: 50px;
+    border: 1px solid #6d6bff;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #333;
+    margin-top: 5px;
+}
+
+main div.orderFrame .payment .paymentList  input[type=radio]:checked+label{
+    background-color: #6d6bff;
+    color: #fff;
+}
+
+/* terms */
+main div.orderFrame .terms > .orderBox > div {
+    margin: 5px 0;
+}
+input[type=checkbox] {
+    position: relative;
+    top: 2px;
+}
+input[type=radio] {
+    position: relative;
+    top: 2px;
+}
+/* btnOrder */
+
+main div.orderFrame a.btnOrder {
+    display: block;
+    width: 380px;
+    height: 60px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 60px;
+    text-align: center;
+    background-color: #6d6bff;
+    border-radius: 6px;
+    margin: 0 auto;
+}
+input {
+	outline: none;
+}
+select {
+	outline: none;
+}
+textarea {
+	outline: none;
+	resize: none;
+}
+.totalLeft > p {
+	font-weight: bold;
+	color: #555;
+}
+.totalRight > p {font-size: 14px;}
+.totalRight input {
+	border: none;
+	text-align: right;
+	font-weight: bold;
+	font-size: 16px;
+}
+.totalBottom > p {font-size: 14px;}
+.totalBottom input {
+	border: none;
+	text-align: right;
+	font-weight: bold;
+	font-size: 16px;
+}
+.terms {
+	float: left;
+	clear: both;
+	width: 100%;
+}
+.terms textarea {
+	width: 95%;
+	margin-top: 10px;
+    font-size: 12px;
+    color: #777;
+}
+.terms div span {
+	font-size: 12px;
+}
+input[type="number"]#input_mile {
+	border: 1px solid #767676;
+	text-align: right;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

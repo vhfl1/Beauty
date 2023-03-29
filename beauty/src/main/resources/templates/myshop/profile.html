@@ -1,0 +1,141 @@
+<!--
+날짜 : 2023/03/13
+이름 : 김동근
+내용 : 포트폴리오01 HTML wishlist
+-->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+		<meta charset="UTF-8">
+        <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+        <!-- 스프링 시큐리티 csrf token 누락 -->
+	    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+		<meta name="_csrf" th:content="${_csrf.token}">
+		<!-- 스프링 시큐리티 csrf token 누락 -->
+        <!-- Private index, headfoot settings -->
+        <!-- font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR:wght@300&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+        <!-- library -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <!-- css -->
+        <link rel="stylesheet" th:href="@{/css/myshop/init.css}">
+        <link rel="stylesheet" th:href="@{/css/myshop/myPage.css}">
+        <link rel="stylesheet" th:href="@{/css/myshop/profile.css}">
+        <!-- js -->
+        <script th:src="@{/js/myshop/myshop.js}"></script>
+        <script th:src="@{/js/myshop/profile.js}"></script>
+        
+        <title>Profile</title>
+    </head>
+    <body>
+        <div id="wrap">
+            <!-- 헤더 -->
+            <th:block th:replace="~{_header :: headerFragment}"></th:block>
+            
+            <!-- 메인 -->
+            <main>
+                <div class="mainBackgorund">
+                    <div class="mainContent">
+                        <!-- 콘텐츠 -->
+                        <section class="myContent">
+                        	<!-- 마이페이지 메뉴-->
+	                        <th:block th:replace="~{myshop/_mymenu :: mymenuFragment}"></th:block>
+	                        
+	                        <!-- 회원정보 -->
+							<th:block th:replace="~{myshop/_mymenu :: myheadFragment}"></th:block>
+							
+                            <!-- 내 정보 -->
+                            <div class="profileFrame">
+                                <div class="checkPassword">
+                                    <table border="0">
+                                        <caption>비밀번호를 다시 입력해주세요.</caption>
+                                        <tbody>
+                                            <tr>
+                                                <th>비밀번호</th>
+                                                <td><input type="password" size="15" id="pass"></td>
+                                                <td><a href="#" class="btn" id="btnCheckPW">확인</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="profileInfo disnone">
+                                    <table border="0">
+                                        <caption>기본정보</caption>
+                                        <tbody>
+                                            <tr>
+                                                <th>아이디</th>
+                                                <td><span id="uid" class="btn" th:text="${member.uid}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>비밀번호</th>
+                                                <td>
+                                                    <input id="pw1" type="password" value="">
+                                                    <span class="pw result"> (영문 대소문자/숫자/특수문자 조합, 8자~16자)</span>
+                                                    <br>
+                                                    <input id="pw2" type="password" value="">
+                                                    <span class="btn" id="savePassword">변경</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>이름</th>
+                                                <td><span id="name" class="btn" th:text="${member.name}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>휴대폰</th>
+                                                <td>
+                                                    <select id="phone1">
+                                                        <option value="010">010</option>
+                                                        <option value="011">011</option>
+                                                        <option value="016">016</option>
+                                                        <option value="017">017</option>
+                                                        <option value="018">018</option>
+                                                        <option value="019">019</option>
+                                                    </select>
+                                                    - <input id="phone2" maxlength="4" size="4" type="text" th:value="${#strings.substring(member.phone, 4, 8)}">
+                                                    - <input id="phone3" maxlength="4" size="4" type="text" th:value="${#strings.substring(member.phone, 9)}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>키</th>
+                                                <td><input id="height" type="text" th:value="${member.height}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>몸무게</th>
+                                                <td><input id="weight" type="text" th:value="${member.weight}"></td>
+                                            </tr>
+                                            <tr class="group">
+                                                <th>주소</th>
+                                                <td>
+                                                    <input id="zip" type="text" size="10" th:value="${member.zip}" readonly>
+                                                    <span class="btn">검색</span>
+                                                    <br>
+                                                    <input id="addr1" type="text" th:value="${member.addr1}" readonly>
+                                                    <br>
+                                                    <input id="addr2" type="text" th:value="${member.addr2}">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="profileBtns">
+                                        <a class="apply" href="#">정보수정</a>
+                                        <a class="deleteAcc" href="#">회원탈퇴</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+            </main>
+
+            <!-- 푸터 -->
+            <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+        </div>
+    </body>
+</html>

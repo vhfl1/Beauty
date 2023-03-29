@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Beauty</title>
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/community/community.css}">
+</head>
+<body>
+	<th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+        <th:block th:replace="~{_header :: headerFragment}"></th:block>
+        <main>
+            <div>
+                <section>
+                    <span>NOTICE</span>
+                </section>
+                <table>
+                    <colgroup> 
+                        <col width="5%">
+                        <col width="70%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="5%">
+                    </colgroup> 
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회</th>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="title"><a th:href="@{community/board/notice_view}">공지사항 게시판입니다.</a></td>
+                        <td>뷰티샵</td>
+                        <td>2023-03-02</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="title"><a href="#">공지사항 게시판입니다.</a></td>
+                        <td>뷰티샵</td>
+                        <td>2023-03-02</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td class="title"><a href="#">공지사항 게시판입니다.</a></td>
+                        <td>뷰티샵</td>
+                        <td>2023-03-02</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+                <div id="boardSearch">
+                    <input type="text" name="search" placeholder="Search"><span class="material-icons">search</span></input>
+                </div>
+                <div class="page">
+                    <a href="#" class="prev"><span class="material-icons">chevron_left</span></a>
+                    <a href="#" class="num current">1</a>
+                    <a href="#" class="num">2</a>
+                    <a href="#" class="num">3</a>
+                    <a href="#" class="num">4</a>
+                    <a href="#" class="num">5</a>
+                    <a href="#" class="num">6</a>
+                    <a href="#" class="num">7</a>
+                    <a href="#" class="num">8</a>
+                    <a href="#" class="num">9</a>
+                    <a href="#" class="num">10</a>
+                    <a href="#" class="next"><span class="material-icons">chevron_right</span></a>
+                </div>
+            </div>
+        </main>
+        <th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+    <title>Beauty</title>
+    <link rel="stylesheet" th:href="@{/css/admin/product.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/product.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script th:src="@{/js/admin.js}"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <th:block th:replace="~{admin/product/_header :: headerFragment}"></th:block>
+        <main style="width:100%">
+            <section id="admin-product-register">
+                <form th:action="@{/admin/product/register}" method="post" enctype="multipart/form-data" id="productForm">
+                    <article>
+                        <h3>상품 기본 정보</h3>
+                        <table>
+                            <tr>
+                                <th>대분류</th>
+                                <td>
+                                    <select name="prodCate1" id="cate1" onChange="cateChange();">
+                                        <option value="0">대분류 선택</option>
+                                        <option value="100">OUTER</option>
+                                        <option value="200">TOP</option>
+                                        <option value="300">BOTTOM</option>
+                                        <option value="400">DRESS</option>
+                                        <option value="500">ETC</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>소분류</th>
+                                <td>
+                                    <select name="prodCate2" id="cate2">
+                                        <option value="0">소분류 선택</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상품명</th>
+                                <td><input type="text" name="prodName"></td>
+                            </tr>
+                            <tr>
+                                <th>기본설명</th>
+                                <td><input type="text" name="descript"></td>
+                            </tr>
+                            <tr>
+                                <th>원가</th>
+                                <td><input type="text" name="price" id="price">원</td>
+                            </tr>
+                            <tr>
+                                <th>할인율</th>
+                                <td><input type="text" name="discount" id="discount">%</td>
+                            </tr>
+                            <tr>
+                                <th>포인트</th>
+                                <td><input type="text" name="point" readonly id="point">원</td>
+                            </tr>
+                            <tr>
+                                <th>제조업체</th>
+                                <td><input type="text" name="company"></td>
+                            </tr>
+                            <tr>
+                                <th>제조국</th>
+                                <td><input type="text" name="origin"></td>
+                            </tr>
+                            <tr>
+                                <th>제조일</th>
+                                <td><label><input type="date" name="rdate" style="width:206px;"></label></td>
+                            </tr>                     
+                        </table>
+                    </article>
+                    <article>
+                        <h3>상품 상세 정보</h3>
+                        <table>                           
+                            <tr>
+                                <th style="width: 68px;">색상</th>
+                                <td>
+                                   	<label><input type="checkbox" value="#000000" name="color">블랙</input></label>    
+                                    <label><input type="checkbox" value="#000080" name="color">네이비</input></label>    
+                                    <label><input type="checkbox" value="#a9a9a9" name="color">다크그레이</input></label>    
+                                    <label><input type="checkbox" value="#808080" name="color">그레이</input></label>    
+                                    <label><input type="checkbox" value="#d3d3d3" name="color">라이트그레이</input></label>    
+                                    <label><input type="checkbox" value="#0000ff" name="color">블루</input></label>    
+                                    <label><input type="checkbox" value="#87ceeb" name="color">스카이블루</input></label>    
+                                    <label><input type="checkbox" value="#8b0000" name="color">다크레드</input></label>    
+                                    <label><input type="checkbox" value="#ff0000" name="color">레드</input></label>    
+                                    <label><input type="checkbox" value="#ff7f50" name="color">코랄</input></label>    
+                                    <label><input type="checkbox" value="#ff69b4" name="color">핫핑크</input></label>    
+                                    <label><input type="checkbox" value="#ffc0cb" name="color">핑크</input></label>    
+                                    <label><input type="checkbox" value="#ffb6c1" name="color">라이트핑크</input></label>    
+                                    <label><input type="checkbox" value="#ffff00" name="color">옐로우</input></label>    
+                                    <label><input type="checkbox" value="#ffd700" name="color">골드</input></label>    
+                                    <label><input type="checkbox" value="#ffa500" name="color">오렌지</input></label>    
+                                    <label><input type="checkbox" value="#a52a2a" name="color">브라운</input></label>    
+                                    <label><input type="checkbox" value="#f0e68c" name="color">카키</input></label>    
+                                    <label><input type="checkbox" value="#006400" name="color">다크그린</input></label>    
+                                    <label><input type="checkbox" value="#008000" name="color">그린</input></label>    
+                                    <label><input type="checkbox" value="#808000" name="color">올리브</input></label>    
+                                    <label><input type="checkbox" value="#800080" name="color">퍼플</input></label>    
+                                    <label><input type="checkbox" value="#ee82ee" name="color">바이올렛</input></label>    
+                                    <label><input type="checkbox" value="#e6e6fa" name="color">라벤더</input></label>    
+                                    <label><input type="checkbox" value="#f5f5dc" name="color">베이지</input></label>    
+                                    <label><input type="checkbox" value="#fffff0" name="color">아이보리</input></label>    
+                                    <label><input type="checkbox" value="#c0c0c0" name="color">실버</input></label>    
+                                    <label><input type="checkbox" value="#ffffff" name="color">화이트</input></label>      
+                                </td>
+                            </tr>                   
+                            <tr>
+                                <th>소재</th>
+                                <td><input type="text" name="status"></td>
+                            </tr>     
+                            <tr>
+                                <th>사이즈</th>
+                                <td>
+                                    <label><input type="checkbox" name="size" value="free">free</label>
+                                    <label><input type="checkbox" name="size" value="S">S</label>
+                                    <label><input type="checkbox" name="size" value="M">M</label>
+                                    <label><input type="checkbox" name="size" value="L">L</label>
+                                    <label><input type="checkbox" name="size" value="XL">XL</label>
+                                </td>
+                            </tr>                
+                            <tr>
+                                <th>두께감</th>
+                                <td>
+                                    <label><input type="radio" name="thick" value="두꺼움">두꺼움</label>
+                                    <label><input type="radio" name="thick" value="보통">보통</label>
+                                    <label><input type="radio" name="thick" value="얇음">얇음</label>
+                                 </td>
+                            </tr>                
+                            <tr>
+                                <th>비침</th>
+                                <td>
+                                    <label><input type="radio" name="through" value="비침">있음</label>
+                                    <label><input type="radio" name="through" value="약간있음">약간있음</label>
+                                    <label><input type="radio" name="through" value="없음">없음</label>
+                                </td>
+                            </tr>                
+                            <tr>
+                                <th>안감</th>
+                                <td>
+                                    <label><input type="radio" name="lining" value="있음">있음</label>
+                                    <label><input type="radio" name="lining" value="없음">없음</label>
+                                    <label><input type="radio" name="lining" value="부분안감">부분안감</label>
+                                </td>
+                            </tr>                
+                            <tr>
+                                <th>신축성</th>
+                                <td>
+                                    <label><input type="radio" name="flex" value="좋음">좋음</label>
+                                    <label><input type="radio" name="flex" value="보통">보통</label>
+                                    <label><input type="radio" name="flex" value="없음">없음</label>
+                                </td>
+                            </tr>       
+                        </table>
+                        <section class="image">
+                            <table>
+                                <tr><th>상품 메인 이미지()</th></tr>
+                                <tr>
+                                    <td>
+                                        <input type="file" name="file1" id="isFile1"  accept="image/jpeg, image/png, image/jpg"><br>
+                                        <input type="file" name="file2" id="isFile2"  accept="image/jpeg, image/png, image/jpg"><br>
+                                        <input type="file" name="file3" id="isFile3"  accept="image/jpeg, image/png, image/jpg"><br>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table>
+                                <tr><th>상품 목록 이미지()</th></tr>
+                                <tr>
+                                    <td>
+                                        <input type="file" name="file4" id="isFile4"  accept="image/jpeg, image/png, image/jpg"><br>
+                                        <input type="file" name="file5" id="isFile5"  accept="image/jpeg, image/png, image/jpg"><br>
+                                        <input type="file" name="file6" id="isFile6"  accept="image/jpeg, image/png, image/jpg"><br>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table>
+                                <tr><th>상품 상세 이미지()</th></tr>
+                                <tr>
+                                    <td>
+                                        <input type="file" name="file7" id="isFile7"  accept="image/jpeg, image/png, image/jpg"><br>
+                                        <input type="file" name="file8" id="isFile8"  accept="image/jpeg, image/png, image/jpg"><br>
+                                        <input type="file" name="file9" id="isFile9"  accept="image/jpeg, image/png, image/jpg"><br>
+                                    </td>
+                                </tr>
+                            </table>
+                        </section>
+                    </article>
+                    <input type="submit" value="등록" class="register">
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

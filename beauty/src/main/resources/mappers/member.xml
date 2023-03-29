@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 강중현 -->
+<mapper namespace="kr.co.beauty.dao.MemberDAO">
+	<select id="selectTerms" resultType="MemberVO">
+		select * from `terms`;
+	</select>
+
+	<insert id="insertMember">
+		insert into `member` set
+			`uid`=#{uid},
+			`pass`=#{pass},
+			`name`=#{name},
+			`zip`=#{zip},
+			`addr1`=#{addr1},
+			`addr2`=#{addr2},
+			`phone`=#{phone},
+			`regip`=#{regip},
+			`rdate`=NOW(),
+			`height`=#{height},
+			`weight`=#{weight};
+	</insert>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findId" resultType="String">
+		select `uid` from `member` where `name`=#{arg0} and `phone`=#{arg1};
+	</select>
+	<!-- 비밀번호 찾기 -->
+	<select id="findPw" resultType="String">
+		select `pass` from `member` where `uid`=#{arg1};
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="findPwResult">
+		update `member` set `pass`=#{arg1} where `uid`=#{arg0};
+	</update>
+	
+	
+	<!-- 김동근 -->
+	<select id="selectMember" resultType="MemberVO">
+		SELECT * FROM `member`
+		WHERE `uid` = #{uid};
+	</select>
+	
+	<!-- 내 프로필 -->
+	<update id="updateMember">
+		UPDATE `member`
+		SET `phone` = #{phone},
+			`zip` 	= #{zip},
+			`addr1` = #{addr1},
+			`addr2` = #{addr2},
+			`height`= #{height},
+			`weight`= #{weight}
+		WHERE `uid` = #{uid};
+	</update>
+	
+	<update id="savePassword">
+		UPDATE `member`
+		SET `pass` = #{pass}
+		WHERE `uid` = #{uid};
+	</update>
+	
+	<delete id="deleteMember">
+		DELETE FROM `member`
+		WHERE `uid` = #{uid};
+	</delete>
+	
+</mapper>

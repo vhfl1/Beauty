@@ -1,0 +1,226 @@
+/**
+ * 날짜 : 2023/03/07
+ * 이름 : 강중현 
+ * 내용 : Beauty member register css
+ */
+main>.mb {
+	width: 1600px;
+	min-height: 600px;
+	margin-top: 80px
+}
+
+* {
+	margin: 0 auto;
+	padding: 0;
+}
+
+main>.mb>form>div {
+	width: 900px;
+}
+
+main>.mb>form>h2 {
+	height: 22px;
+	width: 900px;
+	font-size: 18px;
+	font-weight: 700;
+	text-align: left;
+}
+
+main>.mb>form>.invalid-feedback {
+	display: none;
+	width: 100%;
+	margin-top: .25rem;
+	font-size: 80%;
+	color: #dc3545
+}
+
+main>.mb>form>table>tbody>tr>td>div>.zip {
+	height: 22px;
+	width: 50px;
+	border: 1px solid #d5d5d5;
+	padding: 2px 4px 2px 4px;
+}
+
+main>.mb>form>table>tbody>tr>td>div>.addr {
+	height: 22px;
+	width: 280px;
+	border: 1px solid #d5d5d5;
+	margin: 5px 0 0 0;
+	padding: 2px 4px 2px 4px;
+}
+
+main>.mb>form>table {
+	border-collapse: collapse;
+	border-spacing: 0px 0px;
+	caption-side: top;
+	empty-cells: show;
+	table-layout: auto;
+}
+
+main>.mb>form>table>tbody>tr>td>label {
+	display: inline-block;
+}
+
+main>.mb>form>table>tbody>tr>td>.mb-input {
+	font-size: 12px;
+	line-height: 22px;
+	height: 22px;
+	width: 137px;
+	border: 1px solid #d5d5d5;
+	padding: 2px 4px 2px 4px;
+}
+
+main>.mb>form>table>tbody>tr>th {
+	font-size: 12px;
+	line-height: 18px;
+	text-align: left;
+	vertical-align: top;
+	height: 20px;
+	width: 131.5px;
+	border: 1px solid #e5e5e5;
+	padding: 12px 0 12px 18px;
+}
+
+main>.mb>form>table>tbody>tr>td {
+	font-size: 12px;
+	line-height: 18px;
+	height: 28px;
+	width: 729.5px;
+	border: 1px solid #e5e5e5;
+	padding: 8px 10px 7px 10px;
+}
+
+main>.mb>form>table>tbody>tr>td>.birth_year {
+	height: 22px;
+	width: 60px;
+	border: 1px solid #d5d5d5;
+	margin: 0 4px 0 0;
+	padding: 2px 4px 2px 4px;
+}
+
+main>.mb>form>table>tbody>tr>td>.birth_month {
+	height: 22px;
+	width: 30px;
+	border: 1px solid #d5d5d5;
+	margin: 0 4px 0 0;
+	padding: 2px 4px 2px 4px;
+}
+
+main>.mb>form>table>tbody>tr>td>.birth_day {
+	height: 22px;
+	width: 30px;
+	border: 1px solid #d5d5d5;
+	margin: 0 4px 0 0;
+	padding: 2px 4px 2px 4px;
+}
+
+main>.mb>form>table>tbody>tr>td>label>#calender {
+	height: 13px;
+	width: 13px;
+}
+
+main>.mb>form>h4 {
+	height: 21px;
+	width: 900px;
+	padding: 50px 0 10px 0;
+}
+
+input[type=checkbox], input[type=radio] {
+	box-sizing: border-box;
+	padding: 0;
+	width: 13px;
+	height: 13px;
+}
+
+main>.mb>form>div>.btn-terms {
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+	height: 48px;
+	width: 180px;
+	border: 1px solid #fff;
+	padding: 14px 8px 14px 8px;
+	font-size: 15px;
+	line-height: 18px;
+	text-align: center;
+}
+
+main>.mb>form>div>.btn-terms:hover {
+	color: #fff;
+	background-color: #0069d9;
+	border-color: #0062cc;
+}
+
+main>div>form>section>div>h3 {
+	height: 20px;
+	width: 858px;
+	font-size: 12px;
+	line-height: 20px;
+	font-weight: 700;
+	margin: 0 0 10px 0;
+}
+
+main>.mb>form>section>div>textarea {
+	height: 110px;
+	width: 799px;
+	padding: 20px 20px 20px 20px;
+	font-size: 12px;
+	line-height: 20px;
+	border: 1px solid #d5d5d5;
+}
+
+main>.mb>form>section>.base-box {
+	height: 209px;
+	width: 858px;
+	border: 1px solid #e5e5e5;
+	padding: 20px 20px 20px 20px;
+	font-size: 12px;
+	line-height: 20px;
+	background-color: #f9f9f9;
+}
+
+main>.mb>form>.btn-base-box {
+	height: 48px;
+	width: 900px;
+	padding: 10px 0 10px 0;
+	background-color: #fff;
+	text-align: center;
+}
+
+main>.mb>form>table>tbody>tr>th>.essential {
+	color: #ef3f43;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+main>div>form>section>div>h3>.essential {
+	color: #ef3f43;
+	margin-right: 5px;
+}
+
+textarea {
+	resize: none;
+}
+
+.insertCode {
+	font-size: 12px;
+	line-height: 22px;
+	height: 22px;
+	width: 137px;
+	border: 1px solid #d5d5d5;
+	padding: 2px 4px 2px 4px;
+}
+
+button {
+	color: white;
+	font-size: 12px;
+	font-weight: bold;
+	background: black;
+	outline: none;
+}
+
+#timer {
+	position: absolute;
+    left: 605px;
+    top: 334px;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Beauty</title>
+    <th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/community/community_board.css">
+    <script th:src="@{/js/comm.js"}></script>
+    
+</head>
+<body>
+    <th:block th:replace="~{_header :: modileFragment}"></th:block>
+    <div id="wrap">
+        <th:block th:replace="~{_header :: headerFragment}"></th:block>
+        <main>
+            <div class="container">
+                <div class="path">
+                    <ol>
+                        <li><a href="#">HOME</a></li>
+                        <li><a href="#">REVIEW</a></li>
+                    </ol>
+                </div>
+                <section>
+                    <span>REVIEW</span>
+                    <p>상품Review 글쓰기 입니다.</p>
+                </section>
+                <table border="1">
+                    <colgroup>
+                        <col style="width: 130px;">
+                        <col style="width: auto;">
+                    </colgroup>
+                    <tr>
+                        <th>제목</th>
+                        <td>
+                            <select name="board_category" id="board_category">
+                                <option value="1">상품Review</option>
+                            </select>
+                            <input type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>작성자</th>
+                        <td><input type="text"></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td><input type="email"></td>
+                    </tr>
+                    <tr>
+                        <th>평점</th>
+                        <td>
+                            <input type="radio" id="point0" name="point" value="5">
+                            <label for="point0"><span class="point5">★★★★★</span></label>
+                            <input type="radio" id="point1" name="point" value="4">
+                            <label for="point1"><span class="point4">★★★★</span></label>
+                            <input type="radio" id="point2" name="point" value="3">
+                            <label for="point2"><span class="point3">★★★</span></label>
+                            <input type="radio" id="point3" name="point" value="2">
+                            <label for="point3"><span class="point2">★★</span></label>
+                            <input type="radio" id="point4" name="point" value="1">
+                            <label for="point4"><span class="point1">★</span></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <textarea name="" id="" cols="100" rows="10"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>첨부파일</th>
+                        <td><input type="file" name="filereview"></td>
+                    </tr>
+                    <tr>
+                        <th>비밀글 설정</th>
+                        <td>
+                            <label><input type="radio" name="open" class="off" checked>공개글</label>
+                            <label><input type="radio" name="open" class="on">비밀글</label>
+                        </td>
+                    </tr>
+                    <tr class="passArea">
+                        <th>비밀번호</th>
+                        <td><input type="password"></td>
+                    </tr>
+                    <tr class="passArea">
+                        <th>비밀번호설정</th>
+                        <td><input type="password"></td>
+                    </tr>
+                    
+                </table>
+                <div class="button">
+                    <span class="gleft">
+                        <a href="#" class="btn btnList">목록</a>
+                    </span>
+                    <span class="gright">
+                        <a href="#" class="btn btnComplete">등록</a>
+                        <a href="#" class="btn btnCancel">취소</a>
+                    </span>
+                </div>
+            </div>
+        </main>
+		<th:block th:replace="~{_footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>

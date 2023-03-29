@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<th:block th:replace="~{_config :: indexConfigFragment}"></th:block>
+	<!-- 주소 -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- 배포 ajax통신 403에러 -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+	<!-- css -->
+	<link rel="stylesheet" th:href="@{/css/index.css}">
+	<link rel="stylesheet" th:href="@{/css/member/register.css}">
+	<!-- js -->
+	<script th:src="@{/js/member/register.js}"></script>
+	<script th:src="@{/js/postcode.js}"></script>
+	
+	<th:block th:replace="~{_header :: headerFragment}"></th:block>
+</head>
+<body>
+	<div id="wrap">
+		<main>
+			<div class="mb">
+				<form th:action="@{/member/register}" method="POST">
+					<h2>JOIN US</h2>
+					<h4>기본정보</h4>
+					<table border="1">
+						<tr>
+							<th><span class="essential">*</span>이메일</th>
+							<td>
+								<input type="email" class="mb-input" name="uid" placeholder="" required>
+								<span class="resultUid">이메일을 입력해주세요.</span>
+								<button type="submit" class="sendCode">인증번호 발송</button>
+								<div>
+									<input type="text" class="insertCode" name="insertCode" placeholder="" style="margin-top: 10px;">
+									<span id="timer"></span>
+	                                <span>인증번호 6자리를 입력하세요</span>
+                                </div>
+							</td>
+						</tr>
+						<tr>
+							<th><span class="essential">*</span>비밀번호</th>
+							<td>
+								<input type="password" class="mb-input" name="pass1" placeholder="" required>
+								<span class="resultPass1">영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해 주세요.</span>
+							</td>
+						</tr>
+						<tr>
+							<th><span class="essential">*</span>비밀번호 확인</th>
+							<td>
+								<input type="password" class="mb-input" name="pass2" placeholder="" required>
+								<span class="resultPass">비밀번호 재입력</span>
+							</td>
+						</tr>
+						<tr>
+							<th><span class="essential">*</span>이름</th>
+							<td>
+								<input type="name" class="mb-input" name="name" placeholder="" required>
+								<span class="resultName">한글 2자 이상 이어야 합니다.</span>
+							</td>
+						</tr>
+						<tr>
+							<th><span class="essential">*</span>주소</th>
+							<td>
+								<div>
+									<input type="text" class="zip" id="orderZip" name="zip" placeholder="우편번호" required readonly>
+									<button type="button" onclick="orderPost()">우편번호 찾기</button>
+								</div>
+								<div>
+									<input type="text" class="addr" id="orderAddr1" name="addr1" placeholder="기본주소" readonly required>
+								</div>
+								<div>
+									<input type="text" class="addr" id="orderAddr2" name="addr2" placeholder="나머지주소">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th><span class="essential">*</span>휴대전화</th>
+							<td>
+								<input type="text" class="mb-input" name="phone" placeholder="" required>
+								<span class="resultPhone">010-1234-5678</span>
+							</td>
+						</tr>
+					</table>
+					<h4>추가정보</h4>
+					<table border="1">
+						<tr>
+							<th>생년월일</th>
+							<td>
+								<input type="text" class="birth_year">년 <input type="text" class="birth_month">월 <input type="text" class="birth_day">일
+								<label><input type="radio" id="calender" value="1">양력</label>
+								<label><input type="radio" id="calender" value="2">음력</label>
+							</td>
+						</tr>
+						<tr>
+							<th>키/몸무게</th>
+							<td>
+								<input type="text" class="mb-input" name="height">cm
+								<input type="text" class="mb-input" name="weight">kg
+							</td>
+						</tr>
+					</table>
+					<table>
+						<h4>약관</h4>
+						<div>
+							<label><input type="checkbox" id="checkAll" class="terms-checkbox" required> [전체선택] 개인정보 수집 및 이용약관에 동의합니다</label>
+						</div>
+						<section>
+							<div class="base-box">
+								<h3>
+									<span class="essential">[필수]</span> 이용약관 동의
+								</h3>
+								<textarea class="" readonly>[[${memberVO.terms}]]</textarea>
+								<div>
+									<label> 이용약관에 동의하십니까?<input type="checkbox" class="agree-checkbox" name="agree"></label>
+								</div>
+							</div>
+							<div class="base-box">
+								<h3>
+									<span class="essential">[필수]</span>개인정보 수집 및 이용 동의
+								</h3>
+								<textarea class="" readonly>[[${memberVO.privacy}]]</textarea>
+								<div>
+									<label> 이용약관에 동의하십니까?<input type="checkbox"
+										class="agree-checkbox" name="agree">
+									</label>
+								</div>
+							</div>
+							<div class="base-box">
+								<h3>
+									<span>[선택]</span> 쇼핑정보 수신 동의
+								</h3>
+								<textarea class="" readonly>[[${memberVO.location}]]</textarea>
+								<div>
+									<label> 이용약관에 동의하십니까?<input type="checkbox"
+										class="agree-checkbox" name="agree">
+									</label>
+								</div>
+							</div>
+						</section>
+					</table>
+					<div class="btn-base-box">
+						<input class="btn-terms" type="submit" value="회원가입">
+					</div>
+				</form>
+			</div>
+		</main>
+		<th:block th:replace="~{_footer :: footerFragment}"></th:block>
+	</div>
+
+</body>
+
+</html>
