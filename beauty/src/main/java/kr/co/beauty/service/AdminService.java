@@ -50,9 +50,14 @@ public class AdminService {
 		return result;
 	};
 
-	// 관리자페이지에서 선택된 카테고리의 상품목록 불러오기
+	// 관리자 상품현황 페이지에서 선택된 카테고리의 상품목록 불러오기
 	public List<Product1VO> selectProducts(List<String> collection) {
 		return dao.selectProducts(collection);
+	}
+	
+	//관리자 재고관리 페이지에서 상품목록 불러오기
+	public List<Product1VO> selectProduct(){
+		return dao.selectProduct();
 	}
 
 	// 상품 삭제

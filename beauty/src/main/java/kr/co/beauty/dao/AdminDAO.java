@@ -12,6 +12,7 @@ public interface AdminDAO {
 	public int insertProduct(Product1VO vo);
 	public int insertOption(int param1,String param2,String param3,String param4);
 	public List<Product1VO> selectProducts(List<String> collection);
+	public List<Product1VO> selectProduct();
 	public int selectCountProducts(List<String> collection);
 	public int deleteProduct(String prodNo);
 	public List<Product1VO> searchProduct(String[] arg0, String arg1, String arg2, int arg3);

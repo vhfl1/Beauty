@@ -69,7 +69,12 @@
 	</delete>
 	<!-- 관리자 페이지에서 상품 검색하기 -->
 	<select id="searchProduct" resultType="Product1VO">
-		select * from `product` 
+		SELECT a.*, b.*, c.`cate` AS `cate2`, c.`c2Name`   
+		FROM `product` AS a 
+		LEFT JOIN `cate1` AS b 
+		ON a.`prodCate1`=b.`cate` 
+		JOIN `cate2` AS c 
+		ON a.`prodCate2`=c.`cate`   
 		<choose>
 		<when test="arg0 != null and arg0.length > 0">
 			where `prodCate2` in
@@ -96,7 +101,7 @@
 	    </where>
 	    ;
 	</select>
-	<!-- 상품목록 페이지 처리를 위해 상품 개수 세기 -->
+	<!-- 상품검색결과 목록 페이지 처리를 위해 상품 개수 세기 -->
 	<select id="selectCountProductByKeyword" resultType="int">
 		<choose>
 			<when test="param2 == 'prodName'">
@@ -107,4 +112,16 @@
 			</otherwise>
 		</choose>
 	</select> 
+	
+	<!-- 재고관리 페이지에서 상품목록 불러오기 -->
+	<select id="selectProduct"  resultType="Product1VO">
+		SELECT a.*, b.*, c.`cate` AS `cate2`, c.`c2Name`   
+		FROM `product` AS a 
+		LEFT JOIN `cate1` AS b 
+		ON a.`prodCate1`=b.`cate` 
+		JOIN `cate2` AS c 
+		ON a.`prodCate2`=c.`cate`   
+		GROUP BY a.prodNo 
+		order by a.`prodNo` desc ;
+	</select>
 </mapper>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+	<meta name="_csrf" th:content="${_csrf.token}">
+    <title>Beauty</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/admin/product.css}">
+    <script th:src="@{/js/admin.js}"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <th:block th:replace="~{admin/product/_header :: headerFragment}"></th:block>
+        <main>
+            <section id="admin-product-stock">
+                <table>
+                    <tr>
+                        <th>상품번호</th>
+                        <th>대분류</th>
+                        <th>소분류</th>
+                        <th>상품명</th>
+                        <th>판매가</th>
+                        <th>수량</th>
+                        <th>관리</th>
+                    </tr>
+                    <tr th:each="prod:${products}">
+                    	<td>[[${prod.prodNo}]]</td>
+                    	<td>[[${prod.c1Name}]]</td>
+                    	<td>[[${prod.c2Name}]]</td>
+                    	<td>[[${prod.prodName}]]</td>
+                    	<td>[[${prod.price - prod.disPrice}]]</td>
+                    	<td>[[${prod.stock}]]</td>
+                    	<td>
+                    		<button class='btnModify' th:value="${prod.prodNo}">수정</button>
+                    		<button class='more' th:value="${prod.prodNo}">상세보기</button>
+                    	</td>
+                    </tr>
+                </table>
+                <div class="page"></div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

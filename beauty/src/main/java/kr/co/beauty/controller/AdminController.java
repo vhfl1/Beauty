@@ -154,4 +154,14 @@ public class AdminController {
 		
 		return "admin/product/search";
 	}
+	
+	//재고관리 페이지
+	@GetMapping("admin/product/stock")
+	public String stock(Model model) {
+		List<Product1VO> products = service.selectProduct();
+		
+		model.addAttribute("products", products);
+		
+		return "admin/product/stock";
+	}
 }
