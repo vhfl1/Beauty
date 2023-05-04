@@ -1,5 +1,7 @@
 package kr.co.beauty.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.beauty.service.AdminService;
 import kr.co.beauty.vo.Product1VO;
+import kr.co.beauty.vo.ProductOptionVO;
 import lombok.extern.log4j.Log4j2;
 
 /*
@@ -157,11 +162,71 @@ public class AdminController {
 	
 	//재고관리 페이지
 	@GetMapping("admin/product/stock")
-	public String stock(Model model) {
-		List<Product1VO> products = service.selectProduct();
+	public String stock(Model model, String pg) {
 		
+		//상품 목록 페이징 처리
+		int currentPage = service.getCurrentPage(pg);
+        int arg3 = service.getLimitStart(currentPage);
+       
+        int total = service.selectCountProducts(null);
+        int lastPageNum = service.getLastPageNum(total);
+        int pageStartNum = service.getPageStartNum(total, arg3);
+        int groups[] = service.getPageGroup(currentPage, lastPageNum);
+        
+        //상품 목록 불러오기
+        List<Product1VO> products = service.selectProduct(arg3);
+
 		model.addAttribute("products", products);
+		model.addAttribute("groups", groups);
+		model.addAttribute("currentPage", currentPage);
+        model.addAttribute("lastPageNum", lastPageNum);
+        model.addAttribute("pageStartNum", pageStartNum);
+        
+		return "admin/product/stock";
+	}
+	
+	//재고관리 페이지에서 재고 상세보기 모달 창
+	@PostMapping("admin/product/stock")
+	@ResponseBody
+	public Map<String, Object> stockDetail(Model model, String prodNo) {
+		List<Integer> solds= new ArrayList<>();
+		int sold=0;
 		
+		//해당 상품 번호의 사이즈
+		List<String> sizes = service.selectProductSize(prodNo);
+		//해당 상품 번호의 색상
+		List<String> colors = service.selectProductColorName(prodNo);
+		//해당 상품 번호의 재고
+		for (int i = 0; i < sizes.size(); i++) {
+			for (int j = 0; j < colors.size(); j++) {
+				sold = service.selectProductSold(prodNo,sizes.get(i),colors.get(j));
+				solds.add(sold);
+			}
+			
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("result1", sizes);
+		map.put("result2", colors);
+		map.put("result3", solds);
+		
+		return map;
+	}
+	
+	//재고등록 페이지에서 재고 등록하기
+	@ResponseBody
+	@PostMapping("admin/product/stockRegister")
+	public String stockRegister(String arg1,
+							@RequestParam(value = "arg2[]") List<String> arg2, 
+							@RequestParam(value = "arg3[]") List<String> arg3, 
+							@RequestParam(value = "arg0[]") List<String> arg0) {
+		
+		//색상,사이즈별로 재고 등록하기
+		for(int i=0; i<arg2.size(); i++) {
+			service.updateStock(arg0.get(i), arg1, arg2.get(i), arg3.get(i));
+		}
+		//총 재고 등록하기
+		service.UpdateTotalStock(arg1);
+	    
 		return "admin/product/stock";
 	}
 }

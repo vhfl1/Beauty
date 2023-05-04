@@ -25,8 +25,10 @@ $(document).ready(function(){
     });
     
     //페이지가 로드되면 처음 실행
+    if(window.location.pathname !== "/Beauty/admin/product/stock"){
   	CheckBoxList();//상품목록
   	page();//페이지 번호
+  	}
   	
   	var start=0;
   	var pg=1;
@@ -95,7 +97,7 @@ $(document).ready(function(){
   	
 	//페이징 처리
 	function page(){
-		if(window.location.pathname !== "/Beauty/admin/product/search"){
+		if(window.location.pathname == "/Beauty/admin/product/list"){
 		//체크박스 값 배열에 담기
 		var collection = new Array();
 	  	if($('input:checkbox[name=category2]:checked').length == 0){
@@ -309,7 +311,7 @@ $(document).ready(function(){
 	    console.log(cate2);
 	  });
 
-});	
+
 
 /* product-register 카테고리 분류 */
 function cateChange(){
@@ -355,19 +357,6 @@ function cateChange(){
     		
     	}
     	
-$(document).ready(function(){
-    	/*$("input[name=color]").on("change",function(){
-    		if($(this).prop("checked")){
-    		var	color=$(this).val();
-    		var label =$(this).parent();
-    		
-    		var text = label.contents().filter(function(){
-    			return this.nodeType === Node.TEXT_NODE;
-    		}).text().trim();
-    		console.log(text);
-    		console.log(color);
-    		}
-    	});*/
     	
     	//상품등록
     	$(document).on("click",".register",function(e){
@@ -651,4 +640,213 @@ $(document).ready(function(){
 			//유효성 검사 끝나면 ajax 요청 보내기
 			callback();
 		}	
+		
+/* 재고관리 페이지 */
+	//상세보기 버튼을 클릭했을 때
+	$(".more").on("click",function(){
+		//불러올 재고의 상품번호
+    	var prodNo = $(this).val();
+    	
+    	//ajax 요청
+    	$.ajax({
+			type:"post",
+			url:"/Beauty/admin/product/stock",
+			beforeSend: function(xhr){
+		        xhr.setRequestHeader(header, token);
+		    },
+			data: {prodNo:prodNo},
+			dataType: 'json',
+			success:function(data){
+				//해당 상품의 사이즈
+				var sizes = data.result1;
+				//해당 상품의 색상
+				var colors = data.result2;
+				//해당 상품의 재고수량
+				var solds = data.result3;
+				
+				//modal 창 보이기
+				var modal = document.getElementById("myModal");
+				modal.style.display = "block";
+				
+				//테이블 생성
+				var table =$("<table></table>");
+				var headerRow = $("<tr></tr>");
+				
+				//헤더 셀 추가
+				headerRow.append("<td></td>");
+				for(var i=0; i < sizes.length; i++){
+					headerRow.append("<td>"+sizes[i]+"</td>")
+				}
+				table.append(headerRow);
+				
+				//테이블 바디 생성(색상,사이즈로 2차원 배열)
+				for (var j = 0; j < colors.length; j++) {
+				  var bodyRow = $("<tr></tr>");
+				  bodyRow.append("<td>" + colors[j] + "</td>");
+				  for (var k = 0; k < sizes.length; k++) {
+				    var sold = solds[k * colors.length + j]; // 1차원 배열에서 인덱스 계산
+				    bodyRow.append("<td>" + sold + "</td>");
+				  }
+				  table.append(bodyRow);
+				}
+				
+				//생성된 테이블 추가
+				$("#modalData").append(table);
+				
+				//테이블 스타일 적용
+				table.css({
+					'width':'450px',
+					'height':'200px',
+					'padding-right':'60px',
+				});
+				
+				table.find('td').css({
+					'font-size':'15px',
+				});
+				table.find('tr:first-child >td').css({
+					'font-size':'15px',
+					'font-weight':'bold',
+				});
+				table.find('tr > td:first-child').css({
+					'font-size':'15px',
+					'font-weight':'bold',
+					
+				});
+			}
+	  	});
+    	
+    });
+	
+	//modal 창 닫기
+	$(".close").on("click",function(){
+		//상세보기 창이 열려있을 경우
+		$("#modalData").empty();
+		
+		var modal = document.getElementById("myModal");
+		modal.style.display = "none";
+		
+		//재고등록 창이 열려있을 경우
+		var modal2 = document.getElementById("registerStock");
+		modal2.style.display = "none";
+		
 	});
+	
+	//재고등록 버튼을 클릭했을 때
+	$(".btnModify").on("click",function(){
+		//재고등록할 상품번호
+    	var prodNo = $(this).val();
+    	
+    	//ajax 요청
+    	$.ajax({
+			type:"post",
+			url:"/Beauty/admin/product/stock",
+			beforeSend: function(xhr){
+		        xhr.setRequestHeader(header, token);
+		    },
+			data: {prodNo:prodNo},
+			dataType: 'json',
+			success:function(data){
+				//해당 상품의 사이즈
+				var sizes = data.result1;
+				//해당 상품의 색상
+				var colors = data.result2;
+		
+	    		//재고등록 modal 창 보이기
+				var modal = document.getElementById("registerStock");
+				modal.style.display = "block";
+				
+				$("#selectOption").empty();
+				$("#prodNo").empty();
+				
+				//해당 상품번호 보이기
+				$("#prodNo").append("상품번호 "+prodNo+" 번");
+				
+				//해당 상품 옵션 보이기
+				$("#selectOption").append("<tr><th>색상</th><th>사이즈</th><th>수량</th></tr>");
+				
+				for(i=0; i<colors.length; i++){
+					for(j=0; j<sizes.length; j++){
+						$("#selectOption").append("<tr>");
+						$("#selectOption").append("<td class='colors'>"+colors[i]+"</td>");
+						$("#selectOption").append("<td class='sizes'>"+sizes[j]+"</td>");
+						$("#selectOption").append("<td><input type='text' class='stocks'></td>");
+						$("#selectOption").append("</tr>");
+						
+					}
+				}
+				
+				$(".btnRegister").val(prodNo);
+				
+				//테이블 스타일 적용
+				$("#selectOption").css({
+					'width':'450px',
+					'height':'auto',
+					'padding-left':'50px',
+					'margin':'10px 0',
+				});
+				
+				$("#selectOption").find('th').css({
+					'font-size':'15px',
+				});
+				$("#selectOption").find('td').css({
+					'font-size':'15px',
+					'padding':'5px',
+				});
+				$("#selectOption").find('input').css({
+					'height':'20px',
+				});
+				$("#prodNo").css({
+					'text-align':'center',
+					'font-size':'15px',
+					'font-weight':'bold',
+				});
+				$(".btnRegister").css({
+					'text-align':'center',
+					'font-size':'14px',
+					'padding':'4px 20px',
+				});
+			}
+    	});
+    	
+	});
+    	
+    //재고등록 페이지에서 재고 입력 후 등록버튼을 클릭했을 때	
+   	$(".btnRegister").on("click",function(){
+   		//해당 상품 번호
+   		var prodNo = $(this).val();
+
+   		//해당 상품의 색상 배열
+   		const elements1 = document.querySelectorAll(".colors");
+   		const colors = Array.from(elements1).map((el) => el.textContent);
+   		
+   		//해당 상품의 사이즈 배열
+   		const elements2 = document.querySelectorAll(".sizes");
+   		const sizes = Array.from(elements2).map((el) => el.textContent);
+   		
+   		//해당 상품의 입력된 재고 배열
+   		const elements3 = document.querySelectorAll(".stocks");
+   		const stocks = Array.from(elements3).map((input) => input.value);
+   		
+   		
+	 	//ajax 요청
+       	$.ajax({
+   			type:"post",
+   			url:"/Beauty/admin/product/stockRegister",
+   			beforeSend: function(xhr){
+   		        xhr.setRequestHeader(header, token);
+   		    },
+   			data: {
+   				arg1:prodNo,
+     			arg2:colors,
+     			arg3:sizes,
+     			arg0:stocks
+   			},
+   			tranditional:true,
+   			success:function(data){
+   				location.href="/Beauty/admin/product/stock";
+   			}
+   			
+       	});
+   		
+   	});
+});

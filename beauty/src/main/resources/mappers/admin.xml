@@ -122,6 +122,43 @@
 		JOIN `cate2` AS c 
 		ON a.`prodCate2`=c.`cate`   
 		GROUP BY a.prodNo 
-		order by a.`prodNo` desc ;
+		order by a.`prodNo` desc 
+		limit #{arg3},10;
 	</select>
+	<!-- 재고관리 페이지에서 재고정보 상세보기 -->
+	<!-- 사이즈 정보 중복없이 불러오기 -->
+	<select id="selectProductSize" resultType="String">
+		SELECT distinct `size` FROM `product_option` 
+		WHERE `prodNo`=#{prodNo};
+	</select>
+	<!-- 색상 정보 중복없이 불러오기 -->
+	<select id="selectProductColorName" resultType="String">
+		SELECT distinct `colorName` FROM `product_option` 
+		WHERE `prodNo`=#{prodNo};
+	</select>
+	<!-- 사이즈와 색상에 따른 재고 정보 불러오기 -->
+	<select id="selectProductSold" resultType="int">
+		SELECT  `sold`
+		FROM `product_option`
+		WHERE `prodNo` = #{param1} and `size`=#{param2} and `colorName`=#{param3};
+	</select>
+
+	<!-- 재고관리 페이지에서 재고 등록하기 -->
+	<update id="updateStock">
+		UPDATE `product_option` 
+		SET `sold`=#{arg0} 
+		WHERE `prodNo`=#{arg1} AND 
+		`colorName`=#{arg2} AND
+		`size`=#{arg3};
+	</update>
+	<!-- 총 재고수량 등록하기 -->
+	<update id="UpdateTotalStock">
+		UPDATE `product`
+		SET `stock` = (
+		    SELECT SUM(`sold`) 
+		    FROM `product_option` 
+		    WHERE `prodNo`=#{prodNo}
+		)
+		WHERE `prodNo` = #{prodNo};
+	</update>
 </mapper>

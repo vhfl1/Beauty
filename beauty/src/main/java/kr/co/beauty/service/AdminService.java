@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.beauty.dao.AdminDAO;
 import kr.co.beauty.vo.Product1VO;
+import kr.co.beauty.vo.ProductOptionVO;
 
 @Service
 public class AdminService {
@@ -55,11 +56,6 @@ public class AdminService {
 		return dao.selectProducts(collection);
 	}
 	
-	//관리자 재고관리 페이지에서 상품목록 불러오기
-	public List<Product1VO> selectProduct(){
-		return dao.selectProduct();
-	}
-
 	// 상품 삭제
 	public int deleteProduct(String prodNo) {
 		return dao.deleteProduct(prodNo);
@@ -81,7 +77,7 @@ public class AdminService {
 	public int selectCountProductByKeyword(String param2, String arg2){
 		return dao.selectCountProductByKeyword(param2, arg2);
 	}
-
+	
 	// 현재 페이지 번호
 	public int getCurrentPage(String pg) {
 		int currentPage = 1;
@@ -129,6 +125,36 @@ public class AdminService {
 		int[] groups = { groupStart, groupEnd };
 
 		return groups;
+	}
+	
+	/* 재고 관리 페이지 */
+	//관리자 재고관리 페이지에서 상품목록 불러오기
+		public List<Product1VO> selectProduct(int arg3){
+			return dao.selectProduct(arg3);
+		}
+		
+	//재고 관리 상세 보기 (사이즈 불러오기)
+	public List<String> selectProductSize(String prodNo){
+		return dao.selectProductSize(prodNo);
+	}
+	
+	//재고 관리 상세 보기 (색상 불러오기)
+	public List<String> selectProductColorName(String prodNo){
+		return dao.selectProductColorName(prodNo);
+	}
+	
+	//재고 관리 상세 보기 (사이즈,색상별 재고 불러오기)
+	public int selectProductSold(String param1,String param2,String param3){
+		return dao.selectProductSold(param1,param2,param3);
+	}
+	
+	//재고 등록하기
+	public int updateStock(String arg0, String arg1, String arg2, String arg3) {
+		return dao.updateStock(arg0, arg1, arg2, arg3);
+	}
+	//총 재고 등록하기
+	public int UpdateTotalStock(String prodNo) {
+		return dao.UpdateTotalStock(prodNo);
 	}
 
 	// 이미지 파일 업로드
