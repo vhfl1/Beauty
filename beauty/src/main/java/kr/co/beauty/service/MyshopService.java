@@ -10,6 +10,7 @@ import kr.co.beauty.dao.MemberDAO;
 import kr.co.beauty.dao.MyshopDAO;
 import kr.co.beauty.vo.MemberVO;
 import kr.co.beauty.vo.MyorderVO;
+import kr.co.beauty.vo.PointVO;
 import kr.co.beauty.vo.WishVO;
 
 @Service
@@ -38,7 +39,26 @@ public class MyshopService {
 	public int countOrderList(String uid, String start, String end) {
 		return daoMy.countOrderList(uid, start, end);
 	}
+	
+	public int orderConfirm (int ordNo) {
+		return daoMy.orderConfirm(ordNo);
+	}
 
+	// point
+	public List<PointVO> selectSavePointListSearchDate (String uid, String start, String end, int pg) {
+		return daoMy.selectSavePointListSearchDate(uid, start, end, pg);
+	}
+	public List<PointVO> selectUsedPointListSearchDate (String uid, String start, String end, int pg) {
+		return daoMy.selectUsedPointListSearchDate(uid, start, end, pg);
+	}
+	public int countSavePointList (String uid, String start, String end) {
+		return daoMy.countSavePointList(uid, start, end);
+	}
+	public int countUsedPointList (String uid, String start, String end) {
+		return daoMy.countUsedPointList(uid, start, end);
+	}
+	
+	
 	// wishlist
 	public int addWish(WishVO vo) {
 		// 중복체크

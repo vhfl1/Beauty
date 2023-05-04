@@ -37,10 +37,60 @@
 		update `member` set `pass`=#{arg1} where `uid`=#{arg0};
 	</update>
 	
+	<!-- 비회원 주문 고객정보 조회 -->
+	<select id="joinNonOrder" resultType="MyorderVO">
+		SELECT 
+				p.`prodNo`,
+				p.`prodName`,
+				p.`thumb1`, 
+				p.`price`, 
+				p.`disPrice`, 
+				p.`company`,
+				o.`ordNo`, 
+				o.`count`, 
+				o.`color`, 
+				o.`size`, 
+				o.`rdate`,
+				oc.`ordComplete`
+			FROM `ordercomplete` AS oc
+			JOIN `order` AS o USING (`ordNo`)
+			JOIN `product` AS p USING (`prodNo`)
+			WHERE `orderer`=#{arg0} AND `orderHp`=#{arg1} AND `ordNo`=#{arg2}
+			ORDER BY o.`rdate` DESC LIMIT 10;
+	</select>
+	<!-- 
+		SELECT count(`ordNo`) FROM `ordercomplete` WHERE `orderer` = #{arg0} 
+		and `orderHp` = #{arg1} and `ordNo` = #{arg2};
+	 -->
+	<!-- 비회원 주문조회 상품목록 -->
+	<!-- 
+	<select id="selectNonOrder" resultType="MyorderVO">
+		SELECT 
+			p.`prodNo`,
+			p.`prodName`,
+			p.`thumb1`, 
+			p.`price`, 
+			p.`disPrice`, 
+			p.`company`,
+			o.`ordNo`, 
+			o.`count`, 
+			o.`color`, 
+			o.`size`, 
+			o.`rdate`,
+			oc.`ordComplete`
+		FROM `ordercomplete` AS oc
+		JOIN `order` AS o USING (`ordNo`)
+		JOIN `product` AS p USING (`prodNo`)
+		WHERE `orderer` = #{arg0} and `orderHp` = #{arg1} and `ordNo` = #{arg2}
+		ORDER BY o.`rdate` DESC LIMIT 10;
+	</select>
+	 -->
 	
 	<!-- 김동근 -->
 	<select id="selectMember" resultType="MemberVO">
-		SELECT * FROM `member`
+		SELECT m.*, SUM(oc.`total`) AS boughtPrice
+		FROM `member` AS m
+		JOIN `ordercomplete` AS oc USING(`uid`)
 		WHERE `uid` = #{uid};
 	</select>
 	

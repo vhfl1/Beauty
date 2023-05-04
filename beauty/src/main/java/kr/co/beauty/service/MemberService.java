@@ -1,5 +1,7 @@
 package kr.co.beauty.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 import kr.co.beauty.dao.MemberDAO;
 import kr.co.beauty.repository.MemberRepo;
 import kr.co.beauty.vo.MemberVO;
+import kr.co.beauty.vo.MyorderVO;
 
 @Service
 public class MemberService {
@@ -16,7 +19,7 @@ public class MemberService {
 
 	@Autowired
 	private MemberRepo repo;
-
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -55,4 +58,15 @@ public class MemberService {
 	public int countByNameAndUid(String name, String uid) {
 		return repo.countByNameAndUid(name, uid);
 	}
+	
+	// 비회원 주문 고객정보 조회
+	public List<MyorderVO> joinNonOrder(String name, String phone, String orderNumber) {
+		return dao.joinNonOrder(name, phone, orderNumber);
+	}
+	
+	// 비회원 주문 상품 리스트
+//	public List<MyorderVO> selectNonOrder(String orderer, String orderHp, String ordNo) {
+//		return dao.selectNonOrder(orderer, orderHp, ordNo);
+//	}
+	
 }

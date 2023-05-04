@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,7 @@ import kr.co.beauty.utils.CookieManager;
 import kr.co.beauty.vo.CartVO;
 import kr.co.beauty.vo.ProdCate2VO;
 import kr.co.beauty.vo.ProductVO;
+import kr.co.beauty.vo.ReplyVO;
 import kr.co.beauty.vo.WishVO;
 import lombok.extern.log4j.Log4j2;
 
@@ -194,11 +196,11 @@ public class ProductController {
 			if (check > 0) { 
 				// 장바구니에 이미 있음(수량 증가)
 				rs = service.updateCart(vo.get(i));
-				log.info("장바구니 새상품 등록");
+				log.info("장바구니 기존상품 업데이트");
 			} else { 
 				// 장바구니에 없음(새로 등록)
 				rs = service.addCart(vo.get(i));
-				log.info("장바구니 기존상품 추가");
+				log.info("장바구니 새상품 추가");
 			}
 		}
 		
@@ -254,6 +256,32 @@ public class ProductController {
 		// JSON 리턴
 		Map<String, Integer> result = new HashMap<>();
 		result.put("result", rs);
+		
+		return result;
+	}
+	
+	// 상품리뷰
+	@ResponseBody
+	@PostMapping("product/review")
+	public Map<String, List<ReplyVO>> productReview(int prodNo, String orderBy, int pg) {
+		
+		log.info("상품보기:: 리뷰");
+		
+		Map<String, List<ReplyVO>> result = new HashMap<>();
+		List<ReplyVO> vo = service.productReply(prodNo, orderBy, pg);
+		result.put("result", vo); 
+		
+		return result;
+	}
+	@ResponseBody
+	@PostMapping("product/reviewCount/{prodNo}")
+	public Map<String, Integer> productReview(@PathVariable("prodNo") int prodNo) {
+		
+		log.info("상품보기:: 댓글개수");
+		
+		Map<String, Integer> result = new HashMap<>();
+		int count = service.countReply(prodNo);
+		result.put("result", count); 
 		
 		return result;
 	}

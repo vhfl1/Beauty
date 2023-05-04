@@ -22,24 +22,6 @@
 		JOIN `product` 		 AS p 	ON o.`prodNo`=p.`prodNo`
 		WHERE uid = #{uid};
 	</select>
-	<select id="selectOrderListByDate" resultType="MyorderVO">
-		SELECT
-			p.`prodNo`,
-			p.`prodName`,
-			p.`thumb1`, 
-			p.`price`, 
-			p.`disPrice`, 
-			p.`company`,
-			o.`ordNo`, 
-			o.`count`, 
-			o.`color`, 
-			o.`size`, 
-			o.`rdate`
-		FROM `ordercomplete` AS oc
-		JOIN `order` AS o USING (`ordNo`)
-		JOIN `product` AS p USING (`prodNo`)
-		WHERE `uid` = #{uid} AND o.`rdate` > DATE_ADD(NOW(), INTERVAL ${date} MONTH);
-	</select>
 	<select id="selectOrderListSearchDate" resultType="MyorderVO">
 		SELECT
 			p.`prodNo`,
@@ -52,7 +34,8 @@
 			o.`count`, 
 			o.`color`, 
 			o.`size`, 
-			o.`rdate`
+			o.`rdate`,
+			oc.`ordComplete`
 		FROM `ordercomplete` AS oc
 		JOIN `order` AS o USING (`ordNo`)
 		JOIN `product` AS p USING (`prodNo`)
@@ -66,7 +49,37 @@
 		JOIN `product` AS p USING (`prodNo`)
 		WHERE `uid` = #{uid} AND DATE(o.`rdate`) BETWEEN #{start} AND #{end};
 	</select>
-
+	<update id="orderConfirm">
+		UPDATE `ordercomplete`
+		SET `ordComplete` = 6
+		WHERE `ordNo` = #{ordNo};
+	</update>
+	
+	<!-- 포인트 -->
+	<select id="selectSavePointListSearchDate" resultType="PointVO">
+		SELECT `ordDate`, `ordNo`, `savePoint`, `ordComplete`
+		FROM `ordercomplete`
+		WHERE `uid` = #{uid} AND DATE(`ordDate`) BETWEEN #{start} AND #{end}
+		ORDER BY `ordDate` DESC LIMIT #{pg}, 10;
+	</select>
+	<select id="countSavePointList" resultType="int">
+		SELECT COUNT(*) 
+		FROM `ordercomplete`
+		WHERE `uid` = #{uid} AND DATE(`ordDate`) BETWEEN #{start} AND #{end};
+	</select>
+	
+	<select id="selectUsedPointListSearchDate" resultType="PointVO">
+		SELECT `ordDate`, `ordNo`, `usedPoint`, `ordComplete`
+		FROM `ordercomplete`
+		WHERE `uid` = #{uid} AND `usedPoint`>0 AND DATE(`ordDate`) BETWEEN #{start} AND #{end}
+		ORDER BY `ordDate` DESC LIMIT #{pg}, 10;
+	</select>
+	<select id="countUsedPointList" resultType="int">
+		SELECT COUNT(*) 
+		FROM `ordercomplete`
+		WHERE `uid` = #{uid} AND `usedPoint`>0 AND DATE(`ordDate`) BETWEEN #{start} AND #{end};
+	</select>
+	
 
 	<!-- 위시리스트 -->
 	<insert id="addWish">

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import kr.co.beauty.vo.CartVO;
 import kr.co.beauty.vo.ProdCate2VO;
 import kr.co.beauty.vo.ProductVO;
+import kr.co.beauty.vo.ReplyVO;
 import kr.co.beauty.vo.WishVO;
 
 @Mapper
@@ -31,4 +32,7 @@ public interface ProductDAO {
 	public int updateCart(CartVO vo);
 	public int addCart(CartVO vo);
 	public void updateHit(String prodNo);
+	
+	public List<ReplyVO> productReply(int arg0, String arg1, int arg2);
+	public int countReply(int prodNo);
 }

@@ -10,6 +10,7 @@ import lombok.ToString;
 public class CartVO {
 	private int cartNo;
 	private String uid;
+	private String cookieUid;
 	private int prodNo;
 	private int count;
 	private String color;

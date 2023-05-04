@@ -10,6 +10,7 @@ import kr.co.beauty.dao.ProductDAO;
 import kr.co.beauty.vo.CartVO;
 import kr.co.beauty.vo.ProdCate2VO;
 import kr.co.beauty.vo.ProductVO;
+import kr.co.beauty.vo.ReplyVO;
 import kr.co.beauty.vo.WishVO;
 
 @Service
@@ -138,4 +139,15 @@ public class ProductService {
 		dao.updateHit(prodNo);
 	}
 
+	public List<ReplyVO> productReply(int prodNo, String orderBy, int pg){
+		
+		pg = (pg - 1) * 10;
+		
+		return dao.productReply(prodNo, orderBy, pg);
+	}
+	
+	public int countReply(int prodNo) {
+		return dao.countReply(prodNo);
+	}
+	
 }

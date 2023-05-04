@@ -75,11 +75,18 @@
                                         <input type="date">
                                         <button type="button" class="btn">조회</button>
                                     </div>
+                                    <div class="typeBtns">
+                                    	<input type="radio" id="save" name="chkType" value="적립" checked="checked">
+                                        <label for="save">적립</label>
+                                        
+                                        <input type="radio" id="used" name="chkType" value="사용">
+                                        <label for="used">사용</label>
+                                    </div>
                                 </div>
 
                                 <!-- 포인트 내역 -->
                                 <div class="pointList">
-                                    <table class="">
+                                    <table id="pointListTable">
                                         <thead>
                                             <tr>
                                                 <th>주문일자</th>
@@ -110,13 +117,11 @@
                                 </div>
                                 <div class="center">
                                     <div class="pagination">
-                                        <a class="firstPage" 	href="#">&laquo;</a>
-                                        <a class="prevPage" 	href="#">&lsaquo;</a>
+                                        <a class="prevPage" href="#">&lsaquo;</a>
                                         
                                             <a href="#" class="active">1</a>
                                         
-                                        <a class="nextPage" 	href="#">&rsaquo;</a>
-                                        <a class="lastPage" 	href="#">&raquo;</a>
+                                        <a class="nextPage" href="#">&rsaquo;</a>
                                     </div>
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 $(function(){
 	var header = $("meta[name='_csrf_header']").attr('content');
 	var token = $("meta[name='_csrf']").attr('content');
-	
+	let type = '적립';
 	let lastPage= 1;
 	let pg 		= 1;
 	let today 	= new Date();
@@ -42,32 +42,13 @@ $(function(){
 		paging		(start, end);
 		getOrderList(start, end);
 	});
+	/* 검색 타입 */
+	$('div.typeBtns > input:radio[name="chkType"]').click(function(){
+		type = $('div.typeBtns > input:radio:checked[name="chkType"]').val();
+		paging		(start, end);
+		getOrderList(start, end);
+	});	
 	
-	/* 리뷰 작성, 구매 확정 버튼 */
-	$(document).on('click', 'table div.tooltip > .btnConfirm', function(){
-		if(confirm('구매를 확정 지으시겠습니까?')){
-			let ordNo = parseInt($(this).parent().children('input[type=hidden]').val());
-			$.ajax({
-				url:'/Beauty/myshop/orderConfirm',
-				type:'POST',
-				data: {'ordNo':ordNo},
-				dataType:'json',
-				beforeSend: function(xhr){
-	        		xhr.setRequestHeader(header, token);
-			    },
-				success:function(data){
-					//버튼 변경 구매 확정 -> 리뷰 작성
-					getOrderList(start, end);
-					alert('구매가 확정되었습니다!');
-				}
-			});
-		}else{
-			return false;
-		}
-	 });
-	 $(document).on('click', 'table div.tooltip > .btnReview', function(){
-		//todo
-	 });
 	
 	/* 페이지 처리 */
 	//페이지 숫자 클릭시
@@ -104,9 +85,10 @@ $(function(){
 	//페이지 버튼 생성
 	function paging(start, end){
 		$.ajax({
-			url:'/Beauty/myshop/countOrderList',
+			url:'/Beauty/myshop/countPointList',
 			type:'POST',
 			data:{
+				'type'	: type,
 				'start'	: start,
 				'end'	: end
 			},
@@ -139,9 +121,10 @@ $(function(){
 	//리스트 가져오기
 	function getOrderList(start, end){
 		$.ajax({
-			url:'/Beauty/myshop/myorderSearchDate',
+			url:'/Beauty/myshop/pointSearchDate',
 			type:'POST',
 			data:{
+				'type'	: type,
 				'start'	: start,
 				'end'	: end,
 				'pg'	: pg
@@ -151,10 +134,10 @@ $(function(){
         		xhr.setRequestHeader(header, token);
 		    },
 			success:function(data){
-				$('#orderListTable > tbody').empty();
+				$('#pointListTable > tbody').empty();
 				inputOrderList(data);
 				//테이블이 비었으면
-				if($('#orderListTable > tbody').children().length == 0){
+				if($('#pointListTable > tbody').children().length == 0){
 					emptyTable();
 				}
 			}
@@ -165,29 +148,20 @@ $(function(){
 	function inputOrderList(data){
 		for (order of data) {
 			let tag = "";
-			tag += '<tr><td><div>';
-			tag += '<a href="#"><img src="/Beauty/image/'+ order.thumb1 +'" alt=""/></a>';
-			tag += '<ul class="info">';
-			tag += '<li id="company"><a href="#">'+ order.company +'</a></li>';
-			tag += '<li id="prodName"><a href="/shop/view?pno='+ order.prodNo +'">'+ order.prodName +'</a></li>';
-			tag += '<li id="option">[옵션 : '+ order.color +', '+ order.size +']</li>';
-			tag += '</ul></div></td>';
-			tag += '<td>'+ order.rdate +'</td>';
-			tag += '<td><a href="#">'+ order.ordNo +'</a></td>';
-			tag += '<td><span id="disPrice">'+ order.totalPrice.toLocaleString() +'원</span><br/>';
-			tag += '<span id="count">'+ order.count.toLocaleString() +'개</span></td>';
-			tag += '<td><div class="btn-set tooltip">';
-			tag += '<button type="button" class="btn btnTrack">배송 조회</button><br/>';
-			if(order.ordComplete == 6){
-				tag += '<button type="button" class="btn btnReview">리뷰 작성</button><br/>';
+			tag += '<tr>';
+			tag += '<td id="ordDate">'+ order.ordDate +'</td>';
+			tag += '<td>'+ type +'</td>';
+			tag += '<td><a href="#" id="ordNo">'+ order.ordNo +'</a></td>';
+			if(type == '적립'){
+				tag += '<td><span id="point">'+ order.savePoint +'</span></td>';
 			}else{
-				tag += '<button type="button" class="btn btnConfirm">구매 확정</button><br/>';	
+				tag += '<td><span id="point">'+ order.usedPoint +'</span></td>';
 			}
-			tag += '<button type="button" class="btn">반품/교환</button>';
-			tag += '<input type="hidden" value="'+ order.ordNo +'"/>';
-			tag += '</div></td></tr>';
+			tag += '<td id="descript">상품 구매확정</td>';
+			tag += '<td>'+ formatExpire('20'+order.ordDate) +'</td>'
+			tag += '</tr>';
 			
-			$('#orderListTable > tbody').append(tag);
+			$('#pointListTable > tbody').append(tag);
 		}
 	}
 	
@@ -195,8 +169,8 @@ $(function(){
 	function emptyTable(){
 		//카트 비었으면
 		//테이블, 토탈테이블 삭제, div.emptyCart 삽입
-		let tag = "<tr><td colspan='5'>장바구니에 담긴 상품이 없습니다.</td></tr>";
-		$('#orderListTable > tbody').append(tag);
+		let tag = "<tr><td colspan='5'>포인트 "+ type +"내역이 없습니다.</td></tr>";
+		$('#pointListTable > tbody').append(tag);
 	}
 	
 	//날짜 포매팅 'yyyy-MM-dd'
@@ -210,8 +184,16 @@ $(function(){
 	        month = '0' + month;
 	    if (day.length < 2) 
 	        day = '0' + day;
-	
+		//윤년처리 해줄것
 	    return [year, month, day].join('-');
 	}
+	
+	//유효 기간 포매팅
+	function formatExpire(ordDate){
+		console.log(ordDate);
+		var date = new Date(ordDate);
+		date.setFullYear(date.getFullYear()+1);
+		return formatDate(date);
+	} 
 
 });

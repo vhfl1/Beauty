@@ -86,7 +86,7 @@ $(function() {
 	// 아이디 찾기
 	$('.btnId').click(function() {
 
-		//		console.log('here1');
+//		console.log('here1');
 
 		let name = $('input[name=name]').val();
 		let phone = $('input[name=phone]').val();
@@ -96,7 +96,7 @@ $(function() {
 			"phone": phone
 		};
 		console.log(jsonData);
-		//		console.log('here2');
+//		console.log('here2');
 		$.ajax({
 			url: '/Beauty/member/find1',
 			type: 'post',
@@ -185,9 +185,9 @@ $(function() {
 				type: 'post',
 				data: jsonData,
 				dataType: 'json',
-				beforeSend: function(xhr){
-		        	xhr.setRequestHeader(header, token);
-		    	},
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader(header, token);
+				},
 				success: function(data) {
 					if (data == 1) {
 						location.href = "/Beauty/member/findPwResult";
@@ -205,53 +205,7 @@ $(function() {
 	});
 
 
-	// 비밀번호 변경
-	$('.changePw').click(function(e) {
-		e.preventDefault();
-
-		let uid = $('.uid').text();
-		let pass1 = $('input[name=pass1]').val();
-		let pass2 = $('input[name=pass2]').val();
-
-		console.log("hr1 : " + pass1);
-		console.log("hr2 : " + pass2);
-
-		if (pass1 != pass2) {
-			alert('비밀번호가 일치하지 않습니다.\n다시 입력해주세요.');
-			return;
-		}
-		console.log("hr3");
-
-		if (!pass2.match(regPass)) {
-			alert('영문, 숫자, 특수문자 조합하여 8~12자이어야 합니다.');
-			return;
-		}
-
-		let jsonData = {
-			"uid": uid,
-			"pass": pass2
-		};
-		console.log(jsonData);
-
-		$.ajax({
-			url: '/Beauty/member/findPwResult',
-			type: 'post',
-			data: jsonData,
-			dataType: 'json',
-			beforeSend: function(xhr){
-	        	xhr.setRequestHeader(header, token);
-	    	},
-			success: function(data) {
-				console.log("hr4 : " + JSON.stringify(data))
-
-				if (data.result == 0) {
-					console.log("hr5")
-					alert('비밀번호가 변경되었습니다.\n다시 로그인 하십시오.');
-					location.href = "/Beauty/member/login";
-				}
-			}
-		});
-	});
+	
 	
 
 	// 인증번호 타이머

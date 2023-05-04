@@ -23,7 +23,7 @@ public class MyorderVO {
 	private String color;
 	private String size;
 	private String rdate;
-	
+	private int ordComplete;
 	
 	public String getRdate() {
 		return rdate.substring(2,10);

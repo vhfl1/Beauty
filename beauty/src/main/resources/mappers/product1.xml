@@ -87,7 +87,7 @@
 		VALUES (#{prodNo}, #{uid}, NOW());
 	</insert>
 	<select id="checkCart" resultType="int">
-		SELECT COUNT(`prodNo`) FROM `cart` WHERE `prodNo`=#{prodNo} AND `color`=#{color} AND `size`=#{size};
+		SELECT COUNT(`prodNo`) FROM `cart` WHERE `prodNo`=#{prodNo} AND `color`=#{color} AND `size`=#{size} AND `uid`=#{uid} OR `uid`=#{cookieUid};
 	</select>
 	<update id="updateCart">
 		UPDATE `cart` SET `count`=`count`+#{count} WHERE `prodNo`=#{prodNo} AND `color`=#{color} AND `size`=#{size};
@@ -99,4 +99,12 @@
 	<update id="updateHit">
 		UPDATE `product` SET `hit`=`hit`+1 WHERE `prodNo`=#{prodNo};
 	</update>
+	
+	<!-- 상품 Review -->
+	<select id="productReply" resultType="ReplyVO">
+		SELECT * FROM `reply` WHERE `prodNo`=#{arg0} ${arg1} LIMIT #{arg2},10;
+	</select>
+	<select id="countReply" resultType="int">
+		SELECT COUNT(`no`) FROM `reply` WHERE `prodNo`=#{prodNo};
+	</select>
 </mapper>

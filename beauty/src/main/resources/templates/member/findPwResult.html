@@ -11,7 +11,7 @@
 	<link rel="stylesheet" th:href="@{/css/index.css}">
 	<link rel="stylesheet" th:href="@{/css/member/findPwResult.css}">
 	<!-- js -->
-	<script th:src="@{/js/member/find.js}"></script>
+	<script th:src="@{/js/member/findPwResult.js}"></script>
 
 	<th:block th:replace="~{_header :: headerFragment}"></th:block>
 </head>
@@ -21,7 +21,7 @@
 			<h2>비밀번호 찾기 결과</h2>
 			<div class="findPw">
 				<fieldset>
-					<h2 class="uid">고객님의 아이디는 <strong>[[${uid}]]</strong> 입니다.</h2>
+					<h2>고객님의 아이디는 <strong class="uid">[[${uid}]]</strong> 입니다.</h2>
 					<table border="0">
 						<tr>
 							<td>새 비밀번호</td>

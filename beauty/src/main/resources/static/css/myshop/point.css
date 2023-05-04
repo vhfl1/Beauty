@@ -74,6 +74,17 @@ div.pointFrame > div.byDate input[type=radio]:checked+label{
     border-color: #777;
 }
 
+/* 타입 선택 */
+div.pointFrame > div.byDate {
+	position: relative;
+}
+div.pointFrame > div.byDate > div.typeBtns {
+    display: inline-block;
+    position: absolute;
+    top: 1px;
+    right: 20px;
+}
+
 
 /* 아이템 반복 */
 div.pointFrame > div.pointList > table {

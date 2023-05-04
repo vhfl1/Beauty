@@ -24,27 +24,39 @@
 	                <img th:src="@{/img/default_profile.png}" alt="">
 	            </a>
 	        </div>
-	        <div class="userInfo" th:with="levelPoint=${2500}">
+	        <div class="userInfo" th:with="levelPoint=${member.boughtPrice / 100}">
 	            <div><span id="userNick" th:text="${member.name}"></span>님</div>
 	            
 	            <!-- 등급 -->
-	            <th:block th:if="${levelPoint < 1000}">
-		            <div>Lv.<span id="level">0</span> <span id="levelName">브론즈</span></div>
+	            <th:block th:if="${member.level == '0'}">
+		            <div>
+		            	Lv.<span id="level">0</span>
+		            	<span id="levelName">브론즈</span>
+		            	<span id="levelNext" th:text="'(다음 레벨까지 ' + ${#numbers.formatInteger(1000-levelPoint, 0, 'COMMA')} + '포인트 남았습니다.)'"></span>
+		            </div>
 	            </th:block>
-	            <th:block th:if="${levelPoint < 3000 && 1000 < levelPoint}">
-		            <div>Lv.<span id="level">1</span> <span id="levelName">실버</span></div>
+	            <th:block th:if="${member.level == '1'}">
+		            <div>
+		            	Lv.<span id="level">1</span>
+		            	<span id="levelName">실버</span>
+		            	<span id="levelNext" th:text="'(다음 레벨까지 ' + ${#numbers.formatInteger(3000-levelPoint, 0, 'COMMA')} + '포인트 남았습니다.)'">
+		            </div>
 	            </th:block>
-	            <th:block th:if="${levelPoint < 10000 && 3000 < levelPoint}">
-		            <div>Lv.<span id="level">2</span> <span id="levelName">골드</span></div>
+	            <th:block th:if="${member.level == '2'}">
+		            <div>
+		            	Lv.<span id="level">2</span>
+		            	<span id="levelName">골드</span>
+		            	<span id="levelNext" th:text="'(다음 레벨까지 ' + ${#numbers.formatInteger(10000-levelPoint, 0, 'COMMA')} + '포인트 남았습니다.)'">
+		            </div>
 	            </th:block>
-	            <th:block th:if="${10000 < levelPoint}">
+	            <th:block th:if="${member.level == '3'}">
 		            <div>Lv.<span id="level">3</span> <span id="levelName">다이아몬드</span></div>
 	            </th:block>
 	            
 	            <div>
 	                <div class="boughtPrice">
 	                    <span>누적 구매 금액</span>
-	                    <span id="boughtPrice">250,000</span>
+	                    <span id="boughtPrice" th:text="${#numbers.formatInteger(member.boughtPrice, 0, 'COMMA')}"></span>
 	                </div>
 	                <div class="point">
 	                    <span>현재 포인트</span>

@@ -24,6 +24,7 @@ import kr.co.beauty.service.MyshopService;
 import kr.co.beauty.service.UtilService;
 import kr.co.beauty.vo.MemberVO;
 import kr.co.beauty.vo.MyorderVO;
+import kr.co.beauty.vo.PointVO;
 import kr.co.beauty.vo.WishVO;
 
 @Controller
@@ -104,7 +105,23 @@ public class MyshopController {
 	public String track() {
 		return "myshop/track";
 	}
-
+	
+	// 구매 확정
+	@ResponseBody
+	@PostMapping("myshop/orderConfirm")
+	public int orderConfirm(@RequestParam("ordNo") int ordNo) {
+		return service.orderConfirm(ordNo);
+	}
+	
+	/*
+	// 리뷰 작성
+	@GetMapping("myshop/track")
+	public String track() {
+		return "myshop/track";
+	}
+	*/
+	
+	
 	/* 쿠폰 */
 	@GetMapping("myshop/coupon")
 	public String coupon(Principal principal, Model model, HttpSession session, @CookieValue(required = false)String nomember) {
@@ -147,6 +164,35 @@ public class MyshopController {
 		}
 		model.addAttribute("cartCount", cartCount);
 		return "myshop/point";
+	}
+	
+	@ResponseBody
+	@PostMapping("myshop/pointSearchDate")
+	public List<PointVO> pointSearchDate(Principal principal, @RequestParam("pg") int pg,
+			@RequestParam("end") String end, @RequestParam("start") String start, @RequestParam("type") String type) {
+		List<PointVO> orderList = new ArrayList<>();
+		if (principal != null) {
+			// 내 주문내역 가져오기
+			int limitstart = (pg - 1) * 10;
+			if(type.equals("적립")) {
+				orderList = service.selectSavePointListSearchDate(principal.getName(), start, end, limitstart);
+			}else {
+				orderList = service.selectUsedPointListSearchDate(principal.getName(), start, end, limitstart);
+			}
+		}
+		
+		return orderList;
+	}
+
+	@ResponseBody
+	@PostMapping("myshop/countPointList")
+	public int countPointList(Principal principal, @RequestParam("end") String end,
+			@RequestParam("start") String start, @RequestParam("type") String type) {
+		if(type.equals("적립")) {
+			return service.countSavePointList(principal.getName(), start, end);
+		}else {
+			return service.countUsedPointList(principal.getName(), start, end);
+		}
 	}
 
 	/* 1:1문의 */

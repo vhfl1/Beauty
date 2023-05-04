@@ -143,8 +143,10 @@ $(function() {
 			alert('이메일을 입력해주세요');
 			return;
 		}
+		/*
 		// 인증번호 타이머
 		timer();
+		*/
 		$.ajax({
 			url: '/Beauty/member/emailAuth',
 			method: 'post',
@@ -194,7 +196,7 @@ $(function() {
 		}
 	});
 
-
+/*
 	// 인증번호 타이머
 	function timer() {
 
@@ -235,8 +237,7 @@ $(function() {
 		AuthTimer.domId = document.getElementById("timer");
 
 	}
-
-
+*/
 
 
 });
