@@ -30,8 +30,8 @@ public class MemberVO {
 	private String addr2;
 	private String regip;
 	private String rdate;
-	private int height;
-	private int weight;
+	private String height;
+	private String weight;
 	
 	private String phone1;
 	private String phone2;

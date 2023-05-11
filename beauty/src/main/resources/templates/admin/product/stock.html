@@ -16,7 +16,8 @@
             <section id="admin-product-stock">
                 <table>
                     <tr>
-                        <th>상품번호</th>
+                    	<th>상품번호</th>
+                        <th>사진</th>
                         <th>대분류</th>
                         <th>소분류</th>
                         <th>상품명</th>
@@ -26,13 +27,14 @@
                     </tr>
                     <tr th:each="prod:${products}">
                     	<td>[[${prod.prodNo}]]</td>
+                    	<td><img th:src="@{/image/}+${prod.thumb1}"></td>
                     	<td>[[${prod.c1Name}]]</td>
                     	<td>[[${prod.c2Name}]]</td>
                     	<td>[[${prod.prodName}]]</td>
                     	<td>[[${prod.price - prod.disPrice}]]</td>
                     	<td>[[${prod.stock}]]</td>
                     	<td>
-                    		<button class='btnModify' th:value="${prod.prodNo}">재고등록</button><br>
+                    		<button class='btnModify' th:value="${prod.prodNo}">재고추가</button><br>
                     		<button class='more' th:value="${prod.prodNo}">상세보기</button>
                     	</td>
                     </tr>
@@ -58,12 +60,13 @@
 			    	<table id="selectOption">
 			    		
 			    	</table>
-			    	<button class="btnRegister">등록</button>
+			    	<button class="btnRegister">추가</button>
 				  </div>
 				</div>
 				<div id="myModal" class="modal">
 				  <div class="modal-content">
 				    <span class="close">&times;</span>
+				    <nav id="prodNo2"></nav>
 				    <p id="modalData"></p>
 				  </div>
 				</div>

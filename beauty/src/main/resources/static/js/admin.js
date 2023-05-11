@@ -310,336 +310,290 @@ $(document).ready(function(){
 	    $("#cate2").val(cate2);
 	    console.log(cate2);
 	  });
-
-
-
-/* product-register 카테고리 분류 */
-function cateChange(){
-    		let outer = ["가디건","자켓/코트","패딩/점퍼","집업/조끼"];
-    		let top = ["티셔츠","니트/스웨터","맨투맨/후드","조끼/나시"];
-    		let bottom = ["스커트","데님","팬츠","슬랙스","레깅스"];
-    		let dress = ["원피스","투피스","점프수트"];
-    		let etc = ["신발","가방","모자","쥬얼리"];
-    		
-    		let outerV=[101,102,103,104];
-    		let topV=[201,202,203,204,205];
-    		let bottomV=[301,302,303,304,305];
-    		let dressV=[401,402,403];
-    		let etcV=[501,502,503,504];
-    		
-    		let target = $("#cate1").val();
-    		let opt;
-    		let optV;
-    		//console.log(target);
-    		if(target == '100'){
-    			opt = outer;
-    			optV= outerV;
-    		}else if(target == '200'){
-    			opt = top;
-    			optV= topV;
-    		}else if(target == '300'){
-    			opt = bottom;
-    			optV= bottomV;
-    		}else if(target == '400'){
-    			opt = dress;
-    			optV= dressV;
-    		}else if(target == '500'){
-    			opt = etc;
-    			optV= etcV;
-    		}
-    		
-    		$("#cate2").empty();
-    		$("#cate2").append('<option value="0">소분류 선택</option>');
-    		
-    		for(var i = 0; i < opt.length; i++){
-    			$("#cate2").append('<option value="'+optV[i]+'">'+opt[i]+'</option>');
-    		}
-    		
-    	}
     	
-    	
-    	//상품등록
-    	$(document).on("click",".register",function(e){
-    		e.preventDefault();
-    	
-			//색상,사이즈 선택된 값을 담을 배열
-			var colorArr = [];
-			var colorNameArr = [];
-			var sizeArr = [];
-			//색상 체크박스를 선택했을 때
-			$("input[name=color]:checked").each(function(){
-				colorArr.push($(this).val());
-			});
-			
-			$("input[name=color]:checked").each(function(){
-				var label =$(this).parent();
-	    		
-	    		var text = label.contents().filter(function(){
-	    			return this.nodeType === Node.TEXT_NODE;
-	    		}).text().trim();
-				colorNameArr.push(text);
-			});
-			
-			//사이즈 체크박스를 선택했을 때
-			$("input[name=size]:checked").each(function(){
-				sizeArr.push($(this).val());
-			});
-			
-			//폼에 선택된 색상,사이즈 배열 추가하기
-			var form=$("#productForm")[0];
-			var formData = new FormData(form);
-			for (var i = 0; i < colorArr.length; i++) {
-			    formData.append("colorArr[]", colorArr[i]);
-			    formData.append("colorNameArr[]", colorNameArr[i]);
-			}
-			for (var i = 0; i < sizeArr.length; i++) {
-			    formData.append("sizeArr[]", sizeArr[i]);
-			}
-			
-			var header = $("meta[name='_csrf_header']").attr('content');
-			var token = $("meta[name='_csrf']").attr('content');
-			
-			//카테고리를 선택하지 않았을 경우
-			if($("#cate2").val()=='0'){
-				alert("카테고리를 선택해주세요.");
-			//색상을 선택하지 않았을 경우
-			}else if(colorArr.length == 0){
-				alert("선택된 색상이 없습니다.");
-			}else{
-				fileUpload(function(){
-					//ajax 요청 보내기
-					$.ajax({
-						url:'/Beauty/admin/product/register',
-						beforeSend: function(xhr){
-					        xhr.setRequestHeader(header, token);
-					    },
-						type:'post',
-						data:formData,
-						cache: false,
-				        contentType: false,
-				        processData: false,
-						success:function(data){
-							location.href="/Beauty/admin/product/list";
-						}	
-					});
+/* admin-product-register */    	
+	//상품등록
+	$(document).on("click",".register",function(e){
+		e.preventDefault();
+
+		//색상,사이즈 선택된 값을 담을 배열
+		var colorArr = [];
+		var colorNameArr = [];
+		var sizeArr = [];
+		//색상 체크박스를 선택했을 때
+		$("input[name=color]:checked").each(function(){
+			colorArr.push($(this).val());
+		});
+		
+		$("input[name=color]:checked").each(function(){
+			var label =$(this).parent();
+    		
+    		var text = label.contents().filter(function(){
+    			return this.nodeType === Node.TEXT_NODE;
+    		}).text().trim();
+			colorNameArr.push(text);
+		});
+		
+		//사이즈 체크박스를 선택했을 때
+		$("input[name=size]:checked").each(function(){
+			sizeArr.push($(this).val());
+		});
+		
+		//폼에 선택된 색상,사이즈 배열 추가하기
+		var form=$("#productForm")[0];
+		var formData = new FormData(form);
+		for (var i = 0; i < colorArr.length; i++) {
+		    formData.append("colorArr[]", colorArr[i]);
+		    formData.append("colorNameArr[]", colorNameArr[i]);
+		}
+		for (var i = 0; i < sizeArr.length; i++) {
+		    formData.append("sizeArr[]", sizeArr[i]);
+		}
+		
+		var header = $("meta[name='_csrf_header']").attr('content');
+		var token = $("meta[name='_csrf']").attr('content');
+		
+		//카테고리를 선택하지 않았을 경우
+		if($("#cate2").val()=='0'){
+			alert("카테고리를 선택해주세요.");
+		//색상을 선택하지 않았을 경우
+		}else if(colorArr.length == 0){
+			alert("선택된 색상이 없습니다.");
+		}else{
+			fileUpload(function(){
+				//ajax 요청 보내기
+				$.ajax({
+					url:'/Beauty/admin/product/register',
+					beforeSend: function(xhr){
+				        xhr.setRequestHeader(header, token);
+				    },
+					type:'post',
+					data:formData,
+					cache: false,
+			        contentType: false,
+			        processData: false,
+					success:function(data){
+						location.href="/Beauty/admin/product/list";
+					}	
 				});
-				
-			}
-    	});
-    	
-    	//포인트 계산(할인가의 1%)
-    	$(document).on("input","#discount",function(){
-    		let price=$("#price").val();
-        	let discount=$("#discount").val();
-        	let disPrice =price*(discount/100);
-        	console.log(disPrice);
-			$("#point").val(Math.ceil((price-disPrice)*1/100));
-    	});
-    	
-    	//이미지파일 유효성 검사
-    	function fileUpload(callback){
-			var imgFile = $('#isFile1').val();
-			var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-			var maxSize = 5 * 1024 * 1024;
-			var fileSize;
+			});
 			
-			if($('#isFile1').val() == "") {
-				alert("첨부파일은 필수!");
-			    $("#isFile1").focus();
-			    return;
-			}
-			
-			if(imgFile != "" && imgFile != null) {
-				fileSize = document.getElementById("isFile1").files[0].size;
-			    console.log(fileSize);
-			    console.log(maxSize);
-			    if(!imgFile.match(fileForm)) {
-			    	alert("이미지 파일만 업로드 가능");
-			        return;
-			    } else if(fileSize > maxSize) {
-			    	alert("파일 사이즈는 5MB까지 가능");
-			        return;
-			    }
-			}
-			var imgFile = $('#isFile2').val();
-			var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-			var maxSize = 5 * 1024 * 1024;
-			var fileSize;
-			
-			if($('#isFile2').val() == "") {
-				alert("첨부파일은 필수!");
-			    $("#isFile2").focus();
-			    return;
-			}
-			
-			if(imgFile != "" && imgFile != null) {
-				fileSize = document.getElementById("isFile2").files[0].size;
-			    
-			    if(!imgFile.match(fileForm)) {
-			    	alert("이미지 파일만 업로드 가능");
-			        return;
-			    } else if(fileSize > maxSize) {
-			    	alert("파일 사이즈는 5MB까지 가능");
-			        return;
-			    }
-			}
-			var imgFile = $('#isFile3').val();
-			var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-			var maxSize = 5 * 1024 * 1024;
-			var fileSize;
-			
-			if($('#isFile3').val() == "") {
-				alert("첨부파일은 필수!");
-			    $("#isFile3").focus();
-			    return;
-			}
-			
-			if(imgFile != "" && imgFile != null) {
-				fileSize = document.getElementById("isFile3").files[0].size;
-			    
-			    if(!imgFile.match(fileForm)) {
-			    	alert("이미지 파일만 업로드 가능");
-			        return;
-			    } else if(fileSize > maxSize) {
-			    	alert("파일 사이즈는 5MB까지 가능");
-			        return;
-			    }
-			}
-			var imgFile = $('#isFile4').val();
-			var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-			var maxSize = 5 * 1024 * 1024;
-			var fileSize;
-			
-			if($('#isFile4').val() == "") {
-				alert("첨부파일은 필수!");
-			    $("#isFile4").focus();
-			    return;
-			}
-			
-			if(imgFile != "" && imgFile != null) {
-				fileSize = document.getElementById("isFile4").files[0].size;
-			    
-			    if(!imgFile.match(fileForm)) {
-			    	alert("이미지 파일만 업로드 가능");
-			        return;
-			    } else if(fileSize > maxSize) {
-			    	alert("파일 사이즈는 5MB까지 가능");
-			        return;
-			    }
-			}
-			var imgFile = $('#isFile5').val();
-			var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-			var maxSize = 5 * 1024 * 1024;
-			var fileSize;
-			
-			if($('#isFile5').val() == "") {
-				alert("첨부파일은 필수!");
-			    $("#isFile5").focus();
-			    return;
-			}
-			
-			if(imgFile != "" && imgFile != null) {
-				fileSize = document.getElementById("isFile5").files[0].size;
-			    
-			    if(!imgFile.match(fileForm)) {
-			    	alert("이미지 파일만 업로드 가능");
-			        return;
-			    } else if(fileSize > maxSize) {
-			    	alert("파일 사이즈는 5MB까지 가능");
-			        return;
-			    }
-			}
-			var imgFile = $('#isFile6').val();
-			var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-			var maxSize = 5 * 1024 * 1024;
-			var fileSize;
-			
-			if($('#isFile6').val() == "") {
-				alert("첨부파일은 필수!");
-			    $("#isFile6").focus();
-			    return;
-			}
-			
-			if(imgFile != "" && imgFile != null) {
-				fileSize = document.getElementById("isFile6").files[0].size;
-			    
-			    if(!imgFile.match(fileForm)) {
-			    	alert("이미지 파일만 업로드 가능");
-			        return;
-			    } else if(fileSize > maxSize) {
-			    	alert("파일 사이즈는 5MB까지 가능");
-			        return;
-			    }
-			}
-			var imgFile = $('#isFile7').val();
-			var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-			var maxSize = 5 * 1024 * 1024;
-			var fileSize;
-			
-			if($('#isFile7').val() == "") {
-				alert("첨부파일은 필수!");
-			    $("#isFile7").focus();
-			    return;
-			}
-			
-			if(imgFile != "" && imgFile != null) {
-				fileSize = document.getElementById("isFile7").files[0].size;
-			    
-			    if(!imgFile.match(fileForm)) {
-			    	alert("이미지 파일만 업로드 가능");
-			        return;
-			    } else if(fileSize > maxSize) {
-			    	alert("파일 사이즈는 5MB까지 가능");
-			        return;
-			    }
-			}
-			var imgFile = $('#isFile8').val();
-			var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-			var maxSize = 5 * 1024 * 1024;
-			var fileSize;
-			
-			if($('#isFile8').val() == "") {
-				alert("첨부파일은 필수!");
-			    $("#isFile8").focus();
-			    return;
-			}
-			
-			if(imgFile != "" && imgFile != null) {
-				fileSize = document.getElementById("isFile8").files[0].size;
-			    
-			    if(!imgFile.match(fileForm)) {
-			    	alert("이미지 파일만 업로드 가능");
-			        return;
-			    } else if(fileSize > maxSize) {
-			    	alert("파일 사이즈는 5MB까지 가능");
-			        return;
-			    }
-			}
-			var imgFile = $('#isFile9').val();
-			var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-			var maxSize = 5 * 1024 * 1024;
-			var fileSize;
-			
-			if($('#isFile9').val() == "") {
-				alert("첨부파일은 필수!");
-			    $("#isFile9").focus();
-			    return;
-			}
-			
-			if(imgFile != "" && imgFile != null) {
-				fileSize = document.getElementById("isFile9").files[0].size;
-			    
-			    if(!imgFile.match(fileForm)) {
-			    	alert("이미지 파일만 업로드 가능");
-			        return;
-			    } else if(fileSize > maxSize) {
-			    	alert("파일 사이즈는 5MB까지 가능");
-			        return;
-			    }
-			}
-			//유효성 검사 끝나면 ajax 요청 보내기
-			callback();
-		}	
+		}
+	});
+	
+	//포인트 계산(할인가의 1%)
+	$(document).on("input","#discount",function(){
+		let price=$("#price").val();
+    	let discount=$("#discount").val();
+    	let disPrice =price*(discount/100);
+    	console.log(disPrice);
+		$("#point").val(Math.ceil((price-disPrice)*1/100));
+	});
+	
+	//이미지파일 유효성 검사
+	function fileUpload(callback){
+		var imgFile = $('#isFile1').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 5 * 1024 * 1024;
+		var fileSize;
+		
+		if($('#isFile1').val() == "") {
+			alert("첨부파일은 필수!");
+		    $("#isFile1").focus();
+		    return;
+		}
+		
+		if(imgFile != "" && imgFile != null) {
+			fileSize = document.getElementById("isFile1").files[0].size;
+		    console.log(fileSize);
+		    console.log(maxSize);
+		    if(!imgFile.match(fileForm)) {
+		    	alert("이미지 파일만 업로드 가능");
+		        return;
+		    } else if(fileSize > maxSize) {
+		    	alert("파일 사이즈는 5MB까지 가능");
+		        return;
+		    }
+		}
+		var imgFile = $('#isFile2').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 5 * 1024 * 1024;
+		var fileSize;
+		
+		if($('#isFile2').val() == "") {
+			alert("첨부파일은 필수!");
+		    $("#isFile2").focus();
+		    return;
+		}
+		
+		if(imgFile != "" && imgFile != null) {
+			fileSize = document.getElementById("isFile2").files[0].size;
+		    
+		    if(!imgFile.match(fileForm)) {
+		    	alert("이미지 파일만 업로드 가능");
+		        return;
+		    } else if(fileSize > maxSize) {
+		    	alert("파일 사이즈는 5MB까지 가능");
+		        return;
+		    }
+		}
+		var imgFile = $('#isFile3').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 5 * 1024 * 1024;
+		var fileSize;
+		
+		if($('#isFile3').val() == "") {
+			alert("첨부파일은 필수!");
+		    $("#isFile3").focus();
+		    return;
+		}
+		
+		if(imgFile != "" && imgFile != null) {
+			fileSize = document.getElementById("isFile3").files[0].size;
+		    
+		    if(!imgFile.match(fileForm)) {
+		    	alert("이미지 파일만 업로드 가능");
+		        return;
+		    } else if(fileSize > maxSize) {
+		    	alert("파일 사이즈는 5MB까지 가능");
+		        return;
+		    }
+		}
+		var imgFile = $('#isFile4').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 5 * 1024 * 1024;
+		var fileSize;
+		
+		if($('#isFile4').val() == "") {
+			alert("첨부파일은 필수!");
+		    $("#isFile4").focus();
+		    return;
+		}
+		
+		if(imgFile != "" && imgFile != null) {
+			fileSize = document.getElementById("isFile4").files[0].size;
+		    
+		    if(!imgFile.match(fileForm)) {
+		    	alert("이미지 파일만 업로드 가능");
+		        return;
+		    } else if(fileSize > maxSize) {
+		    	alert("파일 사이즈는 5MB까지 가능");
+		        return;
+		    }
+		}
+		var imgFile = $('#isFile5').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 5 * 1024 * 1024;
+		var fileSize;
+		
+		if($('#isFile5').val() == "") {
+			alert("첨부파일은 필수!");
+		    $("#isFile5").focus();
+		    return;
+		}
+		
+		if(imgFile != "" && imgFile != null) {
+			fileSize = document.getElementById("isFile5").files[0].size;
+		    
+		    if(!imgFile.match(fileForm)) {
+		    	alert("이미지 파일만 업로드 가능");
+		        return;
+		    } else if(fileSize > maxSize) {
+		    	alert("파일 사이즈는 5MB까지 가능");
+		        return;
+		    }
+		}
+		var imgFile = $('#isFile6').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 5 * 1024 * 1024;
+		var fileSize;
+		
+		if($('#isFile6').val() == "") {
+			alert("첨부파일은 필수!");
+		    $("#isFile6").focus();
+		    return;
+		}
+		
+		if(imgFile != "" && imgFile != null) {
+			fileSize = document.getElementById("isFile6").files[0].size;
+		    
+		    if(!imgFile.match(fileForm)) {
+		    	alert("이미지 파일만 업로드 가능");
+		        return;
+		    } else if(fileSize > maxSize) {
+		    	alert("파일 사이즈는 5MB까지 가능");
+		        return;
+		    }
+		}
+		var imgFile = $('#isFile7').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 5 * 1024 * 1024;
+		var fileSize;
+		
+		if($('#isFile7').val() == "") {
+			alert("첨부파일은 필수!");
+		    $("#isFile7").focus();
+		    return;
+		}
+		
+		if(imgFile != "" && imgFile != null) {
+			fileSize = document.getElementById("isFile7").files[0].size;
+		    
+		    if(!imgFile.match(fileForm)) {
+		    	alert("이미지 파일만 업로드 가능");
+		        return;
+		    } else if(fileSize > maxSize) {
+		    	alert("파일 사이즈는 5MB까지 가능");
+		        return;
+		    }
+		}
+		var imgFile = $('#isFile8').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 5 * 1024 * 1024;
+		var fileSize;
+		
+		if($('#isFile8').val() == "") {
+			alert("첨부파일은 필수!");
+		    $("#isFile8").focus();
+		    return;
+		}
+		
+		if(imgFile != "" && imgFile != null) {
+			fileSize = document.getElementById("isFile8").files[0].size;
+		    
+		    if(!imgFile.match(fileForm)) {
+		    	alert("이미지 파일만 업로드 가능");
+		        return;
+		    } else if(fileSize > maxSize) {
+		    	alert("파일 사이즈는 5MB까지 가능");
+		        return;
+		    }
+		}
+		var imgFile = $('#isFile9').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 5 * 1024 * 1024;
+		var fileSize;
+		
+		if($('#isFile9').val() == "") {
+			alert("첨부파일은 필수!");
+		    $("#isFile9").focus();
+		    return;
+		}
+		
+		if(imgFile != "" && imgFile != null) {
+			fileSize = document.getElementById("isFile9").files[0].size;
+		    
+		    if(!imgFile.match(fileForm)) {
+		    	alert("이미지 파일만 업로드 가능");
+		        return;
+		    } else if(fileSize > maxSize) {
+		    	alert("파일 사이즈는 5MB까지 가능");
+		        return;
+		    }
+		}
+		//유효성 검사 끝나면 ajax 요청 보내기
+		callback();
+	}	
 		
 /* 재고관리 페이지 */
 	//상세보기 버튼을 클릭했을 때
@@ -667,6 +621,11 @@ function cateChange(){
 				//modal 창 보이기
 				var modal = document.getElementById("myModal");
 				modal.style.display = "block";
+				
+				$("#prodNo2").empty();
+				
+				//해당 상품번호 보이기
+				$("#prodNo2").append("상품번호 "+prodNo+" 번");
 				
 				//테이블 생성
 				var table =$("<table></table>");
@@ -712,6 +671,11 @@ function cateChange(){
 					'font-weight':'bold',
 					
 				});
+				$("#prodNo2").css({
+					'text-align':'center',
+					'font-size':'15px',
+					'font-weight':'bold',
+				});
 			}
 	  	});
     	
@@ -750,7 +714,9 @@ function cateChange(){
 				var sizes = data.result1;
 				//해당 상품의 색상
 				var colors = data.result2;
-		
+				//해당 상품의 재고수량
+				var solds = data.result3;
+				
 	    		//재고등록 modal 창 보이기
 				var modal = document.getElementById("registerStock");
 				modal.style.display = "block";
@@ -766,10 +732,11 @@ function cateChange(){
 				
 				for(i=0; i<colors.length; i++){
 					for(j=0; j<sizes.length; j++){
+						var soldQty = solds[j * colors.length + i];
 						$("#selectOption").append("<tr>");
 						$("#selectOption").append("<td class='colors'>"+colors[i]+"</td>");
 						$("#selectOption").append("<td class='sizes'>"+sizes[j]+"</td>");
-						$("#selectOption").append("<td><input type='text' class='stocks'></td>");
+						$("#selectOption").append("<td><input type='text' class='stocks' placeholder='"+soldQty+"'></td>");
 						$("#selectOption").append("</tr>");
 						
 					}
@@ -810,7 +777,7 @@ function cateChange(){
     	
 	});
     	
-    //재고등록 페이지에서 재고 입력 후 등록버튼을 클릭했을 때	
+    //재고추가 페이지에서 재고 입력 후 추가버튼을 클릭했을 때	
    	$(".btnRegister").on("click",function(){
    		//해당 상품 번호
    		var prodNo = $(this).val();
@@ -850,3 +817,46 @@ function cateChange(){
    		
    	});
 });
+/* product-register 카테고리 분류 */
+function cateChange(){
+    		let outer = ["가디건","자켓/코트","패딩/점퍼","집업/조끼"];
+    		let top = ["티셔츠","니트/스웨터","맨투맨/후드","조끼/나시"];
+    		let bottom = ["스커트","데님","팬츠","슬랙스","레깅스"];
+    		let dress = ["원피스","투피스","점프수트"];
+    		let etc = ["신발","가방","모자","쥬얼리"];
+    		
+    		let outerV=[101,102,103,104];
+    		let topV=[201,202,203,204,205];
+    		let bottomV=[301,302,303,304,305];
+    		let dressV=[401,402,403];
+    		let etcV=[501,502,503,504];
+    		
+    		let target = $("#cate1").val();
+    		let opt;
+    		let optV;
+    		//console.log(target);
+    		if(target == '100'){
+    			opt = outer;
+    			optV= outerV;
+    		}else if(target == '200'){
+    			opt = top;
+    			optV= topV;
+    		}else if(target == '300'){
+    			opt = bottom;
+    			optV= bottomV;
+    		}else if(target == '400'){
+    			opt = dress;
+    			optV= dressV;
+    		}else if(target == '500'){
+    			opt = etc;
+    			optV= etcV;
+    		}
+    		
+    		$("#cate2").empty();
+    		$("#cate2").append('<option value="0">소분류 선택</option>');
+    		
+    		for(var i = 0; i < opt.length; i++){
+    			$("#cate2").append('<option value="'+optV[i]+'">'+opt[i]+'</option>');
+    		}
+    		
+    	}

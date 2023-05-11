@@ -146,7 +146,7 @@
 	<!-- 재고관리 페이지에서 재고 등록하기 -->
 	<update id="updateStock">
 		UPDATE `product_option` 
-		SET `sold`=#{arg0} 
+		SET `sold`=`sold`+#{arg0} 
 		WHERE `prodNo`=#{arg1} AND 
 		`colorName`=#{arg2} AND
 		`size`=#{arg3};

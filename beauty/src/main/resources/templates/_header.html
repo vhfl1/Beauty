@@ -21,20 +21,20 @@
 					<a th:href="@{/member/register}">회원가입</a>
 		        </li>
 		        <!-- 권한이 1인(일반회원) 사용자가 보이는 블럭 -->
-	           	<li sec:authorize="hasAnyRole('1','3')">
+	           	<li sec:authorize="hasAnyRole('1','2','3','4','5')">
 	           		<a th:href="@{/myshop/index}"><span class="head_name" sec:authentication="principal.member.name"></span></a>
 		        </li>
-	           	<li sec:authorize="hasAnyRole('1','3')">
+	           	<li sec:authorize="hasAnyRole('1','2','3','4','5')">
 					<a th:href="@{/member/logout}">로그아웃</a>
 		        </li>
-		        <!-- 권한이 3인(관리자) 사용자가 보이는 블럭 -->
-		        <li sec:authorize="hasRole('3')">
+		        <!-- 권한이 5인(관리자) 사용자가 보이는 블럭 -->
+		        <li sec:authorize="hasRole('5')">
 		        	<a th:href="@{/admin/product/list}">관리자 페이지</a>
 		        </li>
 		        <li>
 		        	<a th:href="@{/order/cart}">장바구니<span>([[${cartCount}]])</span></a>
 			    </li>
-		        <li class="cate">
+		        <li>
 		            <a th:href="@{/myshop/index}">마이페이지</a>
 		            <ul class="dep">
                         <li><a th:href="@{/myshop/myorder}">주문/배송</a></li>

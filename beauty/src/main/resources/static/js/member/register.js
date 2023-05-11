@@ -134,6 +134,7 @@ $(function() {
 	////// 이메일 인증 /////
 	///////////////////
 
+/*
 	//email
 	var code = null;
 	$('.sendCode').click(function(e) {
@@ -143,10 +144,10 @@ $(function() {
 			alert('이메일을 입력해주세요');
 			return;
 		}
-		/*
+		
 		// 인증번호 타이머
 		timer();
-		*/
+		
 		$.ajax({
 			url: '/Beauty/member/emailAuth',
 			method: 'post',
@@ -168,7 +169,8 @@ $(function() {
 			}
 		});
 	});
-
+*/
+/*
 	//email code check
 	$('.btn-terms').click(function() {
 		let insertCode = $('input[name=insertCode]').val();
@@ -195,6 +197,7 @@ $(function() {
 			return false;
 		}
 	});
+*/
 
 /*
 	// 인증번호 타이머
